@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ساعات العمل</title>
+<meta name="theme-color" content="#1f4e8c">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Arbeitszeiten">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--ink:#1b2430;--muted:#6b7686;--line:#e2e7ef;--brand:#1f4e8c;--brand2:#e8eef7;--ok:#1e8a4c;--bad:#c0392b;--warn:#b7791f;--night:#4b3f9e;--sun:#b7791f;--hol:#c0392b}
+@media (prefers-color-scheme:dark){:root{--bg:#11161d;--card:#1a212b;--ink:#e6ebf2;--muted:#95a1b2;--line:#2a3340;--brand:#6fa3e8;--brand2:#22324a;--ok:#4cc27e;--bad:#ef6b5b;--warn:#e3b04b;--night:#a99cf2;--sun:#e3b04b;--hol:#ef6b5b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:15px;padding-bottom:76px}
+header{background:var(--brand);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+header h1{font-size:18px;margin:0}
+header .st{font-size:12px;opacity:.85}
+main{padding:12px;max-width:720px;margin:auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.card h2{font-size:16px;margin:0 0 10px}
+label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:15px;font-family:inherit}
+textarea{min-height:120px;direction:ltr;text-align:left}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.chk{display:flex;align-items:center;gap:8px;margin-top:12px}.chk input{width:auto}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+button{border:0;border-radius:8px;padding:11px 14px;font-size:15px;font-family:inherit;cursor:pointer;background:var(--brand);color:#fff}
+button.sec{background:var(--brand2);color:var(--brand)}
+button.danger{background:transparent;color:var(--bad);border:1px solid var(--bad)}
+.btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.btns button{flex:1}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;z-index:6;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;color:var(--muted);border-radius:0;padding:10px 4px;font-size:12px}
+nav button b{display:block;font-size:20px;line-height:1.2}
+nav button.on{color:var(--brand);font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:start}
+td.n,th.n{text-align:end;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
+.res td:first-child{color:var(--muted)}
+.big{font-size:22px;font-weight:700}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.kpi{background:var(--brand2);border-radius:10px;padding:10px}.kpi span{display:block;font-size:12px;color:var(--muted)}
+.day{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.day:last-child{border-bottom:0}
+.day .d{font-weight:700}.day .s{font-size:13px;color:var(--muted)}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:10px;margin-inline-start:4px;color:#fff}
+.t-n{background:var(--night)}.t-s{background:var(--sun)}.t-h{background:var(--hol)}.t-x{background:var(--muted)}
+.warn{background:#fff6e5;color:#7a5200;border:1px solid #f0d49a;border-radius:10px;padding:10px;font-size:13px;margin-bottom:12px}
+@media (prefers-color-scheme:dark){.warn{background:#3a2e14;color:#f0d49a;border-color:#6b5420}}
+.pos{color:var(--ok)}.neg{color:var(--bad)}
+.toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:20px;font-size:14px;display:none;z-index:9}
+.hidden{display:none!important}
+.q{display:inline-block;margin-top:4px;background:#f0b429;color:#1b2430;font-size:12px;border-radius:10px;padding:2px 8px;cursor:pointer}
+.tip{display:flex;gap:8px;align-items:flex-start}.tip span{flex:1}.tip button{padding:2px 8px;background:transparent;color:inherit;border:1px solid currentColor}
+#print{display:none}
+@media print{
+  body{padding:0;background:#fff;color:#000}
+  header,nav,main,.toast{display:none!important}
+  #print{display:block;font-family:Arial,sans-serif;direction:ltr;font-size:11px;color:#000}
+  #print table{font-size:10px}#print td,#print th{border:1px solid #000;padding:3px}
+  #print h1{font-size:16px;text-align:center;margin:8px 0}
+}
+</style>
+</head>
+<body>
+<header><div><h1 id="hTitle">ساعات العمل</h1><div class="st" id="hStatus"></div><div class="q hidden" id="qBadge"></div></div><div style="display:flex;gap:6px"><button class="sec hidden" id="installBtn" style="padding:6px 10px" data-t="install"></button><button class="sec" id="langBtn" style="padding:6px 10px">DE</button></div></header>
+<main>
+  <div class="warn tip hidden" id="iosTip"><span data-t="iosTip"></span><button id="iosTipX">✕</button></div>
+  <!-- DAY -->
+  <section id="v-day">
+    <div class="card">
+      <h2 id="formTitle"></h2>
+      <div class="row">
+        <div><label data-t="date"></label><input type="date" id="f-date"></div>
+        <div><label data-t="type"></label><select id="f-type"></select></div>
+      </div>
+      <div class="g-place"><label data-t="place"></label><input id="f-place"></div>
+      <div class="g-func"><label data-t="func"></label><select id="f-func"></select></div>
+      <div class="row3 g-time">
+        <div><label data-t="start"></label><input type="time" id="f-start"></div>
+        <div><label data-t="end"></label><input type="time" id="f-end"></div>
+        <div><label data-t="pause"></label><input type="number" step="0.25" min="0" id="f-pause"></div>
+      </div>
+      <div class="g-hours"><label data-t="paidHours"></label><input type="number" step="0.25" min="0" id="f-hours"><div class="hint" data-t="paidHint"></div></div>
+      <div class="g-km"><label data-t="route"></label><input id="f-route"></div>
+      <div class="row g-km">
+        <div><label data-t="km"></label><input type="number" min="0" id="f-km"></div>
+        <div class="chk"><input type="checkbox" id="f-pass"><span data-t="passenger"></span></div>
+      </div>
+      <label data-t="notes"></label><input id="f-notes">
+      <div class="btns">
+        <button id="saveBtn" data-t="save"></button>
+        <button class="sec hidden" id="newBtn" data-t="newEntry"></button>
+        <button class="danger hidden" id="delBtn" data-t="delete"></button>
+      </div>
+    </div>
+    <div class="card"><h2 data-t="result"></h2><div id="dayResult"></div></div>
+  </section>
+
+  <!-- MONTH -->
+  <section id="v-month" class="hidden">
+    <div class="card"><div class="row"><div><label data-t="month"></label><input type="month" id="m-month"></div><div style="display:flex;align-items:flex-end"><button class="sec" style="width:100%" id="printBtn" data-t="print"></button></div></div></div>
+    <div id="missing"></div>
+    <div class="card"><div id="dayList"></div></div>
+    <div class="card"><h2 data-t="totals"></h2><div id="monthTotals"></div></div>
+    <div class="card"><h2 data-t="adjustments"></h2><div id="adjList"></div>
+      <div class="row3"><div><label data-t="adjHours"></label><input type="number" step="0.25" id="a-hours"></div><div><label data-t="adjRate"></label><input type="number" step="0.01" id="a-rate"></div><div><label data-t="adjAmount"></label><input type="number" step="0.01" id="a-amount"></div></div>
+      <label data-t="adjNote"></label><input id="a-note">
+      <div class="btns"><button class="sec" id="adjBtn" data-t="addAdj"></button></div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section id="v-cmp" class="hidden">
+    <div class="card"><label data-t="month"></label><input type="month" id="c-month"><div class="hint" data-t="cmpHint"></div></div>
+    <div class="card"><h2 data-t="payslip"></h2><div id="slipForm"></div><div class="btns"><button id="slipBtn" data-t="saveSlip"></button></div></div>
+    <div class="card"><div id="cmpTable"></div></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="v-set" class="hidden">
+    <div class="card"><h2 data-t="connection"></h2>
+      <label data-t="url"></label><input id="s-url" dir="ltr" placeholder="https://script.google.com/macros/s/.../exec">
+      <label data-t="key"></label><input id="s-key" dir="ltr">
+      <div class="hint" data-t="localNote"></div>
+      <div class="btns"><button id="connBtn" data-t="connect"></button></div>
+    </div>
+    <div class="card"><h2 data-t="rates"></h2><div id="rateForm"></div></div>
+    <div class="card"><h2 data-t="rules"></h2><div id="ruleForm"></div></div>
+    <div class="card"><h2 data-t="holidays"></h2><textarea id="s-hol"></textarea><div class="hint" data-t="holHint"></div></div>
+    <div class="btns" style="margin-bottom:12px"><button id="setBtn" data-t="saveSettings"></button></div>
+  </section>
+</main>
+<nav>
+  <button data-v="day" class="on"><b>✎</b><span data-t="tabDay"></span></button>
+  <button data-v="month"><b>▦</b><span data-t="tabMonth"></span></button>
+  <button data-v="cmp"><b>⇄</b><span data-t="tabCmp"></span></button>
+  <button data-v="set"><b>⚙</b><span data-t="tabSet"></span></button>
+</nav>
+<div class="toast" id="toast"></div>
+<div id="print"></div>
+
+<script>
+/* ================= TEXTS ================= */
+const T={
+ar:{app:'ساعات العمل',tabDay:'اليوم',tabMonth:'الشهر',tabCmp:'المقارنة',tabSet:'الإعدادات',newTitle:'إدخال جديد',editTitle:'تعديل إدخال',
+date:'التاريخ',type:'نوع اليوم',work:'عمل',ausfall:'إلغاء (Ausfall)',urlaub:'إجازة (Urlaub)',travel:'تنقل فقط',
+place:'مكان العمل',func:'الوظيفة',start:'البداية',end:'النهاية',pause:'الاستراحة (س)',paidHours:'ساعات العمل المكتوبة',paidHint:'الرقم المكتوب في عمود Arbeitszeit (يشمل السفر)',
+route:'المسار (من - إلى)',km:'الكيلومترات ذهاباً وعودة',passenger:'معي عامل في السيارة',notes:'ملاحظات',save:'حفظ',newEntry:'إدخال جديد',delete:'حذف',
+result:'نتيجة اليوم',rate:'أجر الساعة',base:'الأجر الأساسي',night:'إضافة الليل',sunday:'إضافة الأحد',holiday:'إضافة العطلة',kmMoney:'بدل الكيلومترات',meal:'بدل الطعام',
+taxable:'خاضع للضريبة',taxfree:'معفى من الضريبة',deduct:'الاستقطاع التقديري',net:'الصافي التقديري',gross:'الإجمالي',hrs:'س',
+month:'الشهر',print:'طباعة / PDF',totals:'إجمالي الشهر',workHours:'ساعات العمل',vacHours:'ساعات الإجازة',nightH:'ساعات الليل',sunH:'ساعات الأحد',holH:'ساعات العطلة',
+kmTotal:'مجموع الكيلومترات',fixed:'مبلغ ثابت شهري',adjustments:'تعديلات ومكافآت',adjHours:'ساعات',adjRate:'أجر الساعة',adjAmount:'مبلغ €',adjNote:'ملاحظة',addAdj:'إضافة',
+missing:'أيام عمل (الإثنين–الجمعة) بلا إدخال:',noEntries:'لا توجد إدخالات لهذا الشهر',payslip:'أرقام كشف الراتب',cmpHint:'أدخل أرقام كشف الراتب لهذا الشهر لتظهر الفروق',
+saveSlip:'حفظ ومقارنة',item:'البند',appV:'التطبيق',slipV:'الكشف',diff:'الفرق',fahrgeld:'بدل الكيلومترات (Fahrgeld)',meals:'بدل الطعام',transfer:'المبلغ المحوّل',
+connection:'الاتصال بملف Google Sheet',url:'رابط Web App',key:'كلمة السر (API_KEY)',localNote:'بدون رابط يعمل التطبيق محلياً والبيانات على هذا الجهاز فقط',connect:'اتصال ومزامنة',
+rates:'أجور الوظائف (€/ساعة)',rules:'القواعد والنسب',holidays:'العطل الرسمية',holHint:'سطر لكل عطلة: 2026-12-25 Weihnachten',saveSettings:'حفظ الإعدادات',
+raise:'زيادة على أجر الساعة',surBase:'أساس حساب الإضافات €',nightPct:'إضافة الليل % (C فقط)',nightFrom:'الليل من الساعة',nightTo:'إلى الساعة',sunPct:'إضافة الأحد %',holPct:'إضافة العطلة %',
+kmRate:'سعر الكم €',kmRatePass:'سعر الكم مع عامل €',vacRate:'أجر ساعة الإجازة',vacHours:'ساعات يوم الإجازة',ausfallHours:'ساعات يوم الإلغاء',
+mealThreshold:'حد ساعات بدل الطعام',mealLow:'بدل عند الحد بالضبط €',mealHigh:'بدل فوق الحد €',fixedMonthly:'مبلغ ثابت شهري €',deductPct:'نسبة الاستقطاع % (ضريبة + تأمينات)',name:'الاسم',
+saved:'تم الحفظ',err:'خطأ: ',confirmDel:'حذف هذا الإدخال؟',local:'وضع محلي',online:'متصل',offline:'غير متصل — عرض آخر نسخة',loading:'جارٍ التحميل…',install:'تثبيت',iosTip:'لتثبيت التطبيق على آيفون: افتح الرابط في Safari، اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية".',q1:'إدخال واحد بانتظار الإرسال',qN:'إدخالات بانتظار الإرسال',savedOffline:'حُفظ على الهاتف وسيُرسل عند عودة الإنترنت',sent:'تم إرسال الإدخالات المعلّقة إلى الشيت',dup:'يوجد إدخال لهذا التاريخ، سيُضاف إدخال ثانٍ',
+F_A:'A · حارس أمان',F_C:'C · مشرف أمان',F_H:'H · عامل',F_M:'M · تأريض السكة',F_U:'U · مشغّل AWS',F_X:'X · مدقق مخططات',F_Z:'Z · فني/مشروع',F_CU:'C/U · مشرف + AWS'},
+de:{app:'Arbeitszeiten',tabDay:'Tag',tabMonth:'Monat',tabCmp:'Abgleich',tabSet:'Einstellungen',newTitle:'Neuer Eintrag',editTitle:'Eintrag bearbeiten',
+date:'Datum',type:'Art',work:'Arbeit',ausfall:'Ausfall',urlaub:'Urlaub',travel:'Nur Fahrt',
+place:'Arbeitsstelle',func:'Funktion',start:'Beginn',end:'Ende',pause:'Pause (h)',paidHours:'Arbeitszeit (h)',paidHint:'Wert aus der Spalte Arbeitszeit (inkl. Fahrt)',
+route:'Strecke (von - bis)',km:'Gefahrene Km (hin & zurück)',passenger:'Mitfahrer im Auto',notes:'Notizen',save:'Speichern',newEntry:'Neuer Eintrag',delete:'Löschen',
+result:'Tagesergebnis',rate:'Stundenlohn',base:'Grundlohn',night:'N-Zuschlag',sunday:'Sonntagszuschlag',holiday:'Feiertagszuschlag',kmMoney:'Fahrgeld',meal:'Verpflegungszuschuss',
+taxable:'Steuerpflichtig',taxfree:'Steuerfrei',deduct:'Abzüge (geschätzt)',net:'Netto (geschätzt)',gross:'Brutto',hrs:'h',
+month:'Monat',print:'Drucken / PDF',totals:'Monatssumme',workHours:'Arbeitsstunden',vacHours:'Urlaubsstunden',nightH:'Nachtstunden',sunH:'Sonntagsstunden',holH:'Feiertagsstunden',
+kmTotal:'Km gesamt',fixed:'Festbezug',adjustments:'Korrekturen / Prämien',adjHours:'Stunden',adjRate:'Stundenlohn',adjAmount:'Betrag €',adjNote:'Notiz',addAdj:'Hinzufügen',
+missing:'Werktage (Mo–Fr) ohne Eintrag:',noEntries:'Keine Einträge in diesem Monat',payslip:'Werte der Lohnabrechnung',cmpHint:'Werte der Abrechnung eingeben, um Differenzen zu sehen',
+saveSlip:'Speichern & abgleichen',item:'Position',appV:'App',slipV:'Abrechnung',diff:'Differenz',fahrgeld:'Fahrgeld',meals:'Verpflegungszuschuss',transfer:'Auszahlungsbetrag',
+connection:'Verbindung zum Google Sheet',url:'Web-App-URL',key:'Passwort (API_KEY)',localNote:'Ohne URL arbeitet die App lokal, Daten nur auf diesem Gerät',connect:'Verbinden & synchronisieren',
+rates:'Stundenlöhne je Funktion (€)',rules:'Regeln und Sätze',holidays:'Feiertage',holHint:'Eine Zeile pro Feiertag: 2026-12-25 Weihnachten',saveSettings:'Einstellungen speichern',
+raise:'Lohnerhöhung je Stunde',surBase:'Basis für Zuschläge €',nightPct:'N-Zuschlag % (nur C)',nightFrom:'Nacht ab Uhr',nightTo:'bis Uhr',sunPct:'Sonntagszuschlag %',holPct:'Feiertagszuschlag %',
+kmRate:'Km-Satz €',kmRatePass:'Km-Satz mit Mitfahrer €',vacRate:'Urlaubsstundenlohn',vacHours:'Std. je Urlaubstag',ausfallHours:'Std. je Ausfalltag',
+mealThreshold:'Stundengrenze Verpflegung',mealLow:'Zuschuss genau an der Grenze €',mealHigh:'Zuschuss über der Grenze €',fixedMonthly:'Festbezug monatlich €',deductPct:'Abzüge % (Steuer + SV)',name:'Name',
+saved:'Gespeichert',err:'Fehler: ',confirmDel:'Eintrag löschen?',local:'Lokaler Modus',online:'Verbunden',offline:'Offline — letzte Kopie',loading:'Laden…',install:'Installieren',iosTip:'Installation auf dem iPhone: Link in Safari öffnen, Teilen ⬆️ tippen, dann "Zum Home-Bildschirm".',q1:'1 Eintrag wartet auf Upload',qN:'Einträge warten auf Upload',savedOffline:'Auf dem Handy gespeichert, wird bei Internet gesendet',sent:'Wartende Einträge wurden gesendet',dup:'Für dieses Datum gibt es schon einen Eintrag',
+F_A:'A · Sicherungsposten',F_C:'C · Sicherungsaufsicht',F_H:'H · Arbeiter',F_M:'M · Bahnerder',F_U:'U · AWS-Bediener',F_X:'X · Planprüfer',F_Z:'Z · Projektant/Techn.',F_CU:'C/U · Aufsicht + AWS'}
+};
+
+/* ================= ENGINE ================= */
+/*ENGINE-START*/
+const FUNCS=['A','C','H','M','U','X','Z','CU'];
+const r2=x=>Math.round((Number(x)||0)*100)/100;
+const num=x=>Number(String(x==null?'':x).replace(',','.').trim())||0;
+function hm(s){const p=String(s||'').split(':');return (+p[0]||0)*60+(+p[1]||0);}
+function rateFor(f,S){const b=num(S['rate_'+f]);return b?b+num(S.raise):0;}
+function splitMinutes(e,S,hol){
+  const [y,m,d]=e.date.split('-').map(Number);const t0=Date.UTC(y,m-1,d);
+  const s=hm(e.start);let en=hm(e.end);if(en<=s)en+=1440;
+  const nf=num(S.nightFrom)*60,nt=num(S.nightTo)*60,nightOK=(e.func==='C'||e.func==='CU');
+  const mins=[];
+  for(let k=s;k<en;k++){
+    const dt=new Date(t0+k*60000);const mod=dt.getUTCHours()*60+dt.getUTCMinutes();
+    const n=nightOK&&(nf>nt?(mod>=nf||mod<nt):(mod>=nf&&mod<nt));
+    const su=dt.getUTCDay()===0;const ho=hol.has(dt.toISOString().slice(0,10));
+    mins.push({n,su,ho,p:(n?num(S.nightPct):0)+(su?num(S.sunPct):0)+(ho?num(S.holPct):0)});
+  }
+  mins.sort((a,b)=>a.p-b.p); // الاستراحة تُخصم من الدقائق الأقل إضافة أولاً
+  const kept=mins.slice(Math.min(Math.round(num(e.pause)*60),mins.length));
+  const c={n:0,su:0,ho:0,work:kept.length};kept.forEach(x=>{if(x.n)c.n++;if(x.su)c.su++;if(x.ho)c.ho++;});
+  return c;
+}
+function calcEntry(e,S,hol){
+  const r={rate:0,base:0,nightH:0,sunH:0,holH:0,nightAmt:0,sunAmt:0,holAmt:0,kmAmt:0,meal:0,taxable:0,taxfree:0,net:0,actualH:0};
+  const ph=num(e.paidHours);
+  const pass=(e.passenger===true||e.passenger==='true'||e.passenger==='TRUE');
+  if(e.type!=='urlaub') r.kmAmt=r2(num(e.km)*(pass?num(S.kmRatePass):num(S.kmRate)));
+  if(e.type==='work'||e.type==='ausfall'){
+    r.rate=rateFor(e.func,S);r.base=r2(ph*r.rate);
+    const thr=num(S.mealThreshold);r.meal=ph>thr?num(S.mealHigh):(ph>=thr&&ph>0?num(S.mealLow):0);
+  }else if(e.type==='urlaub'){r.rate=num(S.vacRate);r.base=r2(ph*r.rate);}
+  if(e.type==='work'&&e.start&&e.end&&e.date){
+    const c=splitMinutes(e,S,hol);r.nightH=c.n/60;r.sunH=c.su/60;r.holH=c.ho/60;r.actualH=c.work/60;
+    const b=num(S.surBase);
+    r.nightAmt=r2(r.nightH*b*num(S.nightPct)/100);r.sunAmt=r2(r.sunH*b*num(S.sunPct)/100);r.holAmt=r2(r.holH*b*num(S.holPct)/100);
+  }
+  r.taxable=r.base;r.taxfree=r2(r.nightAmt+r.sunAmt+r.holAmt+r.kmAmt+r.meal);
+  r.net=r2(r.taxable*(1-num(S.deductPct)/100)+r.taxfree);
+  return r;
+}
+function monthSummary(month,entries,adjs,S,hol){
+  const list=entries.filter(e=>String(e.date).startsWith(month)).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+  const t={workHours:0,vacHours:0,km:0,base:0,nightH:0,sunH:0,holH:0,nightAmt:0,sunAmt:0,holAmt:0,kmAmt:0,meal:0,adjHours:0,adjAmt:0,fixed:0};
+  list.forEach(e=>{const c=calcEntry(e,S,hol);
+    if(e.type==='urlaub')t.vacHours+=num(e.paidHours);else if(e.type!=='travel')t.workHours+=num(e.paidHours);
+    t.km+=num(e.km);['base','nightH','sunH','holH','nightAmt','sunAmt','holAmt','kmAmt','meal'].forEach(k=>t[k]+=c[k]);});
+  adjs.filter(a=>a.month===month).forEach(a=>{t.adjHours+=num(a.hours);t.adjAmt+=r2(num(a.hours)*num(a.rate)+num(a.amount));});
+  Object.keys(t).forEach(k=>t[k]=r2(t[k]));
+  t.taxable=r2(t.base+t.adjAmt);
+  t.taxfree=r2(t.nightAmt+t.sunAmt+t.holAmt+t.kmAmt+t.meal);
+  t.gross=r2(t.taxable+t.nightAmt+t.sunAmt+t.holAmt+t.kmAmt); // مثل Gesamt-Brutto في الكشف (بدون بدل الطعام)
+  t.deduct=r2(t.taxable*num(S.deductPct)/100);
+  t.net=r2(t.taxable-t.deduct+t.taxfree);
+  t.hoursAll=t.workHours+t.adjHours;
+  return {list,t};
+}
+/*ENGINE-END*/
+
+/* ================= STATE / STORAGE ================= */
+const DEF={name:'Almousaa',rate_A:17,rate_C:19,rate_H:17,rate_M:18,rate_U:19,rate_X:19,rate_Z:19,rate_CU:21,raise:0.5,surBase:17,nightPct:12.5,nightFrom:22,nightTo:6,sunPct:25,holPct:50,kmRate:0.25,kmRatePass:0.30,vacRate:17,vacHours:7.5,ausfallHours:8,mealThreshold:8,mealLow:6,mealHigh:14,deductPct:27.7};
+const DEF_HOL=[['2026-01-01','Neujahr'],['2026-04-03','Karfreitag'],['2026-04-06','Ostermontag'],['2026-05-01','Tag der Arbeit'],['2026-05-14','Christi Himmelfahrt'],['2026-05-25','Pfingstmontag'],['2026-06-04','Fronleichnam (HE)'],['2026-10-03','Tag der Deutschen Einheit'],['2026-12-25','1. Weihnachtstag'],['2026-12-26','2. Weihnachtstag'],['2027-01-01','Neujahr'],['2027-03-26','Karfreitag'],['2027-03-29','Ostermontag'],['2027-05-01','Tag der Arbeit'],['2027-05-06','Christi Himmelfahrt'],['2027-05-17','Pfingstmontag'],['2027-05-27','Fronleichnam (HE)'],['2027-10-03','Tag der Deutschen Einheit'],['2027-12-25','1. Weihnachtstag'],['2027-12-26','2. Weihnachtstag']].map(([date,name])=>({date,name}));
+
+function ls(k,v){try{if(v===undefined){const x=localStorage.getItem(k);return x?JSON.parse(x):null;}localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+let cfg=Object.assign({url:'',key:'',lang:'ar'},ls('rw_cfg')||{});
+let db=ls('rw_db')||{settings:Object.assign({},DEF),holidays:DEF_HOL,entries:[],adjustments:[],payslips:[]};
+const clean=o=>{const r={};Object.keys(o||{}).forEach(k=>{if(o[k]!==''&&o[k]!=null)r[k]=o[k];});return r;};
+db.settings=Object.assign({},DEF,clean(db.settings));
+let editId=null,online=false;
+const S=()=>db.settings;
+const holSet=()=>new Set(db.holidays.map(h=>h.date));
+const persist=()=>ls('rw_db',db);
+
+class NetErr extends Error{}
+async function api(action,data){
+  if(!cfg.url) return null; // الوضع المحلي: التخزين في localStorage فقط
+  let j;
+  try{
+    const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),25000);
+    const res=await fetch(cfg.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({key:cfg.key,action,data}),signal:ctl.signal});
+    clearTimeout(tm);j=await res.json();
+  }catch(e){throw new NetErr(e.message||'network');}
+  if(!j.ok)throw new Error(j.error);return j.data;
+}
+/* ---- قائمة الانتظار: تُحفظ العمليات على الهاتف وتُرسل عند عودة الإنترنت ---- */
+let queue=ls('rw_queue')||[];
+function saveQ(){ls('rw_queue',queue);renderQ();}
+function renderQ(){const b=$('qBadge');if(!b)return;const n=queue.length;b.classList.toggle('hidden',!n);b.textContent=n===1?t('q1'):`${n} ${t('qN')}`;}
+function enqueue(action,data){
+  const id=data&&(data.id||data.month);
+  if(['saveEntry','saveAdjustment','savePayslip'].includes(action))queue=queue.filter(q=>!(q.action===action&&(q.data.id||q.data.month)===id));
+  if(action==='deleteEntry')queue=queue.filter(q=>!(q.action==='saveEntry'&&q.data.id===id));
+  if(action==='deleteAdjustment')queue=queue.filter(q=>!(q.action==='saveAdjustment'&&q.data.id===id));
+  if(action==='saveSettings'||action==='saveHolidays')queue=queue.filter(q=>q.action!==action);
+  queue.push({action,data});saveQ();
+}
+async function write(action,data){
+  if(!cfg.url)return 'local';
+  if(queue.length||!navigator.onLine){enqueue(action,data);return 'queued';}
+  try{await api(action,data);return 'ok';}
+  catch(e){if(e instanceof NetErr){enqueue(action,data);return 'queued';}throw e;}
+}
+let flushing=false;
+async function flush(){
+  if(flushing||!queue.length||!cfg.url||!navigator.onLine)return;
+  flushing=true;let sent=0;
+  try{
+    while(queue.length){
+      const q=queue[0];
+      try{await api(q.action,q.data);}
+      catch(e){if(e instanceof NetErr)break;if(e.message==='auth'){toast(t('err')+'auth');break;}toast(t('err')+e.message);}
+      queue.shift();saveQ();sent++;
+    }
+  }finally{flushing=false;}
+  if(sent&&!queue.length)toast(t('sent'));
+}
+async function sync(){
+  if(!cfg.url){setStatus(t('local'));renderQ();return;}
+  setStatus(t('loading'));
+  await flush();
+  if(queue.length||!navigator.onLine){online=false;setStatus(t('offline'));renderAll();return;}
+  try{const d=await api('getAll');
+    db={settings:Object.assign({},DEF,clean(d.settings)),holidays:d.holidays.length?d.holidays:DEF_HOL,entries:d.entries,adjustments:d.adjustments,payslips:d.payslips};
+    persist();online=true;
+  }catch(e){online=false;if(!(e instanceof NetErr))toast(t('err')+e.message);}
+  renderAll();
+}
+
+/* ================= HELPERS ================= */
+const $=id=>document.getElementById(id);
+const t=k=>(T[cfg.lang]&&T[cfg.lang][k])||T.ar[k]||k;
+const loc=()=>cfg.lang==='de'?'de-DE':'en-US';
+const eur=x=>new Intl.NumberFormat(loc(),{minimumFractionDigits:2,maximumFractionDigits:2}).format(num(x))+' €';
+const hrs=x=>new Intl.NumberFormat(loc(),{maximumFractionDigits:2}).format(num(x));
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fcode=f=>f==='CU'?'C/U':(f||'');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const dayName=ds=>{const [y,m,d]=ds.split('-').map(Number);return new Date(Date.UTC(y,m-1,d)).toLocaleDateString(cfg.lang==='de'?'de-DE':'ar',{weekday:'short',timeZone:'UTC'});};
+const ddmm=ds=>{const p=String(ds).split('-');return p[2]+'.'+p[1];};
+function setStatus(s){$('hStatus').textContent=(S().name?S().name+' · ':'')+s;}
+function toast(s){const e=$('toast');e.textContent=s;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2600);}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+/* ================= LANGUAGE ================= */
+function applyLang(){
+  document.documentElement.lang=cfg.lang;document.documentElement.dir=cfg.lang==='de'?'ltr':'rtl';
+  document.title=t('app');$('hTitle').textContent=t('app');$('langBtn').textContent=cfg.lang==='de'?'ع':'DE';
+  document.querySelectorAll('[data-t]').forEach(el=>el.textContent=t(el.dataset.t));
+  $('f-type').innerHTML=['work','ausfall','urlaub','travel'].map(k=>`<option value="${k}">${t(k)}</option>`).join('');
+  $('f-func').innerHTML=FUNCS.map(f=>`<option value="${f}">${t('F_'+f)}</option>`).join('');
+}
+
+/* ================= DAY FORM ================= */
+function readForm(){
+  return {id:editId||uid(),date:$('f-date').value,type:$('f-type').value,place:$('f-place').value.trim(),func:$('f-func').value,
+    start:$('f-start').value,end:$('f-end').value,pause:$('f-pause').value,paidHours:$('f-hours').value,
+    route:$('f-route').value.trim(),km:$('f-km').value,passenger:$('f-pass').checked,notes:$('f-notes').value.trim()};
+}
+function fillForm(e){
+  editId=e?e.id:null;
+  const x=e||{date:today(),type:'work',func:'C',start:'22:00',end:'06:30',pause:'0.5',paidHours:'',km:'',passenger:false};
+  $('f-date').value=x.date||today();$('f-type').value=x.type||'work';$('f-place').value=x.place||'';$('f-func').value=x.func||'C';
+  $('f-start').value=x.start||'';$('f-end').value=x.end||'';$('f-pause').value=x.pause||'';$('f-hours').value=x.paidHours||'';
+  $('f-route').value=x.route||'';$('f-km').value=x.km||'';$('f-pass').checked=(x.passenger===true||x.passenger==='true'||x.passenger==='TRUE');$('f-notes').value=x.notes||'';
+  $('formTitle').textContent=t(e?'editTitle':'newTitle');
+  $('newBtn').classList.toggle('hidden',!e);$('delBtn').classList.toggle('hidden',!e);
+  typeVis(false);calcPreview();
+}
+function typeVis(setDefaults){
+  const ty=$('f-type').value;
+  const show={'g-place':ty!=='urlaub','g-func':ty==='work'||ty==='ausfall','g-time':ty==='work','g-hours':ty!=='travel','g-km':ty!=='urlaub'};
+  Object.keys(show).forEach(c=>document.querySelectorAll('.'+c).forEach(el=>el.classList.toggle('hidden',!show[c])));
+  if(setDefaults){
+    if(ty==='ausfall')$('f-hours').value=S().ausfallHours;
+    if(ty==='urlaub'){$('f-hours').value=S().vacHours;$('f-place').value='Urlaub';}
+  }
+}
+function resultTable(c,e){
+  const rows=[];
+  if(c.rate)rows.push([t('rate'),eur(c.rate)]);
+  if(c.base)rows.push([t('base')+(e.paidHours?` (${hrs(e.paidHours)} ${t('hrs')})`:''),eur(c.base)]);
+  if(c.nightAmt)rows.push([`${t('night')} (${hrs(c.nightH)} ${t('hrs')})`,eur(c.nightAmt)]);
+  if(c.sunAmt)rows.push([`${t('sunday')} (${hrs(c.sunH)} ${t('hrs')})`,eur(c.sunAmt)]);
+  if(c.holAmt)rows.push([`${t('holiday')} (${hrs(c.holH)} ${t('hrs')})`,eur(c.holAmt)]);
+  if(c.kmAmt)rows.push([`${t('kmMoney')} (${hrs(e.km)} km)`,eur(c.kmAmt)]);
+  if(c.meal)rows.push([t('meal'),eur(c.meal)]);
+  return `<table class="res">${rows.map(r=>`<tr><td>${r[0]}</td><td class="n">${r[1]}</td></tr>`).join('')}</table>
+  <div class="kpis"><div class="kpi"><span>${t('taxable')}</span><b>${eur(c.taxable)}</b></div><div class="kpi"><span>${t('taxfree')}</span><b>${eur(c.taxfree)}</b></div>
+  <div class="kpi"><span>${t('gross')}</span><b>${eur(c.taxable+c.taxfree)}</b></div><div class="kpi"><span>${t('net')}</span><b class="big">${eur(c.net)}</b></div></div>`;
+}
+function calcPreview(){const e=readForm();if(!e.date){$('dayResult').innerHTML='';return;}$('dayResult').innerHTML=resultTable(calcEntry(e,S(),holSet()),e);}
+async function saveEntry(){
+  const e=readForm();if(!e.date)return;
+  if(!editId&&db.entries.some(x=>x.date===e.date))toast(t('dup'));
+  Object.assign(e,calcEntry(e,S(),holSet()));
+  let res;try{res=await write('saveEntry',e);}catch(err){toast(t('err')+err.message);return;}
+  const i=db.entries.findIndex(x=>x.id===e.id);if(i>=0)db.entries[i]=e;else db.entries.push(e);
+  persist();toast(t(res==='queued'?'savedOffline':'saved'));
+  // تجهيز إدخال اليوم التالي بنفس المكان والوظيفة
+  const keep={place:e.place,func:e.func,start:e.start,end:e.end,pause:e.pause};
+  fillForm(null);const [y,m,d]=e.date.split('-').map(Number);const nx=new Date(Date.UTC(y,m-1,d+1)).toISOString().slice(0,10);
+  $('f-date').value=nx;if(e.type==='work'){$('f-place').value=keep.place;$('f-func').value=keep.func;$('f-start').value=keep.start;$('f-end').value=keep.end;$('f-pause').value=keep.pause;}
+  calcPreview();renderMonth();
+}
+async function deleteEntry(){
+  if(!editId||!confirm(t('confirmDel')))return;
+  try{await write('deleteEntry',{id:editId});}catch(err){toast(t('err')+err.message);return;}
+  db.entries=db.entries.filter(x=>x.id!==editId);persist();fillForm(null);renderMonth();
+}
+
+/* ================= MONTH ================= */
+function renderMonth(){
+  const mon=$('m-month').value;if(!mon)return;
+  const {list,t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
+  const hs=holSet();
+  $('dayList').innerHTML=list.length?list.map(e=>{const c=calcEntry(e,S(),hs);
+    const tags=(c.nightH?`<span class="tag t-n">N ${hrs(c.nightH)}</span>`:'')+(c.sunH?`<span class="tag t-s">So ${hrs(c.sunH)}</span>`:'')+(c.holH?`<span class="tag t-h">FT ${hrs(c.holH)}</span>`:'')+(e.type!=='work'?`<span class="tag t-x">${t(e.type)}</span>`:'');
+    return `<div class="day" data-id="${e.id}"><div><div class="d">${ddmm(e.date)} ${dayName(e.date)} · ${esc(e.place)} ${e.func&&e.type!=='urlaub'&&e.type!=='travel'?'· '+fcode(e.func):''}${tags}</div>
+    <div class="s">${e.start?e.start+'–'+e.end+' · ':''}${e.paidHours?hrs(e.paidHours)+' '+t('hrs')+' · ':''}${e.km?hrs(e.km)+' km':''}</div></div>
+    <div class="n" style="text-align:end"><b>${eur(c.net)}</b><div class="s">${eur(c.taxable+c.taxfree)}</div></div></div>`;}).join(''):`<div class="hint">${t('noEntries')}</div>`;
+  document.querySelectorAll('.day').forEach(el=>el.onclick=()=>{fillForm(db.entries.find(x=>x.id===el.dataset.id));show('day');});
+  // أيام بلا إدخال
+  const [y,m]=mon.split('-').map(Number);const days=new Date(Date.UTC(y,m,0)).getUTCDate();const have=new Set(list.map(e=>e.date));const td=today();const miss=[];
+  for(let d=1;d<=days;d++){const ds=`${mon}-${String(d).padStart(2,'0')}`;if(ds>td)break;const wd=new Date(Date.UTC(y,m-1,d)).getUTCDay();if(wd>0&&wd<6&&!have.has(ds)&&!hs.has(ds))miss.push(ddmm(ds));}
+  $('missing').innerHTML=miss.length?`<div class="warn">${t('missing')} ${miss.join('، ')}</div>`:'';
+  const R=(k,v,cls)=>`<tr class="${cls||''}"><td>${k}</td><td class="n">${v}</td></tr>`;
+  $('monthTotals').innerHTML=`<table>
+   ${R(t('workHours'),hrs(tt.workHours)+(tt.adjHours?' + '+hrs(tt.adjHours):'')+' '+t('hrs'))}${R(t('vacHours'),hrs(tt.vacHours)+' '+t('hrs'))}
+   ${R(t('nightH'),hrs(tt.nightH))}${R(t('sunH'),hrs(tt.sunH))}${R(t('holH'),hrs(tt.holH))}${R(t('kmTotal'),hrs(tt.km)+' km')}
+   ${R(t('base'),eur(tt.base))}${tt.adjAmt?R(t('adjustments'),eur(tt.adjAmt)):''}
+   ${R(t('night'),eur(tt.nightAmt))}${R(t('sunday'),eur(tt.sunAmt))}${tt.holAmt?R(t('holiday'),eur(tt.holAmt)):''}${R(t('kmMoney'),eur(tt.kmAmt))}
+   ${R(t('gross'),eur(tt.gross),'tot')}${R(t('taxable'),eur(tt.taxable))}${R(t('deduct')+' ('+S().deductPct+'%)','− '+eur(tt.deduct))}${R(t('meal'),eur(tt.meal))}
+   ${R(t('transfer'),'<span class="big">'+eur(tt.net)+'</span>','tot')}</table>`;
+  const adjs=db.adjustments.filter(a=>a.month===mon);
+  $('adjList').innerHTML=adjs.map(a=>`<div class="day"><div><div class="d">${esc(a.note)||'—'}</div><div class="s">${num(a.hours)?hrs(a.hours)+' '+t('hrs')+' × '+eur(a.rate):''} ${num(a.amount)?eur(a.amount):''}</div></div><button class="danger" data-adj="${a.id}">✕</button></div>`).join('');
+  document.querySelectorAll('[data-adj]').forEach(b=>b.onclick=async()=>{try{await write('deleteAdjustment',{id:b.dataset.adj});}catch(err){toast(t('err')+err.message);return;}db.adjustments=db.adjustments.filter(a=>a.id!==b.dataset.adj);persist();renderMonth();});
+  if(!$('a-rate').value)$('a-rate').value=rateFor('C',S());
+}
+async function addAdj(){
+  const a={id:uid(),month:$('m-month').value,hours:$('a-hours').value,rate:$('a-rate').value,amount:$('a-amount').value,note:$('a-note').value.trim()};
+  if(!a.month||(!num(a.hours)&&!num(a.amount)))return;
+  try{await write('saveAdjustment',a);}catch(err){toast(t('err')+err.message);return;}
+  db.adjustments.push(a);persist();['a-hours','a-amount','a-note'].forEach(i=>$(i).value='');renderMonth();toast(t('saved'));
+}
+function printMonth(){
+  const mon=$('m-month').value;const {list,t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
+  const L=cfg.lang;cfg.lang='de';
+  const rows=list.map(e=>`<tr><td>${ddmm(e.date)}</td><td>${esc(e.place)}</td><td>${e.type==='urlaub'||e.type==='travel'?'':fcode(e.func)}</td><td>${e.start||''}</td><td>${e.end||''}</td><td>${e.pause||''}</td><td>${e.paidHours?hrs(e.paidHours):''}</td><td>${esc(e.route)}${e.type==='ausfall'?' (Ausfall)':''}</td><td>${e.km?hrs(e.km):''}${(e.passenger===true||e.passenger==='true')?' +1':''}</td></tr>`).join('');
+  const P=(k,v)=>`<tr><td>${k}</td><td style="text-align:right">${v}</td></tr>`;
+  $('print').innerHTML=`<div style="display:flex;justify-content:space-between"><b>Kany Sicherung GmbH</b><span>Name: ${esc(S().name)} · ${mon.split('-').reverse().join('/')}</span></div>
+  <h1>Stundennachweis Personal</h1>
+  <table><tr><th>Datum</th><th>Arbeitsstelle</th><th>Funktion</th><th>Beginn</th><th>Ende</th><th>Pause (h)</th><th>Arbeitszeit(h)</th><th>Strecke (von-bis)</th><th>Gefahrene Km</th></tr>${rows}
+  <tr><td><b>Gesamt</b></td><td></td><td></td><td></td><td></td><td></td><td><b>${hrs(tt.workHours+tt.vacHours)}</b></td><td></td><td><b>${hrs(tt.km)}</b></td></tr></table>
+  <h1 style="font-size:13px;text-align:left;margin-top:14px">Berechnung (eigene Schätzung)</h1>
+  <table style="width:60%">${P('Stundenlohn / Urlaub',eur(tt.base))}${tt.adjAmt?P('Korrekturen',eur(tt.adjAmt)):''}
+  ${P('N-Zuschlag ('+hrs(tt.nightH)+' h)',eur(tt.nightAmt))}${P('Sonntagszuschlag ('+hrs(tt.sunH)+' h)',eur(tt.sunAmt))}${P('Feiertagszuschlag ('+hrs(tt.holH)+' h)',eur(tt.holAmt))}
+  ${P('Fahrgeld',eur(tt.kmAmt))}${P('<b>Gesamt-Brutto</b>','<b>'+eur(tt.gross)+'</b>')}${P('Abzüge ('+S().deductPct+'%)','− '+eur(tt.deduct))}${P('Verpflegungszuschuss',eur(tt.meal))}${P('<b>Auszahlung (geschätzt)</b>','<b>'+eur(tt.net)+'</b>')}</table>`;
+  cfg.lang=L;window.print();
+}
+
+/* ================= COMPARE ================= */
+const SLIP=[['hours','workHours','h'],['vacHours','vacHours','h'],['nightH','nightH','h'],['sunH','sunH','h'],['holH','holH','h'],['fahrgeld','fahrgeld','e'],['meals','meals','e'],['gross','gross','e'],['net','transfer','e']];
+function renderCmp(){
+  const mon=$('c-month').value;if(!mon)return;
+  const p=db.payslips.find(x=>x.month===mon)||{};
+  $('slipForm').innerHTML='<div class="row">'+SLIP.map(([k,l])=>`<div><label>${t(l)}</label><input type="number" step="0.01" id="p-${k}" value="${p[k]!==undefined?p[k]:''}"></div>`).join('')+'</div>';
+  const {t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
+  const app={hours:tt.hoursAll,vacHours:tt.vacHours,nightH:tt.nightH,sunH:tt.sunH,holH:tt.holH,fahrgeld:tt.kmAmt,meals:tt.meal,gross:tt.gross,net:tt.net};
+  $('cmpTable').innerHTML=`<table><tr><th>${t('item')}</th><th class="n">${t('appV')}</th><th class="n">${t('slipV')}</th><th class="n">${t('diff')}</th></tr>`+
+   SLIP.map(([k,l,u])=>{const a=app[k],has=p[k]!==undefined&&p[k]!=='';const s=num(p[k]);const d=r2(s-a);const f=u==='e'?eur:hrs;
+    return `<tr><td>${t(l)}</td><td class="n">${f(a)}</td><td class="n">${has?f(s):'—'}</td><td class="n ${has&&Math.abs(d)>=0.01?(d<0?'neg':'pos'):''}">${has?(d>0?'+':'')+f(d):''}</td></tr>`;}).join('')+'</table>';
+}
+async function saveSlip(){
+  const mon=$('c-month').value;if(!mon)return;const p={month:mon};SLIP.forEach(([k])=>p[k]=$('p-'+k).value);
+  try{await write('savePayslip',p);}catch(err){toast(t('err')+err.message);return;}
+  const i=db.payslips.findIndex(x=>x.month===mon);if(i>=0)db.payslips[i]=p;else db.payslips.push(p);persist();renderCmp();toast(t('saved'));
+}
+
+/* ================= SETTINGS ================= */
+const RULES=['name','raise','surBase','nightPct','nightFrom','nightTo','sunPct','holPct','kmRate','kmRatePass','vacRate','vacHours','ausfallHours','mealThreshold','mealLow','mealHigh','deductPct'];
+function renderSet(){
+  $('s-url').value=cfg.url;$('s-key').value=cfg.key;
+  $('rateForm').innerHTML='<div class="row">'+FUNCS.map(f=>`<div><label>${t('F_'+f)}</label><input inputmode="decimal" id="s-rate_${f}" value="${S()['rate_'+f]}"></div>`).join('')+'</div>';
+  $('ruleForm').innerHTML='<div class="row">'+RULES.map(k=>`<div><label>${t(k)}</label><input ${k==='name'?'':'inputmode="decimal"'} id="s-${k}" value="${esc(S()[k])}"></div>`).join('')+'</div>';
+  $('s-hol').value=db.holidays.map(h=>h.date+' '+h.name).join('\n');
+}
+async function saveSet(){
+  const o={};FUNCS.forEach(f=>o['rate_'+f]=$('s-rate_'+f).value);RULES.forEach(k=>o[k]=$('s-'+k).value);Object.keys(o).forEach(k=>{if(k!=='name'){if(o[k]===''){delete o[k];}else o[k]=String(num(o[k]));}});
+  const hol=$('s-hol').value.split('\n').map(l=>l.trim()).filter(l=>/^\d{4}-\d{2}-\d{2}/.test(l)).map(l=>({date:l.slice(0,10),name:l.slice(10).trim()}));
+  try{await write('saveSettings',o);await write('saveHolidays',hol);}catch(err){toast(t('err')+err.message);return;}
+  Object.assign(db.settings,o);db.holidays=hol;persist();toast(t('saved'));renderAll();
+}
+async function connect(){
+  cfg.url=$('s-url').value.trim();cfg.key=$('s-key').value.trim();ls('rw_cfg',cfg);
+  if(cfg.url&&db.entries.length&&confirm(cfg.lang==='de'?'Lokale Einträge in das Sheet hochladen?':'رفع الإدخالات المحلية الموجودة إلى الشيت؟')){
+    try{for(const e of db.entries)await write('saveEntry',e);}catch(err){toast(t('err')+err.message);return;}
+  }
+  await sync();
+}
+
+/* ================= NAV ================= */
+function show(v){
+  ['day','month','cmp','set'].forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  if(v==='month')renderMonth();if(v==='cmp')renderCmp();if(v==='set')renderSet();window.scrollTo(0,0);
+}
+function renderAll(){applyLang();const keep=editId?db.entries.find(x=>x.id===editId):null;fillForm(keep);renderMonth();renderCmp();renderSet();setStatus(cfg.url?(online&&navigator.onLine?t('online'):t('offline')):t('local'));renderQ();}
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));
+['f-date','f-place','f-func','f-start','f-end','f-pause','f-hours','f-route','f-km','f-pass','f-notes'].forEach(i=>$(i).addEventListener('input',calcPreview));
+$('f-type').addEventListener('change',()=>{typeVis(true);calcPreview();});
+$('saveBtn').onclick=saveEntry;$('newBtn').onclick=()=>fillForm(null);$('delBtn').onclick=deleteEntry;
+$('m-month').onchange=renderMonth;$('c-month').onchange=renderCmp;$('adjBtn').onclick=addAdj;$('printBtn').onclick=printMonth;
+$('slipBtn').onclick=saveSlip;$('setBtn').onclick=saveSet;$('connBtn').onclick=connect;
+$('langBtn').onclick=()=>{cfg.lang=cfg.lang==='de'?'ar':'de';ls('rw_cfg',cfg);renderAll();};
+const curM=today().slice(0,7);$('m-month').value=curM;$('c-month').value=curM;
+renderAll();sync();
+window.addEventListener('online',()=>sync());
+window.addEventListener('offline',()=>{online=false;setStatus(t('offline'));});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&queue.length)sync();});
+setInterval(()=>{if(queue.length&&navigator.onLine)sync();},60000);
+$('qBadge').onclick=()=>sync();
+/* ---- التثبيت كتطبيق (PWA) ---- */
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').classList.remove('hidden');});
+$('installBtn').onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();try{await deferredPrompt.userChoice;}catch(e){}deferredPrompt=null;$('installBtn').classList.add('hidden');};
+window.addEventListener('appinstalled',()=>$('installBtn').classList.add('hidden'));
+const isStandalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!isStandalone&&!ls('rw_iosTipX'))$('iosTip').classList.remove('hidden');
+$('iosTipX').onclick=()=>{ls('rw_iosTipX',1);$('iosTip').classList.add('hidden');};
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
