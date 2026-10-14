@@ -1,6 +1,6 @@
 // Service Worker — يجعل التطبيق يفتح بدون إنترنت.
 // الشبكة أولاً (فتظهر التحديثات تلقائياً)، والنسخة المحفوظة عند انقطاع الإنترنت.
-const CACHE = 'arbeitszeiten-v4';
+const CACHE = 'arbeitszeiten-v5';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
