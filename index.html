@@ -80,6 +80,8 @@ tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
 .c-hol{background:var(--hol);color:#fff;border-color:transparent}
 .c-urlaub{background:var(--vac);color:#fff;border-color:transparent}
 .c-unpaid{background:transparent;border:2px solid var(--vac);color:var(--vac)}
+.c-krank{background:#d9480f;color:#fff;border-color:transparent}
+.c-frei{background:transparent;border:2px dashed var(--muted);color:var(--muted)}
 .c-ausfall{background:var(--muted);color:#fff;border-color:transparent}
 .c-travel{background:var(--card);border:2px solid var(--brand)}
 .c-miss{border:2px dashed var(--bad);background:transparent;color:var(--bad)}
@@ -194,7 +196,7 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
 /* ================= TEXTS ================= */
 const T={
 ar:{app:'ساعات العمل',tabDay:'اليوم',tabMonth:'الشهر',tabCmp:'المقارنة',tabSet:'الإعدادات',newTitle:'إدخال جديد',editTitle:'تعديل إدخال',
-date:'التاريخ',type:'نوع اليوم',work:'عمل',ausfall:'إلغاء (Ausfall)',urlaub:'إجازة مدفوعة (Urlaub)',unbezahlt:'إجازة غير مدفوعة (Unbezahlt)',travel:'تنقل فقط',
+date:'التاريخ',type:'نوع اليوم',work:'عمل',ausfall:'إلغاء (Ausfall)',urlaub:'إجازة مدفوعة (Urlaub)',unbezahlt:'إجازة غير مدفوعة (Unbezahlt)',frei:'فراغ (Frei)',krank:'مرضية (Krank)',sickHoursT:'ساعات المرضية',sickRate:'أجر ساعة المرضية',sickHours:'ساعات يوم المرضية',vacSick:'مرضية',vacFrei:'فراغ',lgSick:'مرضية',lgFrei:'فراغ',travel:'تنقل فقط',
 place:'مكان العمل',func:'الوظيفة',start:'البداية',end:'النهاية',pause:'الاستراحة (س)',paidHours:'ساعات العمل المكتوبة',paidHint:'الرقم المكتوب في عمود Arbeitszeit (يشمل السفر)',
 route:'المسار (من - إلى)',km:'الكيلومترات ذهاباً وعودة',passenger:'معي عامل في السيارة',notes:'ملاحظات',save:'حفظ',newEntry:'إدخال جديد',delete:'حذف',
 result:'نتيجة اليوم',rate:'أجر الساعة',base:'الأجر الأساسي',night:'إضافة الليل',sunday:'إضافة الأحد',holiday:'إضافة العطلة',kmMoney:'بدل الكيلومترات',meal:'بدل الطعام',
@@ -211,7 +213,7 @@ mealThreshold:'حد ساعات بدل الطعام',mealLow:'بدل عند ال�
 saved:'تم الحفظ',err:'خطأ: ',confirmDel:'حذف هذا الإدخال؟',local:'وضع محلي',online:'✓ متزامن',offline:'⚠ بدون اتصال — آخر نسخة',loading:'⟳ جارٍ المزامنة…',install:'تثبيت',copyLast:'مثل آخر يوم',vacYear:'الإجازات المدفوعة',vacOf:'من',vacLeft:'متبقٍ',vacUnpaid:'غير مدفوعة',vacOver:'تجاوزت الرصيد بـ',daysU:'يوم',vacDaysYear:'أيام الإجازة المدفوعة سنوياً',lgUnpaid:'غير مدفوعة',mkLink:'إنشاء رابط إعداد / QR',linkHint:'افتح هذا الرابط مرة واحدة على أي جهاز (أو امسح الرمز) فيتصل التطبيق تلقائياً. لا تنشره علناً — فيه كلمة السر.',copyLink:'نسخ الرابط',shareLink:'مشاركة',setupOk:'تم الإعداد — المزامنة تعمل تلقائياً',needUrl:'أدخل الرابط وكلمة السر أولاً',qrErr:'تعذّر إنشاء QR بدون إنترنت — انسخ الرابط بدلاً منه',outMode:'طريقة إخراج PDF',modeJs:'ملف PDF مباشر (jsPDF)',modePrint:'طباعة عادية (تدعم العربية)',outAll:'PDF — الملف كامل',arWarn:'يوجد نص عربي في بيانات هذا الشهر، وملف jsPDF لا يعرض العربية.\n\nموافق = استخدم الطباعة العادية\nإلغاء = تابع بـ jsPDF',libErr:'تعذّر تحميل مكتبة PDF — تحتاج إنترنت لأول مرة. استُخدمت الطباعة العادية.',noLast:'لا يوجد يوم سابق',monthNet:'صافي الشهر',monthHrs:'ساعات',daysW:'أيام',excel:'تصدير Excel',chartTitle:'الصافي اليومي',dayListT:'قائمة الأيام',calMiss:'ناقص',lgWork:'عمل',lgNight:'ليل',lgSun:'أحد',lgHol:'عطلة',lgVac:'إجازة',lgAus:'إلغاء',lgMiss:'بلا إدخال',vOk:'مطابق ✓',vLess:'الكشف أقل من حسابك بـ',vMore:'الكشف أعلى من حسابك بـ',vNone:'أدخل أرقام الكشف للمقارنة',vItems:'بنود مختلفة',copyMail:'نسخ رسالة للمحاسبة (ألماني)',copied:'تم النسخ — الصقها في البريد أو واتساب',noDiff:'لا توجد فروق',theme:'المظهر',iosTip:'لتثبيت التطبيق على آيفون: افتح الرابط في Safari، اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية".',q1:'إدخال واحد بانتظار الإرسال',qN:'إدخالات بانتظار الإرسال',savedOffline:'حُفظ على الهاتف وسيُرسل عند عودة الإنترنت',sent:'تم إرسال الإدخالات المعلّقة إلى الشيت',dup:'يوجد إدخال لهذا التاريخ، سيُضاف إدخال ثانٍ',
 F_A:'A · حارس أمان',F_C:'C · مشرف أمان',F_H:'H · عامل',F_M:'M · تأريض السكة',F_U:'U · مشغّل AWS',F_X:'X · مدقق مخططات',F_Z:'Z · فني/مشروع',F_CU:'C/U · مشرف + AWS'},
 de:{app:'Arbeitszeiten',tabDay:'Tag',tabMonth:'Monat',tabCmp:'Abgleich',tabSet:'Einstellungen',newTitle:'Neuer Eintrag',editTitle:'Eintrag bearbeiten',
-date:'Datum',type:'Art',work:'Arbeit',ausfall:'Ausfall',urlaub:'Urlaub (bezahlt)',unbezahlt:'Unbezahlter Urlaub',travel:'Nur Fahrt',
+date:'Datum',type:'Art',work:'Arbeit',ausfall:'Ausfall',urlaub:'Urlaub (bezahlt)',unbezahlt:'Unbezahlter Urlaub',frei:'Frei',krank:'Krank',sickHoursT:'Krankheitsstunden',sickRate:'Stundenlohn Krankheit',sickHours:'Std. je Krankheitstag',vacSick:'krank',vacFrei:'frei',lgSick:'krank',lgFrei:'frei',travel:'Nur Fahrt',
 place:'Arbeitsstelle',func:'Funktion',start:'Beginn',end:'Ende',pause:'Pause (h)',paidHours:'Arbeitszeit (h)',paidHint:'Wert aus der Spalte Arbeitszeit (inkl. Fahrt)',
 route:'Strecke (von - bis)',km:'Gefahrene Km (hin & zurück)',passenger:'Mitfahrer im Auto',notes:'Notizen',save:'Speichern',newEntry:'Neuer Eintrag',delete:'Löschen',
 result:'Tagesergebnis',rate:'Stundenlohn',base:'Grundlohn',night:'N-Zuschlag',sunday:'Sonntagszuschlag',holiday:'Feiertagszuschlag',kmMoney:'Fahrgeld',meal:'Verpflegungszuschuss',
@@ -232,9 +234,10 @@ F_A:'A · Sicherungsposten',F_C:'C · Sicherungsaufsicht',F_H:'H · Arbeiter',F_
 /* ================= ENGINE ================= */
 /*ENGINE-START*/
 const FUNCS=['A','C','H','M','U','X','Z','CU'];
-const isVac=t=>t==='urlaub'||t==='unbezahlt';
+// أيام غياب: بلا وظيفة ولا كيلومترات ولا إضافات
+const isVac=t=>['urlaub','unbezahlt','frei','krank'].includes(t);
 // الإجازة المدفوعة بلا ساعات مسجّلة (إدخالات قديمة حُفظت 0) تُحسب بساعات يوم الإجازة من الإعدادات
-const effH=(e,S)=>e.type==='urlaub'?(num(e.paidHours)||num(S.vacHours)||7.5):e.type==='unbezahlt'?0:num(e.paidHours);
+const effH=(e,S)=>e.type==='urlaub'?(num(e.paidHours)||num(S.vacHours)||7.5):e.type==='krank'?(num(e.paidHours)||num(S.sickHours)||7.5):(e.type==='unbezahlt'||e.type==='frei')?0:num(e.paidHours);
 const noFunc=e=>isVac(e.type)||e.type==='travel';
 const r2=x=>Math.round((Number(x)||0)*100)/100;
 const num=x=>Number(String(x==null?'':x).replace(',','.').trim())||0;
@@ -265,6 +268,7 @@ function calcEntry(e,S,hol){
     r.rate=rateFor(e.func,S);r.base=r2(ph*r.rate);
     const thr=num(S.mealThreshold);r.meal=ph>thr?num(S.mealHigh):(ph>=thr&&ph>0?num(S.mealLow):0);
   }else if(e.type==='urlaub'){r.rate=num(S.vacRate);r.base=r2(ph*r.rate);}
+  else if(e.type==='krank'){r.rate=num(S.sickRate)||num(S.vacRate);r.base=r2(ph*r.rate);}
   if(e.type==='work'&&e.start&&e.end&&e.date){
     const c=splitMinutes(e,S,hol);r.nightH=c.n/60;r.sunH=c.su/60;r.holH=c.ho/60;r.actualH=c.work/60;
     const b=num(S.surBase);
@@ -276,9 +280,9 @@ function calcEntry(e,S,hol){
 }
 function monthSummary(month,entries,adjs,S,hol){
   const list=entries.filter(e=>String(e.date).startsWith(month)).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
-  const t={workHours:0,vacHours:0,km:0,base:0,nightH:0,sunH:0,holH:0,nightAmt:0,sunAmt:0,holAmt:0,kmAmt:0,meal:0,adjHours:0,adjAmt:0,fixed:0};
+  const t={workHours:0,vacHours:0,sickHours:0,km:0,base:0,nightH:0,sunH:0,holH:0,nightAmt:0,sunAmt:0,holAmt:0,kmAmt:0,meal:0,adjHours:0,adjAmt:0,fixed:0};
   list.forEach(e=>{const c=calcEntry(e,S,hol);
-    if(e.type==='urlaub')t.vacHours+=effH(e,S);else if(e.type!=='travel'&&e.type!=='unbezahlt')t.workHours+=num(e.paidHours);
+    if(e.type==='urlaub')t.vacHours+=effH(e,S);else if(e.type==='krank')t.sickHours+=effH(e,S);else if(e.type==='work'||e.type==='ausfall')t.workHours+=num(e.paidHours);
     t.km+=num(e.km);['base','nightH','sunH','holH','nightAmt','sunAmt','holAmt','kmAmt','meal'].forEach(k=>t[k]+=c[k]);});
   adjs.filter(a=>a.month===month).forEach(a=>{t.adjHours+=num(a.hours);t.adjAmt+=r2(num(a.hours)*num(a.rate)+num(a.amount));});
   Object.keys(t).forEach(k=>t[k]=r2(t[k]));
@@ -293,7 +297,7 @@ function monthSummary(month,entries,adjs,S,hol){
 /*ENGINE-END*/
 
 /* ================= STATE / STORAGE ================= */
-const DEF={name:'Almousaa',rate_A:17,rate_C:19,rate_H:17,rate_M:18,rate_U:19,rate_X:19,rate_Z:19,rate_CU:21,raise:0.5,surBase:17,nightPct:12.5,nightFrom:22,nightTo:6,sunPct:25,holPct:50,kmRate:0.25,kmRatePass:0.30,vacRate:17,vacHours:7.5,ausfallHours:8,mealThreshold:8,mealLow:6,mealHigh:14,deductPct:27.7,vacDaysYear:24};
+const DEF={name:'Almousaa',rate_A:17,rate_C:19,rate_H:17,rate_M:18,rate_U:19,rate_X:19,rate_Z:19,rate_CU:21,raise:0.5,surBase:17,nightPct:12.5,nightFrom:22,nightTo:6,sunPct:25,holPct:50,kmRate:0.25,kmRatePass:0.30,vacRate:17,vacHours:7.5,ausfallHours:8,mealThreshold:8,mealLow:6,mealHigh:14,deductPct:27.7,vacDaysYear:24,sickRate:17,sickHours:7.5};
 const DEF_HOL=[['2026-01-01','Neujahr'],['2026-04-03','Karfreitag'],['2026-04-06','Ostermontag'],['2026-05-01','Tag der Arbeit'],['2026-05-14','Christi Himmelfahrt'],['2026-05-25','Pfingstmontag'],['2026-06-04','Fronleichnam (HE)'],['2026-10-03','Tag der Deutschen Einheit'],['2026-12-25','1. Weihnachtstag'],['2026-12-26','2. Weihnachtstag'],['2027-01-01','Neujahr'],['2027-03-26','Karfreitag'],['2027-03-29','Ostermontag'],['2027-05-01','Tag der Arbeit'],['2027-05-06','Christi Himmelfahrt'],['2027-05-17','Pfingstmontag'],['2027-05-27','Fronleichnam (HE)'],['2027-10-03','Tag der Deutschen Einheit'],['2027-12-25','1. Weihnachtstag'],['2027-12-26','2. Weihnachtstag']].map(([date,name])=>({date,name}));
 
 function ls(k,v){try{if(v===undefined){const x=localStorage.getItem(k);return x?JSON.parse(x):null;}localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
@@ -383,7 +387,7 @@ function applyLang(){
   document.documentElement.lang=cfg.lang;document.documentElement.dir=cfg.lang==='de'?'ltr':'rtl';
   document.title=t('app');$('hTitle').textContent=t('app');$('langBtn').textContent=cfg.lang==='de'?'ع':'DE';
   document.querySelectorAll('[data-t]').forEach(el=>el.textContent=t(el.dataset.t));
-  $('f-type').innerHTML=['work','ausfall','urlaub','unbezahlt','travel'].map(k=>`<option value="${k}">${t(k)}</option>`).join('');
+  $('f-type').innerHTML=['work','ausfall','urlaub','unbezahlt','krank','frei','travel'].map(k=>`<option value="${k}">${t(k)}</option>`).join('');
   $('f-func').innerHTML=FUNCS.map(f=>`<option value="${f}">${t('F_'+f)}</option>`).join('');
   $('funcChips').innerHTML=CHIP_ORDER.map(f=>`<button type="button" class="chip" data-f="${f}">${fcode(f)}</button>`).join('');
   document.querySelectorAll('#funcChips .chip').forEach(b=>b.onclick=()=>{$('f-func').value=b.dataset.f;markChips();calcPreview();});
@@ -410,12 +414,14 @@ function fillForm(e){
 }
 function typeVis(setDefaults){
   const ty=$('f-type').value;
-  const show={'g-place':!isVac(ty),'g-func':ty==='work'||ty==='ausfall','g-time':ty==='work','g-hours':ty!=='travel'&&ty!=='unbezahlt','g-km':!isVac(ty)};
+  const show={'g-place':!isVac(ty),'g-func':ty==='work'||ty==='ausfall','g-time':ty==='work','g-hours':!['travel','unbezahlt','frei'].includes(ty),'g-km':!isVac(ty)};
   Object.keys(show).forEach(c=>document.querySelectorAll('.'+c).forEach(el=>el.classList.toggle('hidden',!show[c])));
   if(setDefaults){
     if(ty==='ausfall')$('f-hours').value=S().ausfallHours;
     if(ty==='urlaub'){$('f-hours').value=num(S().vacHours)||DEF.vacHours;$('f-place').value='Urlaub';}
     if(ty==='unbezahlt'){$('f-hours').value='0';$('f-place').value='Unbezahlt';}
+    if(ty==='frei'){$('f-hours').value='0';$('f-place').value='Frei';}
+    if(ty==='krank'){$('f-hours').value=num(S().sickHours)||DEF.sickHours;$('f-place').value='Krank';}
   }
 }
 function resultTable(c,e){
@@ -448,7 +454,7 @@ function renderSum(){
   const [y,m]=mon.split('-').map(Number);
   const mName=new Date(Date.UTC(y,m-1,1)).toLocaleDateString(cfg.lang==='de'?'de-DE':'ar',{month:'long',timeZone:'UTC'});
   $('sumCard').innerHTML=`<div class="sum"><div class="kpi"><span>${t('monthNet')} · ${mName}</span><b>${eur(tt.net)}</b></div>
-  <div class="kpi"><span>${t('monthHrs')}</span><b>${hrs(tt.workHours+tt.vacHours+tt.adjHours)}</b></div>
+  <div class="kpi"><span>${t('monthHrs')}</span><b>${hrs(tt.workHours+tt.vacHours+tt.sickHours+tt.adjHours)}</b></div>
   <div class="kpi"><span>km · ${list.length} ${t('daysW')}</span><b>${hrs(tt.km)}</b></div></div>`;
 }
 async function saveEntry(){
@@ -478,7 +484,7 @@ function renderMonth(){
   $('dayList').innerHTML=list.length?list.map(e=>{const c=calcEntry(e,S(),hs);
     const tags=(c.nightH?`<span class="tag t-n">N ${hrs(c.nightH)}</span>`:'')+(c.sunH?`<span class="tag t-s">So ${hrs(c.sunH)}</span>`:'')+(c.holH?`<span class="tag t-h">FT ${hrs(c.holH)}</span>`:'')+(e.type!=='work'?`<span class="tag t-x">${t(e.type)}</span>`:'');
     return `<div class="day" data-id="${e.id}"><div><div class="d">${ddmm(e.date)} ${dayName(e.date)} · ${esc(e.place)} ${e.func&&!isVac(e.type)&&e.type!=='travel'?'· '+fcode(e.func):''}${tags}</div>
-    <div class="s">${e.start?e.start+'–'+e.end+' · ':''}${(e.type==='urlaub'||e.paidHours)?hrs(effH(e,S()))+' '+t('hrs')+' · ':''}${e.km?hrs(e.km)+' km':''}</div></div>
+    <div class="s">${e.start?e.start+'–'+e.end+' · ':''}${(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S()))+' '+t('hrs')+' · ':''}${e.km?hrs(e.km)+' km':''}</div></div>
     <div class="n" style="text-align:end"><b>${eur(c.net)}</b><div class="s">${eur(c.taxable+c.taxfree)}</div></div></div>`;}).join(''):`<div class="hint">${t('noEntries')}</div>`;
   document.querySelectorAll('.day').forEach(el=>el.onclick=()=>{fillForm(db.entries.find(x=>x.id===el.dataset.id));show('day');});
   // أيام بلا إدخال
@@ -488,7 +494,7 @@ function renderMonth(){
   $('missing').innerHTML=miss.length?`<div class="warn">${t('missing')} ${miss.join('، ')}</div>`:'';
   const R=(k,v,cls,z)=>z===0?'':`<tr class="${cls||''}"><td>${k}</td><td class="n">${v}</td></tr>`;
   $('monthTotals').innerHTML=`<table>
-   ${R(t('workHours'),hrs(tt.workHours)+(tt.adjHours?' + '+hrs(tt.adjHours):'')+' '+t('hrs'))}${R(t('vacHours'),hrs(tt.vacHours)+' '+t('hrs'),'',tt.vacHours)}
+   ${R(t('workHours'),hrs(tt.workHours)+(tt.adjHours?' + '+hrs(tt.adjHours):'')+' '+t('hrs'))}${R(t('vacHours'),hrs(tt.vacHours)+' '+t('hrs'),'',tt.vacHours)}${R(t('sickHoursT'),hrs(tt.sickHours)+' '+t('hrs'),'',tt.sickHours)}
    ${R(t('nightH'),hrs(tt.nightH),'',tt.nightH)}${R(t('sunH'),hrs(tt.sunH),'',tt.sunH)}${R(t('holH'),hrs(tt.holH),'',tt.holH)}${R(t('kmTotal'),hrs(tt.km)+' km')}
    ${R(t('base'),eur(tt.base))}${tt.adjAmt?R(t('adjustments'),eur(tt.adjAmt)):''}
    ${R(t('night'),eur(tt.nightAmt),'',tt.nightAmt)}${R(t('sunday'),eur(tt.sunAmt),'',tt.sunAmt)}${tt.holAmt?R(t('holiday'),eur(tt.holAmt)):''}${R(t('kmMoney'),eur(tt.kmAmt),'',tt.kmAmt)}
@@ -508,12 +514,12 @@ async function addAdj(){
 function printMonth(part){part=part||'all';
   const mon=$('m-month').value;const {list,t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
   const L=cfg.lang;cfg.lang='de';
-  const rows=list.map(e=>`<tr><td>${ddmm(e.date)}</td><td>${esc(e.place)}</td><td>${noFunc(e)?'':fcode(e.func)}</td><td>${e.start||''}</td><td>${e.end||''}</td><td>${e.pause||''}</td><td>${(e.type==='urlaub'||e.paidHours)?hrs(effH(e,S())):(e.type==='unbezahlt'?'0':'')}</td><td>${esc(e.route)}${e.type==='ausfall'?' (Ausfall)':''}</td><td>${e.km?hrs(e.km):''}${(e.passenger===true||e.passenger==='true')?' +1':''}</td></tr>`).join('');
+  const rows=list.map(e=>`<tr><td>${ddmm(e.date)}</td><td>${esc(e.place)}</td><td>${noFunc(e)?'':fcode(e.func)}</td><td>${e.start||''}</td><td>${e.end||''}</td><td>${e.pause||''}</td><td>${(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S())):((e.type==='unbezahlt'||e.type==='frei')?'0':'')}</td><td>${esc(e.route)}${e.type==='ausfall'?' (Ausfall)':''}</td><td>${e.km?hrs(e.km):''}${(e.passenger===true||e.passenger==='true')?' +1':''}</td></tr>`).join('');
   const P=(k,v)=>`<tr><td>${k}</td><td style="text-align:right">${v}</td></tr>`;
   const head=`<div style="display:flex;justify-content:space-between"><b>Kany Sicherung GmbH</b><span>Name: ${esc(S().name)} · ${mon.split('-').reverse().join('/')}</span></div>`;
   const hoursHtml=`<h1>Stundennachweis Personal</h1>
   <table><tr><th>Datum</th><th>Arbeitsstelle</th><th>Funktion</th><th>Beginn</th><th>Ende</th><th>Pause (h)</th><th>Arbeitszeit(h)</th><th>Strecke (von-bis)</th><th>Gefahrene Km</th></tr>${rows}
-  <tr><td><b>Gesamt</b></td><td></td><td></td><td></td><td></td><td></td><td><b>${hrs(tt.workHours+tt.vacHours)}</b></td><td></td><td><b>${hrs(tt.km)}</b></td></tr></table>`;
+  <tr><td><b>Gesamt</b></td><td></td><td></td><td></td><td></td><td></td><td><b>${hrs(tt.workHours+tt.vacHours+tt.sickHours)}</b></td><td></td><td><b>${hrs(tt.km)}</b></td></tr></table>`;
   const calcHtml=`<h1 style="font-size:13px;text-align:left;margin-top:14px">Berechnung (eigene Schätzung)</h1>
   <table style="width:60%">${P('Stundenlohn / Urlaub',eur(tt.base))}${tt.adjAmt?P('Korrekturen',eur(tt.adjAmt)):''}
   ${P('N-Zuschlag ('+hrs(tt.nightH)+' h)',eur(tt.nightAmt))}${P('Sonntagszuschlag ('+hrs(tt.sunH)+' h)',eur(tt.sunAmt))}${P('Feiertagszuschlag ('+hrs(tt.holH)+' h)',eur(tt.holAmt))}
@@ -554,10 +560,10 @@ function makePDF(mon,part){
   let y=24;
   if(part!=='calc'){
     doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(0);doc.text('Stundennachweis Personal',105,y,{align:'center'});
-    const body=list.map(e=>[ddmm(e.date).replace(/\.$/,''),e.place||'',noFunc(e)?'':fcode(e.func),e.start||'',e.end||'',e.pause||'',(e.type==='urlaub'||e.paidHours)?hrs(effH(e,S())):(e.type==='unbezahlt'?'0':''),(e.route||'')+(e.type==='ausfall'?' (Ausfall)':''),(e.km?hrs(e.km):'')+((e.passenger===true||e.passenger==='true')?' +1':'')]);
+    const body=list.map(e=>[ddmm(e.date).replace(/\.$/,''),e.place||'',noFunc(e)?'':fcode(e.func),e.start||'',e.end||'',e.pause||'',(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S())):((e.type==='unbezahlt'||e.type==='frei')?'0':''),(e.route||'')+(e.type==='ausfall'?' (Ausfall)':''),(e.km?hrs(e.km):'')+((e.passenger===true||e.passenger==='true')?' +1':'')]);
     doc.autoTable(Object.assign({},common,{startY:y+3,
       head:[['Datum','Arbeitsstelle','Funktion','Beginn','Ende','Pause (h)','Arbeitszeit (h)','Strecke (von-bis)','Gefahrene Km']],
-      body,foot:[['Gesamt','','','','','',hrs(tt.workHours+tt.vacHours),'',hrs(tt.km)]],showFoot:'lastPage',
+      body,foot:[['Gesamt','','','','','',hrs(tt.workHours+tt.vacHours+tt.sickHours),'',hrs(tt.km)]],showFoot:'lastPage',
       footStyles:{fillColor:[245,245,245],textColor:[60,60,60],fontStyle:'bold',lineWidth:{top:0.3},lineColor:BLUE},
       columnStyles:{0:{cellWidth:13},1:{cellWidth:23},2:{cellWidth:16},3:{cellWidth:12},4:{cellWidth:11},5:{cellWidth:12},6:{cellWidth:20},7:{cellWidth:'auto'},8:{cellWidth:17}}}));
     y=doc.lastAutoTable.finalY+10;
@@ -582,14 +588,16 @@ function renderVac(mon){
   const y=mon.slice(0,4);const ys=db.entries.filter(e=>String(e.date).startsWith(y));
   const paid=new Set(ys.filter(e=>e.type==='urlaub').map(e=>e.date)).size;
   const unpaid=new Set(ys.filter(e=>e.type==='unbezahlt').map(e=>e.date)).size;
+  const sick=new Set(ys.filter(e=>e.type==='krank').map(e=>e.date)).size;
+  const frei=new Set(ys.filter(e=>e.type==='frei').map(e=>e.date)).size;
   const tot=num(S().vacDaysYear)||DEF.vacDaysYear;const left=tot-paid;const pct=Math.min(100,paid/tot*100);
   $('vacCard').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><b>${t('vacYear')} ${y}</b>
    <span style="font-weight:700">${paid} ${t('vacOf')} ${tot} ${t('daysU')}</span></div>
    <div style="height:10px;background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:8px 0"><div style="height:100%;width:${pct}%;background:${left<0?'var(--bad)':'var(--vac)'}"></div></div>
-   <div class="hint" style="display:flex;justify-content:space-between"><span>${left>=0?`${t('vacLeft')}: <b>${left}</b> ${t('daysU')}`:`<span class="neg">${t('vacOver')} ${-left} ${t('daysU')}</span>`}</span><span>${t('vacUnpaid')}: ${unpaid}</span></div>`;
+   <div class="hint" style="display:flex;justify-content:space-between"><span>${left>=0?`${t('vacLeft')}: <b>${left}</b> ${t('daysU')}`:`<span class="neg">${t('vacOver')} ${-left} ${t('daysU')}</span>`}</span><span>${t('vacSick')}: ${sick} · ${t('vacFrei')}: ${frei} · ${t('vacUnpaid')}: ${unpaid}</span></div>`;
 }
 function dayClass(e,c){
-  if(e.type==='urlaub')return 'c-urlaub';if(e.type==='unbezahlt')return 'c-unpaid';if(e.type==='ausfall')return 'c-ausfall';if(e.type==='travel')return 'c-travel';
+  if(e.type==='urlaub')return 'c-urlaub';if(e.type==='unbezahlt')return 'c-unpaid';if(e.type==='krank')return 'c-krank';if(e.type==='frei')return 'c-frei';if(e.type==='ausfall')return 'c-ausfall';if(e.type==='travel')return 'c-travel';
   if(c.holH)return 'c-hol';if(c.sunH)return 'c-sun';if(c.nightH)return 'c-night';return 'c-work';
 }
 function renderCal(mon,list,hs,td){
@@ -601,12 +609,12 @@ function renderCal(mon,list,hs,td){
   for(let d=1;d<=days;d++){
     const ds=`${mon}-${String(d).padStart(2,'0')}`;const es=byDate[ds];const wd=new Date(Date.UTC(y,m-1,d)).getUTCDay();
     let cls='',sub='';
-    if(es){const e=es[0];const c=calcEntry(e,S(),hs);cls=dayClass(e,c);sub=e.type==='urlaub'?'U':e.type==='unbezahlt'?'UB':e.type==='ausfall'?'A':(e.type==='travel'?'km':fcode(e.func));}
+    if(es){const e=es[0];const c=calcEntry(e,S(),hs);cls=dayClass(e,c);sub=e.type==='urlaub'?'U':e.type==='unbezahlt'?'UB':e.type==='krank'?'K':e.type==='frei'?'F':e.type==='ausfall'?'A':(e.type==='travel'?'km':fcode(e.func));}
     else if(ds<=td&&wd>0&&wd<6&&!hs.has(ds)){cls='c-miss';sub=t('calMiss');}
     h+=`<button type="button" class="cell ${cls} ${ds===td?'today':''}" data-date="${ds}" data-id="${es?es[0].id:''}">${d}${sub?`<small>${sub}</small>`:''}</button>`;
   }
   const L=(c,k)=>`<span><i class="${c}"></i>${t(k)}</span>`;
-  $('calendar').innerHTML=`<div class="cal">${h}</div><div class="legend">${L('c-work','lgWork')}${L('c-night','lgNight')}${L('c-sun','lgSun')}${L('c-hol','lgHol')}${L('c-urlaub','lgVac')}${L('c-unpaid','lgUnpaid')}${L('c-ausfall','lgAus')}${L('c-miss','lgMiss')}</div>`;
+  $('calendar').innerHTML=`<div class="cal">${h}</div><div class="legend">${L('c-work','lgWork')}${L('c-night','lgNight')}${L('c-sun','lgSun')}${L('c-hol','lgHol')}${L('c-urlaub','lgVac')}${L('c-unpaid','lgUnpaid')}${L('c-krank','lgSick')}${L('c-frei','lgFrei')}${L('c-ausfall','lgAus')}${L('c-miss','lgMiss')}</div>`;
   document.querySelectorAll('#calendar .cell').forEach(b=>b.onclick=()=>{
     const e=b.dataset.id&&db.entries.find(x=>x.id===b.dataset.id);
     if(e)fillForm(e);else{fillForm(null);$('f-date').value=b.dataset.date;calcPreview();}
@@ -628,7 +636,7 @@ function exportCSV(){
   const head=['Datum','Art','Arbeitsstelle','Funktion','Beginn','Ende','Pause (h)','Arbeitszeit (h)','Strecke','Km','Mitfahrer','Stundenlohn','Grundlohn','Nacht h','N-Zuschlag','Sonntag h','So-Zuschlag','Feiertag h','FT-Zuschlag','Fahrgeld','Verpflegung','Netto (geschätzt)','Notiz'];
   const rows=list.map(e=>{const c=calcEntry(e,S(),hs);const p=e.date.split('-');
     return [p[2]+'.'+p[1]+'.'+p[0],T.de[e.type],e.place,noFunc(e)?'':fcode(e.func),e.start,e.end,n(e.pause),n(effH(e,S())),e.route,n(e.km),(e.passenger===true||e.passenger==='true')?'ja':'',n(c.rate),n(c.base),n(c.nightH),n(c.nightAmt),n(c.sunH),n(c.sunAmt),n(c.holH),n(c.holAmt),n(c.kmAmt),n(c.meal),n(c.net),e.notes];});
-  rows.push(['Gesamt','','','','','','',n(tt.workHours+tt.vacHours),'',n(tt.km),'','',n(tt.base),n(tt.nightH),n(tt.nightAmt),n(tt.sunH),n(tt.sunAmt),n(tt.holH),n(tt.holAmt),n(tt.kmAmt),n(tt.meal),n(tt.net),'']);
+  rows.push(['Gesamt','','','','','','',n(tt.workHours+tt.vacHours+tt.sickHours),'',n(tt.km),'','',n(tt.base),n(tt.nightH),n(tt.nightAmt),n(tt.sunH),n(tt.sunAmt),n(tt.holH),n(tt.holAmt),n(tt.kmAmt),n(tt.meal),n(tt.net),'']);
   const csv='\ufeff'+[head,...rows].map(r=>r.map(q).join(';')).join('\r\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
   a.download=`Arbeitszeiten_${mon}.csv`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
@@ -674,7 +682,7 @@ async function saveSlip(){
 }
 
 /* ================= SETTINGS ================= */
-const RULES=['name','raise','surBase','nightPct','nightFrom','nightTo','sunPct','holPct','kmRate','kmRatePass','vacRate','vacHours','ausfallHours','mealThreshold','mealLow','mealHigh','deductPct','vacDaysYear'];
+const RULES=['name','raise','surBase','nightPct','nightFrom','nightTo','sunPct','holPct','kmRate','kmRatePass','vacRate','vacHours','ausfallHours','mealThreshold','mealLow','mealHigh','deductPct','vacDaysYear','sickRate','sickHours'];
 function renderSet(){
   $('s-url').value=cfg.url;$('s-key').value=cfg.key;
   $('rateForm').innerHTML='<div class="row">'+FUNCS.map(f=>`<div><label>${t('F_'+f)}</label><input inputmode="decimal" id="s-rate_${f}" value="${S()['rate_'+f]}"></div>`).join('')+'</div>';
