@@ -1,6 +1,6 @@
 // Service Worker — يجعل التطبيق يفتح بدون إنترنت.
 // الشبكة أولاً (فتظهر التحديثات تلقائياً)، والنسخة المحفوظة عند انقطاع الإنترنت.
-const CACHE = 'arbeitszeiten-v1';
+const CACHE = 'arbeitszeiten-v3';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -23,7 +23,17 @@ function withTimeout(p, ms) {
 
 self.addEventListener('fetch', e => {
   const req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
+  if (req.method !== 'GET') return;
+  const origin = new URL(req.url).origin;
+  // مكتبة jsPDF من cdnjs: من الذاكرة أولاً، فيعمل التصدير بدون إنترنت بعد أول استخدام
+  if (origin === 'https://cdnjs.cloudflare.com') {
+    e.respondWith(caches.match(req).then(m => m || fetch(req).then(res => {
+      if (res && (res.ok || res.type === 'opaque')) { const cp = res.clone(); caches.open(CACHE).then(c => c.put(req, cp)); }
+      return res;
+    })));
+    return;
+  }
+  if (origin !== self.location.origin) return;
   e.respondWith(
     withTimeout(fetch(req), 5000)
       .then(res => {

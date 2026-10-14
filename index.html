@@ -13,24 +13,26 @@
 <meta name="apple-mobile-web-app-title" content="Arbeitszeiten">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
-:root{--bg:#f3f5f9;--card:#fff;--ink:#1b2430;--muted:#6b7686;--line:#e2e7ef;--brand:#1f4e8c;--brand2:#e8eef7;--ok:#1e8a4c;--bad:#c0392b;--warn:#b7791f;--night:#4b3f9e;--sun:#b7791f;--hol:#c0392b}
-@media (prefers-color-scheme:dark){:root{--bg:#11161d;--card:#1a212b;--ink:#e6ebf2;--muted:#95a1b2;--line:#2a3340;--brand:#6fa3e8;--brand2:#22324a;--ok:#4cc27e;--bad:#ef6b5b;--warn:#e3b04b;--night:#a99cf2;--sun:#e3b04b;--hol:#ef6b5b}}
+:root{--bg:#f3f5f9;--card:#fff;--ink:#1b2430;--muted:#6b7686;--line:#e2e7ef;--brand:#1f4e8c;--brand2:#e8eef7;--ok:#1e8a4c;--bad:#c0392b;--warn:#b7791f;--night:#4b3f9e;--sun:#b7791f;--hol:#c0392b;--warnbg:#fff6e5;--warnfg:#7a5200;--warnbd:#f0d49a;--vac:#1e8a4c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11161d;--card:#1a212b;--ink:#e6ebf2;--muted:#95a1b2;--line:#2a3340;--brand:#6fa3e8;--brand2:#22324a;--ok:#4cc27e;--bad:#ef6b5b;--warn:#e3b04b;--night:#a99cf2;--sun:#e3b04b;--hol:#ef6b5b;--warnbg:#3a2e14;--warnfg:#f0d49a;--warnbd:#6b5420}}
+:root[data-theme="dark"]{--bg:#11161d;--card:#1a212b;--ink:#e6ebf2;--muted:#95a1b2;--line:#2a3340;--brand:#6fa3e8;--brand2:#22324a;--ok:#4cc27e;--bad:#ef6b5b;--warn:#e3b04b;--night:#a99cf2;--sun:#e3b04b;--hol:#ef6b5b;--warnbg:#3a2e14;--warnfg:#f0d49a;--warnbd:#6b5420}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:15px;padding-bottom:76px}
-header{background:var(--brand);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+header{background:#1f4e8c;color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
 header h1{font-size:18px;margin:0}
 header .st{font-size:12px;opacity:.85}
 main{padding:12px;max-width:720px;margin:auto}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
 .card h2{font-size:16px;margin:0 0 10px}
 label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
-input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:15px;font-family:inherit}
+input,select,textarea{width:100%;min-height:46px;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:16px;font-family:inherit}
 textarea{min-height:120px;direction:ltr;text-align:left}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.g-time{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 72px}.g-time input{padding-inline:6px;min-width:0}#f-pause{text-align:center}
 .chk{display:flex;align-items:center;gap:8px;margin-top:12px}.chk input{width:auto}
 .hint{font-size:12px;color:var(--muted);margin-top:4px}
-button{border:0;border-radius:8px;padding:11px 14px;font-size:15px;font-family:inherit;cursor:pointer;background:var(--brand);color:#fff}
+button{border:0;border-radius:10px;padding:13px 16px;font-size:16px;min-height:46px;font-family:inherit;cursor:pointer;background:var(--brand);color:#fff}
 button.sec{background:var(--brand2);color:var(--brand)}
 button.danger{background:transparent;color:var(--bad);border:1px solid var(--bad)}
 .btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.btns button{flex:1}
@@ -51,14 +53,40 @@ tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
 .day .d{font-weight:700}.day .s{font-size:13px;color:var(--muted)}
 .tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:10px;margin-inline-start:4px;color:#fff}
 .t-n{background:var(--night)}.t-s{background:var(--sun)}.t-h{background:var(--hol)}.t-x{background:var(--muted)}
-.warn{background:#fff6e5;color:#7a5200;border:1px solid #f0d49a;border-radius:10px;padding:10px;font-size:13px;margin-bottom:12px}
-@media (prefers-color-scheme:dark){.warn{background:#3a2e14;color:#f0d49a;border-color:#6b5420}}
+.warn{background:var(--warnbg);color:var(--warnfg);border:1px solid var(--warnbd);border-radius:10px;padding:10px;font-size:13px;margin-bottom:12px}
 .pos{color:var(--ok)}.neg{color:var(--bad)}
 .toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:20px;font-size:14px;display:none;z-index:9}
 .hidden{display:none!important}
 .q{display:inline-block;margin-top:4px;background:#f0b429;color:#1b2430;font-size:12px;border-radius:10px;padding:2px 8px;cursor:pointer}
 .tip{display:flex;gap:8px;align-items:flex-start}.tip span{flex:1}.tip button{padding:2px 8px;background:transparent;color:inherit;border:1px solid currentColor}
 #print{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--brand2);color:var(--brand);border-radius:22px;padding:10px 0;min-width:56px;font-weight:700}
+.chip.on{background:var(--brand);color:#fff}
+.mini{padding:6px 12px;min-height:34px;font-size:13px}
+.savebar{position:sticky;bottom:72px;z-index:4;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 18px rgba(0,0,0,.14);margin-bottom:12px}
+.savebar .live{flex:1;line-height:1.2}.savebar .live span{display:block;font-size:12px;color:var(--muted)}.savebar .live b{font-size:22px}
+.savebar button{flex:0 0 40%}
+.sum{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px}
+.sum .kpi b{font-size:18px;white-space:nowrap}.sum .kpi:first-child b{font-size:20px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .h{font-size:11px;color:var(--muted);text-align:center;padding-bottom:2px}
+.cell{aspect-ratio:1;border-radius:9px;background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink);padding:0;min-height:0}
+.cell small{font-size:9px;font-weight:400;opacity:.9}
+.cell.today{outline:2px solid var(--brand)}
+.c-work{background:var(--brand2);color:var(--brand);border-color:transparent}
+.c-night{background:var(--night);color:#fff;border-color:transparent}
+.c-sun{background:var(--sun);color:#fff;border-color:transparent}
+.c-hol{background:var(--hol);color:#fff;border-color:transparent}
+.c-urlaub{background:var(--vac);color:#fff;border-color:transparent}
+.c-ausfall{background:var(--muted);color:#fff;border-color:transparent}
+.c-travel{background:var(--card);border:2px solid var(--brand)}
+.c-miss{border:2px dashed var(--bad);background:transparent;color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-inline-end:4px}
+.verdict{font-size:17px;font-weight:700;padding:12px;border-radius:10px;margin-bottom:10px;text-align:center}
+.verdict.ok{background:rgba(30,138,76,.12);color:var(--ok)}.verdict.bad{background:rgba(192,57,43,.12);color:var(--bad)}
+details summary{cursor:pointer;font-weight:700;padding:4px 0}
 @media print{
   body{padding:0;background:#fff;color:#000}
   header,nav,main,.toast{display:none!important}
@@ -69,19 +97,20 @@ tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
 </style>
 </head>
 <body>
-<header><div><h1 id="hTitle">ساعات العمل</h1><div class="st" id="hStatus"></div><div class="q hidden" id="qBadge"></div></div><div style="display:flex;gap:6px"><button class="sec hidden" id="installBtn" style="padding:6px 10px" data-t="install"></button><button class="sec" id="langBtn" style="padding:6px 10px">DE</button></div></header>
+<header><div><h1 id="hTitle">ساعات العمل</h1><div class="st" id="hStatus"></div><div class="q hidden" id="qBadge"></div></div><div style="display:flex;gap:6px"><button class="sec mini hidden" id="installBtn" data-t="install"></button><button class="sec mini" id="themeBtn">◐</button><button class="sec mini" id="langBtn">DE</button></div></header>
 <main>
   <div class="warn tip hidden" id="iosTip"><span data-t="iosTip"></span><button id="iosTipX">✕</button></div>
   <!-- DAY -->
   <section id="v-day">
+    <div class="card" id="sumCard"></div>
     <div class="card">
-      <h2 id="formTitle"></h2>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><h2 id="formTitle" style="margin:0"></h2><button class="sec mini" id="copyBtn" data-t="copyLast"></button></div>
       <div class="row">
         <div><label data-t="date"></label><input type="date" id="f-date"></div>
         <div><label data-t="type"></label><select id="f-type"></select></div>
       </div>
       <div class="g-place"><label data-t="place"></label><input id="f-place"></div>
-      <div class="g-func"><label data-t="func"></label><select id="f-func"></select></div>
+      <div class="g-func"><label data-t="func"></label><select id="f-func" class="hidden"></select><div class="chips" id="funcChips"></div><div class="hint" id="funcName"></div></div>
       <div class="row3 g-time">
         <div><label data-t="start"></label><input type="time" id="f-start"></div>
         <div><label data-t="end"></label><input type="time" id="f-end"></div>
@@ -95,19 +124,25 @@ tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
       </div>
       <label data-t="notes"></label><input id="f-notes">
       <div class="btns">
-        <button id="saveBtn" data-t="save"></button>
         <button class="sec hidden" id="newBtn" data-t="newEntry"></button>
         <button class="danger hidden" id="delBtn" data-t="delete"></button>
       </div>
     </div>
-    <div class="card"><h2 data-t="result"></h2><div id="dayResult"></div></div>
+    <div class="savebar"><div class="live"><span data-t="net"></span><b id="liveNet">0,00 €</b></div><button id="saveBtn" data-t="save"></button></div>
+    <div class="card"><details id="resDet"><summary data-t="result"></summary><div id="dayResult"></div></details></div>
   </section>
 
   <!-- MONTH -->
   <section id="v-month" class="hidden">
-    <div class="card"><div class="row"><div><label data-t="month"></label><input type="month" id="m-month"></div><div style="display:flex;align-items:flex-end"><button class="sec" style="width:100%" id="printBtn" data-t="print"></button></div></div></div>
+    <div class="card"><div class="row"><div><label data-t="month"></label><input type="month" id="m-month"></div><div style="display:flex;align-items:flex-end"><button class="sec" style="width:100%" id="xlsBtn" data-t="excel"></button></div></div>
+      <label data-t="outMode"></label><select id="outMode"><option value="jspdf" data-t="modeJs"></option><option value="print" data-t="modePrint"></option></select>
+      <div class="btns"><button id="outAll" data-t="outAll"></button></div>
+      <div class="btns" style="margin-top:8px"><button class="sec" id="outHours" style="padding:13px 6px">Stundennachweis</button><button class="sec" id="outCalc" style="padding:13px 6px">Berechnung</button></div>
+    </div>
     <div id="missing"></div>
-    <div class="card"><div id="dayList"></div></div>
+    <div class="card"><div id="calendar"></div></div>
+    <div class="card"><h2 data-t="chartTitle"></h2><div id="chart"></div></div>
+    <div class="card"><details><summary data-t="dayListT"></summary><div id="dayList"></div></details></div>
     <div class="card"><h2 data-t="totals"></h2><div id="monthTotals"></div></div>
     <div class="card"><h2 data-t="adjustments"></h2><div id="adjList"></div>
       <div class="row3"><div><label data-t="adjHours"></label><input type="number" step="0.25" id="a-hours"></div><div><label data-t="adjRate"></label><input type="number" step="0.01" id="a-rate"></div><div><label data-t="adjAmount"></label><input type="number" step="0.01" id="a-amount"></div></div>
@@ -120,7 +155,7 @@ tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
   <section id="v-cmp" class="hidden">
     <div class="card"><label data-t="month"></label><input type="month" id="c-month"><div class="hint" data-t="cmpHint"></div></div>
     <div class="card"><h2 data-t="payslip"></h2><div id="slipForm"></div><div class="btns"><button id="slipBtn" data-t="saveSlip"></button></div></div>
-    <div class="card"><div id="cmpTable"></div></div>
+    <div class="card"><div id="cmpVerdict"></div><div id="cmpTable"></div><div class="btns"><button class="sec" id="mailBtn" data-t="copyMail"></button></div></div>
   </section>
 
   <!-- SETTINGS -->
@@ -164,7 +199,7 @@ rates:'أجور الوظائف (€/ساعة)',rules:'القواعد والنس�
 raise:'زيادة على أجر الساعة',surBase:'أساس حساب الإضافات €',nightPct:'إضافة الليل % (C فقط)',nightFrom:'الليل من الساعة',nightTo:'إلى الساعة',sunPct:'إضافة الأحد %',holPct:'إضافة العطلة %',
 kmRate:'سعر الكم €',kmRatePass:'سعر الكم مع عامل €',vacRate:'أجر ساعة الإجازة',vacHours:'ساعات يوم الإجازة',ausfallHours:'ساعات يوم الإلغاء',
 mealThreshold:'حد ساعات بدل الطعام',mealLow:'بدل عند الحد بالضبط €',mealHigh:'بدل فوق الحد €',fixedMonthly:'مبلغ ثابت شهري €',deductPct:'نسبة الاستقطاع % (ضريبة + تأمينات)',name:'الاسم',
-saved:'تم الحفظ',err:'خطأ: ',confirmDel:'حذف هذا الإدخال؟',local:'وضع محلي',online:'متصل',offline:'غير متصل — عرض آخر نسخة',loading:'جارٍ التحميل…',install:'تثبيت',iosTip:'لتثبيت التطبيق على آيفون: افتح الرابط في Safari، اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية".',q1:'إدخال واحد بانتظار الإرسال',qN:'إدخالات بانتظار الإرسال',savedOffline:'حُفظ على الهاتف وسيُرسل عند عودة الإنترنت',sent:'تم إرسال الإدخالات المعلّقة إلى الشيت',dup:'يوجد إدخال لهذا التاريخ، سيُضاف إدخال ثانٍ',
+saved:'تم الحفظ',err:'خطأ: ',confirmDel:'حذف هذا الإدخال؟',local:'وضع محلي',online:'متصل',offline:'غير متصل — عرض آخر نسخة',loading:'جارٍ التحميل…',install:'تثبيت',copyLast:'مثل آخر يوم',outMode:'طريقة إخراج PDF',modeJs:'ملف PDF مباشر (jsPDF)',modePrint:'طباعة عادية (تدعم العربية)',outAll:'PDF — الملف كامل',arWarn:'يوجد نص عربي في بيانات هذا الشهر، وملف jsPDF لا يعرض العربية.\n\nموافق = استخدم الطباعة العادية\nإلغاء = تابع بـ jsPDF',libErr:'تعذّر تحميل مكتبة PDF — تحتاج إنترنت لأول مرة. استُخدمت الطباعة العادية.',noLast:'لا يوجد يوم سابق',monthNet:'صافي الشهر',monthHrs:'ساعات',daysW:'أيام',excel:'تصدير Excel',chartTitle:'الصافي اليومي',dayListT:'قائمة الأيام',calMiss:'ناقص',lgWork:'عمل',lgNight:'ليل',lgSun:'أحد',lgHol:'عطلة',lgVac:'إجازة',lgAus:'إلغاء',lgMiss:'بلا إدخال',vOk:'مطابق ✓',vLess:'الكشف أقل من حسابك بـ',vMore:'الكشف أعلى من حسابك بـ',vNone:'أدخل أرقام الكشف للمقارنة',vItems:'بنود مختلفة',copyMail:'نسخ رسالة للمحاسبة (ألماني)',copied:'تم النسخ — الصقها في البريد أو واتساب',noDiff:'لا توجد فروق',theme:'المظهر',iosTip:'لتثبيت التطبيق على آيفون: افتح الرابط في Safari، اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية".',q1:'إدخال واحد بانتظار الإرسال',qN:'إدخالات بانتظار الإرسال',savedOffline:'حُفظ على الهاتف وسيُرسل عند عودة الإنترنت',sent:'تم إرسال الإدخالات المعلّقة إلى الشيت',dup:'يوجد إدخال لهذا التاريخ، سيُضاف إدخال ثانٍ',
 F_A:'A · حارس أمان',F_C:'C · مشرف أمان',F_H:'H · عامل',F_M:'M · تأريض السكة',F_U:'U · مشغّل AWS',F_X:'X · مدقق مخططات',F_Z:'Z · فني/مشروع',F_CU:'C/U · مشرف + AWS'},
 de:{app:'Arbeitszeiten',tabDay:'Tag',tabMonth:'Monat',tabCmp:'Abgleich',tabSet:'Einstellungen',newTitle:'Neuer Eintrag',editTitle:'Eintrag bearbeiten',
 date:'Datum',type:'Art',work:'Arbeit',ausfall:'Ausfall',urlaub:'Urlaub',travel:'Nur Fahrt',
@@ -181,7 +216,7 @@ rates:'Stundenlöhne je Funktion (€)',rules:'Regeln und Sätze',holidays:'Feie
 raise:'Lohnerhöhung je Stunde',surBase:'Basis für Zuschläge €',nightPct:'N-Zuschlag % (nur C)',nightFrom:'Nacht ab Uhr',nightTo:'bis Uhr',sunPct:'Sonntagszuschlag %',holPct:'Feiertagszuschlag %',
 kmRate:'Km-Satz €',kmRatePass:'Km-Satz mit Mitfahrer €',vacRate:'Urlaubsstundenlohn',vacHours:'Std. je Urlaubstag',ausfallHours:'Std. je Ausfalltag',
 mealThreshold:'Stundengrenze Verpflegung',mealLow:'Zuschuss genau an der Grenze €',mealHigh:'Zuschuss über der Grenze €',fixedMonthly:'Festbezug monatlich €',deductPct:'Abzüge % (Steuer + SV)',name:'Name',
-saved:'Gespeichert',err:'Fehler: ',confirmDel:'Eintrag löschen?',local:'Lokaler Modus',online:'Verbunden',offline:'Offline — letzte Kopie',loading:'Laden…',install:'Installieren',iosTip:'Installation auf dem iPhone: Link in Safari öffnen, Teilen ⬆️ tippen, dann "Zum Home-Bildschirm".',q1:'1 Eintrag wartet auf Upload',qN:'Einträge warten auf Upload',savedOffline:'Auf dem Handy gespeichert, wird bei Internet gesendet',sent:'Wartende Einträge wurden gesendet',dup:'Für dieses Datum gibt es schon einen Eintrag',
+saved:'Gespeichert',err:'Fehler: ',confirmDel:'Eintrag löschen?',local:'Lokaler Modus',online:'Verbunden',offline:'Offline — letzte Kopie',loading:'Laden…',install:'Installieren',copyLast:'Wie letzter Tag',outMode:'PDF-Ausgabe',modeJs:'PDF-Datei direkt (jsPDF)',modePrint:'Normal drucken (mit Arabisch)',outAll:'PDF — Gesamt',arWarn:'Arabischer Text gefunden; jsPDF kann ihn nicht darstellen.\n\nOK = normal drucken\nAbbrechen = trotzdem jsPDF',libErr:'PDF-Bibliothek nicht ladbar (Internet nötig). Normaler Druck verwendet.',noLast:'Kein vorheriger Tag',monthNet:'Netto Monat',monthHrs:'Stunden',daysW:'Tage',excel:'Excel-Export',chartTitle:'Netto pro Tag',dayListT:'Tagesliste',calMiss:'fehlt',lgWork:'Arbeit',lgNight:'Nacht',lgSun:'Sonntag',lgHol:'Feiertag',lgVac:'Urlaub',lgAus:'Ausfall',lgMiss:'ohne Eintrag',vOk:'Stimmt überein ✓',vLess:'Abrechnung niedriger um',vMore:'Abrechnung höher um',vNone:'Werte der Abrechnung eingeben',vItems:'Positionen abweichend',copyMail:'Nachricht an Buchhaltung kopieren',copied:'Kopiert',noDiff:'Keine Abweichungen',theme:'Design',iosTip:'Installation auf dem iPhone: Link in Safari öffnen, Teilen ⬆️ tippen, dann "Zum Home-Bildschirm".',q1:'1 Eintrag wartet auf Upload',qN:'Einträge warten auf Upload',savedOffline:'Auf dem Handy gespeichert, wird bei Internet gesendet',sent:'Wartende Einträge wurden gesendet',dup:'Für dieses Datum gibt es schon einen Eintrag',
 F_A:'A · Sicherungsposten',F_C:'C · Sicherungsaufsicht',F_H:'H · Arbeiter',F_M:'M · Bahnerder',F_U:'U · AWS-Bediener',F_X:'X · Planprüfer',F_Z:'Z · Projektant/Techn.',F_CU:'C/U · Aufsicht + AWS'}
 };
 
@@ -316,14 +351,14 @@ async function sync(){
 /* ================= HELPERS ================= */
 const $=id=>document.getElementById(id);
 const t=k=>(T[cfg.lang]&&T[cfg.lang][k])||T.ar[k]||k;
-const loc=()=>cfg.lang==='de'?'de-DE':'en-US';
+const loc=()=>'de-DE'; // الأرقام دائماً بالصيغة الألمانية مثل الكشف
 const eur=x=>new Intl.NumberFormat(loc(),{minimumFractionDigits:2,maximumFractionDigits:2}).format(num(x))+' €';
 const hrs=x=>new Intl.NumberFormat(loc(),{maximumFractionDigits:2}).format(num(x));
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fcode=f=>f==='CU'?'C/U':(f||'');
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
 const dayName=ds=>{const [y,m,d]=ds.split('-').map(Number);return new Date(Date.UTC(y,m-1,d)).toLocaleDateString(cfg.lang==='de'?'de-DE':'ar',{weekday:'short',timeZone:'UTC'});};
-const ddmm=ds=>{const p=String(ds).split('-');return p[2]+'.'+p[1];};
+const ddmm=ds=>{const p=String(ds).split('-');return p[2]+'.'+p[1]+'.';};
 function setStatus(s){$('hStatus').textContent=(S().name?S().name+' · ':'')+s;}
 function toast(s){const e=$('toast');e.textContent=s;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2600);}
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
@@ -335,7 +370,12 @@ function applyLang(){
   document.querySelectorAll('[data-t]').forEach(el=>el.textContent=t(el.dataset.t));
   $('f-type').innerHTML=['work','ausfall','urlaub','travel'].map(k=>`<option value="${k}">${t(k)}</option>`).join('');
   $('f-func').innerHTML=FUNCS.map(f=>`<option value="${f}">${t('F_'+f)}</option>`).join('');
+  $('funcChips').innerHTML=CHIP_ORDER.map(f=>`<button type="button" class="chip" data-f="${f}">${fcode(f)}</button>`).join('');
+  document.querySelectorAll('#funcChips .chip').forEach(b=>b.onclick=()=>{$('f-func').value=b.dataset.f;markChips();calcPreview();});
 }
+const CHIP_ORDER=['C','CU','A','H','M','U','X','Z'];
+function markChips(){const f=$('f-func').value;document.querySelectorAll('#funcChips .chip').forEach(b=>b.classList.toggle('on',b.dataset.f===f));$('funcName').textContent=t('F_'+f);}
+function applyTheme(){const th=cfg.theme||'auto';if(th==='auto')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=th;$('themeBtn').textContent=th==='dark'?'☾':th==='light'?'☀':'◐';}
 
 /* ================= DAY FORM ================= */
 function readForm(){
@@ -351,7 +391,7 @@ function fillForm(e){
   $('f-route').value=x.route||'';$('f-km').value=x.km||'';$('f-pass').checked=(x.passenger===true||x.passenger==='true'||x.passenger==='TRUE');$('f-notes').value=x.notes||'';
   $('formTitle').textContent=t(e?'editTitle':'newTitle');
   $('newBtn').classList.toggle('hidden',!e);$('delBtn').classList.toggle('hidden',!e);
-  typeVis(false);calcPreview();
+  typeVis(false);markChips();calcPreview();
 }
 function typeVis(setDefaults){
   const ty=$('f-type').value;
@@ -375,7 +415,26 @@ function resultTable(c,e){
   <div class="kpis"><div class="kpi"><span>${t('taxable')}</span><b>${eur(c.taxable)}</b></div><div class="kpi"><span>${t('taxfree')}</span><b>${eur(c.taxfree)}</b></div>
   <div class="kpi"><span>${t('gross')}</span><b>${eur(c.taxable+c.taxfree)}</b></div><div class="kpi"><span>${t('net')}</span><b class="big">${eur(c.net)}</b></div></div>`;
 }
-function calcPreview(){const e=readForm();if(!e.date){$('dayResult').innerHTML='';return;}$('dayResult').innerHTML=resultTable(calcEntry(e,S(),holSet()),e);}
+function calcPreview(){const e=readForm();if(!e.date){$('dayResult').innerHTML='';$('liveNet').textContent=eur(0);return;}const c=calcEntry(e,S(),holSet());$('dayResult').innerHTML=resultTable(c,e);$('liveNet').textContent=eur(c.net);}
+function copyLast(){
+  const d=$('f-date').value||today();
+  const prev=db.entries.filter(x=>x.type==='work'&&x.date<=d&&x.id!==editId).sort((a,b)=>(b.date+b.start).localeCompare(a.date+a.start))[0]
+          ||db.entries.filter(x=>x.type==='work').sort((a,b)=>b.date.localeCompare(a.date))[0];
+  if(!prev){toast(t('noLast'));return;}
+  $('f-type').value='work';typeVis(false);
+  ['place','start','end','pause','route','km','notes'].forEach(k=>$('f-'+k).value=prev[k]||'');
+  $('f-func').value=prev.func||'C';$('f-hours').value=prev.paidHours||'';
+  $('f-pass').checked=(prev.passenger===true||prev.passenger==='true'||prev.passenger==='TRUE');
+  markChips();calcPreview();
+}
+function renderSum(){
+  const mon=today().slice(0,7);const {list,t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
+  const [y,m]=mon.split('-').map(Number);
+  const mName=new Date(Date.UTC(y,m-1,1)).toLocaleDateString(cfg.lang==='de'?'de-DE':'ar',{month:'long',timeZone:'UTC'});
+  $('sumCard').innerHTML=`<div class="sum"><div class="kpi"><span>${t('monthNet')} · ${mName}</span><b>${eur(tt.net)}</b></div>
+  <div class="kpi"><span>${t('monthHrs')}</span><b>${hrs(tt.workHours+tt.vacHours+tt.adjHours)}</b></div>
+  <div class="kpi"><span>km · ${list.length} ${t('daysW')}</span><b>${hrs(tt.km)}</b></div></div>`;
+}
 async function saveEntry(){
   const e=readForm();if(!e.date)return;
   if(!editId&&db.entries.some(x=>x.date===e.date))toast(t('dup'));
@@ -409,14 +468,15 @@ function renderMonth(){
   // أيام بلا إدخال
   const [y,m]=mon.split('-').map(Number);const days=new Date(Date.UTC(y,m,0)).getUTCDate();const have=new Set(list.map(e=>e.date));const td=today();const miss=[];
   for(let d=1;d<=days;d++){const ds=`${mon}-${String(d).padStart(2,'0')}`;if(ds>td)break;const wd=new Date(Date.UTC(y,m-1,d)).getUTCDay();if(wd>0&&wd<6&&!have.has(ds)&&!hs.has(ds))miss.push(ddmm(ds));}
+  renderCal(mon,list,hs,td);renderChart(mon,list,hs);renderSum();
   $('missing').innerHTML=miss.length?`<div class="warn">${t('missing')} ${miss.join('، ')}</div>`:'';
-  const R=(k,v,cls)=>`<tr class="${cls||''}"><td>${k}</td><td class="n">${v}</td></tr>`;
+  const R=(k,v,cls,z)=>z===0?'':`<tr class="${cls||''}"><td>${k}</td><td class="n">${v}</td></tr>`;
   $('monthTotals').innerHTML=`<table>
-   ${R(t('workHours'),hrs(tt.workHours)+(tt.adjHours?' + '+hrs(tt.adjHours):'')+' '+t('hrs'))}${R(t('vacHours'),hrs(tt.vacHours)+' '+t('hrs'))}
-   ${R(t('nightH'),hrs(tt.nightH))}${R(t('sunH'),hrs(tt.sunH))}${R(t('holH'),hrs(tt.holH))}${R(t('kmTotal'),hrs(tt.km)+' km')}
+   ${R(t('workHours'),hrs(tt.workHours)+(tt.adjHours?' + '+hrs(tt.adjHours):'')+' '+t('hrs'))}${R(t('vacHours'),hrs(tt.vacHours)+' '+t('hrs'),'',tt.vacHours)}
+   ${R(t('nightH'),hrs(tt.nightH),'',tt.nightH)}${R(t('sunH'),hrs(tt.sunH),'',tt.sunH)}${R(t('holH'),hrs(tt.holH),'',tt.holH)}${R(t('kmTotal'),hrs(tt.km)+' km')}
    ${R(t('base'),eur(tt.base))}${tt.adjAmt?R(t('adjustments'),eur(tt.adjAmt)):''}
-   ${R(t('night'),eur(tt.nightAmt))}${R(t('sunday'),eur(tt.sunAmt))}${tt.holAmt?R(t('holiday'),eur(tt.holAmt)):''}${R(t('kmMoney'),eur(tt.kmAmt))}
-   ${R(t('gross'),eur(tt.gross),'tot')}${R(t('taxable'),eur(tt.taxable))}${R(t('deduct')+' ('+S().deductPct+'%)','− '+eur(tt.deduct))}${R(t('meal'),eur(tt.meal))}
+   ${R(t('night'),eur(tt.nightAmt),'',tt.nightAmt)}${R(t('sunday'),eur(tt.sunAmt),'',tt.sunAmt)}${tt.holAmt?R(t('holiday'),eur(tt.holAmt)):''}${R(t('kmMoney'),eur(tt.kmAmt),'',tt.kmAmt)}
+   ${R(t('gross'),eur(tt.gross),'tot')}${R(t('taxable'),eur(tt.taxable))}${R(t('deduct')+' ('+S().deductPct+'%)','− '+eur(tt.deduct))}${R(t('meal'),eur(tt.meal),'',tt.meal)}
    ${R(t('transfer'),'<span class="big">'+eur(tt.net)+'</span>','tot')}</table>`;
   const adjs=db.adjustments.filter(a=>a.month===mon);
   $('adjList').innerHTML=adjs.map(a=>`<div class="day"><div><div class="d">${esc(a.note)||'—'}</div><div class="s">${num(a.hours)?hrs(a.hours)+' '+t('hrs')+' × '+eur(a.rate):''} ${num(a.amount)?eur(a.amount):''}</div></div><button class="danger" data-adj="${a.id}">✕</button></div>`).join('');
@@ -429,20 +489,123 @@ async function addAdj(){
   try{await write('saveAdjustment',a);}catch(err){toast(t('err')+err.message);return;}
   db.adjustments.push(a);persist();['a-hours','a-amount','a-note'].forEach(i=>$(i).value='');renderMonth();toast(t('saved'));
 }
-function printMonth(){
+function printMonth(part){part=part||'all';
   const mon=$('m-month').value;const {list,t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
   const L=cfg.lang;cfg.lang='de';
   const rows=list.map(e=>`<tr><td>${ddmm(e.date)}</td><td>${esc(e.place)}</td><td>${e.type==='urlaub'||e.type==='travel'?'':fcode(e.func)}</td><td>${e.start||''}</td><td>${e.end||''}</td><td>${e.pause||''}</td><td>${e.paidHours?hrs(e.paidHours):''}</td><td>${esc(e.route)}${e.type==='ausfall'?' (Ausfall)':''}</td><td>${e.km?hrs(e.km):''}${(e.passenger===true||e.passenger==='true')?' +1':''}</td></tr>`).join('');
   const P=(k,v)=>`<tr><td>${k}</td><td style="text-align:right">${v}</td></tr>`;
-  $('print').innerHTML=`<div style="display:flex;justify-content:space-between"><b>Kany Sicherung GmbH</b><span>Name: ${esc(S().name)} · ${mon.split('-').reverse().join('/')}</span></div>
-  <h1>Stundennachweis Personal</h1>
+  const head=`<div style="display:flex;justify-content:space-between"><b>Kany Sicherung GmbH</b><span>Name: ${esc(S().name)} · ${mon.split('-').reverse().join('/')}</span></div>`;
+  const hoursHtml=`<h1>Stundennachweis Personal</h1>
   <table><tr><th>Datum</th><th>Arbeitsstelle</th><th>Funktion</th><th>Beginn</th><th>Ende</th><th>Pause (h)</th><th>Arbeitszeit(h)</th><th>Strecke (von-bis)</th><th>Gefahrene Km</th></tr>${rows}
-  <tr><td><b>Gesamt</b></td><td></td><td></td><td></td><td></td><td></td><td><b>${hrs(tt.workHours+tt.vacHours)}</b></td><td></td><td><b>${hrs(tt.km)}</b></td></tr></table>
-  <h1 style="font-size:13px;text-align:left;margin-top:14px">Berechnung (eigene Schätzung)</h1>
+  <tr><td><b>Gesamt</b></td><td></td><td></td><td></td><td></td><td></td><td><b>${hrs(tt.workHours+tt.vacHours)}</b></td><td></td><td><b>${hrs(tt.km)}</b></td></tr></table>`;
+  const calcHtml=`<h1 style="font-size:13px;text-align:left;margin-top:14px">Berechnung (eigene Schätzung)</h1>
   <table style="width:60%">${P('Stundenlohn / Urlaub',eur(tt.base))}${tt.adjAmt?P('Korrekturen',eur(tt.adjAmt)):''}
   ${P('N-Zuschlag ('+hrs(tt.nightH)+' h)',eur(tt.nightAmt))}${P('Sonntagszuschlag ('+hrs(tt.sunH)+' h)',eur(tt.sunAmt))}${P('Feiertagszuschlag ('+hrs(tt.holH)+' h)',eur(tt.holAmt))}
   ${P('Fahrgeld',eur(tt.kmAmt))}${P('<b>Gesamt-Brutto</b>','<b>'+eur(tt.gross)+'</b>')}${P('Abzüge ('+S().deductPct+'%)','− '+eur(tt.deduct))}${P('Verpflegungszuschuss',eur(tt.meal))}${P('<b>Auszahlung (geschätzt)</b>','<b>'+eur(tt.net)+'</b>')}</table>`;
+  $('print').innerHTML=head+(part!=='calc'?hoursHtml:'')+(part!=='hours'?calcHtml:'');
   cfg.lang=L;window.print();
+}
+
+/* ---- PDF مباشر عبر jsPDF ---- */
+const JSPDF_URLS=['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js','https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js'];
+let jspdfLoading=null;
+function loadScript(u){return new Promise((ok,no)=>{const sc=document.createElement('script');sc.src=u;sc.onload=ok;sc.onerror=()=>no(new Error('load '+u));document.head.appendChild(sc);});}
+function loadJsPDF(){
+  if(window.jspdf&&window.jspdf.jsPDF&&window.jspdf.jsPDF.API.autoTable)return Promise.resolve();
+  if(!jspdfLoading)jspdfLoading=loadScript(JSPDF_URLS[0]).then(()=>loadScript(JSPDF_URLS[1])).catch(e=>{jspdfLoading=null;throw e;});
+  return jspdfLoading;
+}
+const AR=/[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]/;
+function monthHasArabic(list){return AR.test(S().name||'')||list.some(e=>AR.test([e.place,e.route,e.notes].join(' ')));}
+async function exportOut(part){
+  const mon=$('m-month').value;if(!mon)return;
+  const {list}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
+  let mode=$('outMode').value;
+  if(mode==='jspdf'&&monthHasArabic(list)&&confirm(t('arWarn')))mode='print';
+  if(mode==='print'){printMonth(part);return;}
+  try{await loadJsPDF();}catch(e){toast(t('libErr'));printMonth(part);return;}
+  makePDF(mon,part);
+}
+function makePDF(mon,part){
+  const {list,t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
+  const L=cfg.lang;cfg.lang='de';
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
+  const BLUE=[41,128,186],name=S().name||'',mm=mon.split('-').reverse().join('/');
+  const pageDeco=()=>{doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(0);doc.text('Kany Sicherung GmbH',14,12);
+    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text('Name: '+name+' · '+mm,196,12,{align:'right'});
+    doc.setFontSize(7);doc.setTextColor(150);doc.text('Seite '+doc.internal.getCurrentPageInfo().pageNumber,105,290,{align:'center'});};
+  const common={theme:'striped',headStyles:{fillColor:BLUE,textColor:255,fontStyle:'bold'},styles:{font:'helvetica',fontSize:7.5,cellPadding:1.6,textColor:[80,80,80],overflow:'linebreak'},margin:{left:14,right:14,top:18},didDrawPage:pageDeco};
+  let y=24;
+  if(part!=='calc'){
+    doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(0);doc.text('Stundennachweis Personal',105,y,{align:'center'});
+    const body=list.map(e=>[ddmm(e.date).replace(/\.$/,''),e.place||'',e.type==='urlaub'||e.type==='travel'?'':fcode(e.func),e.start||'',e.end||'',e.pause||'',e.paidHours?hrs(e.paidHours):'',(e.route||'')+(e.type==='ausfall'?' (Ausfall)':''),(e.km?hrs(e.km):'')+((e.passenger===true||e.passenger==='true')?' +1':'')]);
+    doc.autoTable(Object.assign({},common,{startY:y+3,
+      head:[['Datum','Arbeitsstelle','Funktion','Beginn','Ende','Pause (h)','Arbeitszeit (h)','Strecke (von-bis)','Gefahrene Km']],
+      body,foot:[['Gesamt','','','','','',hrs(tt.workHours+tt.vacHours),'',hrs(tt.km)]],showFoot:'lastPage',
+      footStyles:{fillColor:[245,245,245],textColor:[60,60,60],fontStyle:'bold',lineWidth:{top:0.3},lineColor:BLUE},
+      columnStyles:{0:{cellWidth:13},1:{cellWidth:23},2:{cellWidth:16},3:{cellWidth:12},4:{cellWidth:11},5:{cellWidth:12},6:{cellWidth:20},7:{cellWidth:'auto'},8:{cellWidth:17}}}));
+    y=doc.lastAutoTable.finalY+10;
+  }
+  if(part!=='hours'){
+    if(y>250){doc.addPage();y=24;}
+    doc.setFont('helvetica','bold');doc.setFontSize(part==='calc'?15:11);doc.setTextColor(0);
+    if(part==='calc')doc.text('Berechnung (eigene Schätzung)',105,y,{align:'center'});else doc.text('Berechnung (eigene Schätzung)',14,y);
+    const rows=[['Stundenlohn / Urlaub',eur(tt.base)]];
+    if(tt.adjAmt)rows.push(['Korrekturen',eur(tt.adjAmt)]);
+    rows.push(['N-Zuschlag ('+hrs(tt.nightH)+' h)',eur(tt.nightAmt)],['Sonntagszuschlag ('+hrs(tt.sunH)+' h)',eur(tt.sunAmt)],['Feiertagszuschlag ('+hrs(tt.holH)+' h)',eur(tt.holAmt)],
+      ['Fahrgeld',eur(tt.kmAmt)],['Gesamt-Brutto',eur(tt.gross)],['Abzüge ('+S().deductPct+'%)','- '+eur(tt.deduct)],['Verpflegungszuschuss',eur(tt.meal)],['Auszahlung (geschätzt)',eur(tt.net)]);
+    const bold=new Set(['Gesamt-Brutto','Auszahlung (geschätzt)']);
+    doc.autoTable(Object.assign({},common,{startY:y+3,tableWidth:105,margin:{left:part==='calc'?52.5:14,right:14,top:18},
+      head:[['Position',{content:'Betrag',styles:{halign:'right'}}]],body:rows,columnStyles:{1:{halign:'right'}},
+      didParseCell:d=>{if(d.section==='body'&&bold.has(d.row.raw[0]))d.cell.styles.fontStyle='bold';}}));
+  }
+  const fn={all:'Stundennachweis_Berechnung',hours:'Stundennachweis',calc:'Berechnung'}[part]+'_'+(name||'').replace(/[^\w\-]+/g,'_')+'_'+mon+'.pdf';
+  cfg.lang=L;doc.save(fn.replace('__','_'));
+}
+function dayClass(e,c){
+  if(e.type==='urlaub')return 'c-urlaub';if(e.type==='ausfall')return 'c-ausfall';if(e.type==='travel')return 'c-travel';
+  if(c.holH)return 'c-hol';if(c.sunH)return 'c-sun';if(c.nightH)return 'c-night';return 'c-work';
+}
+function renderCal(mon,list,hs,td){
+  const [y,m]=mon.split('-').map(Number);const days=new Date(Date.UTC(y,m,0)).getUTCDate();
+  const first=(new Date(Date.UTC(y,m-1,1)).getUTCDay()+6)%7; // الإثنين أولاً
+  const byDate={};list.forEach(e=>{(byDate[e.date]=byDate[e.date]||[]).push(e);});
+  const heads=[...Array(7)].map((_,i)=>new Date(Date.UTC(2024,0,1+i)).toLocaleDateString(cfg.lang==='de'?'de-DE':'ar',{weekday:'narrow',timeZone:'UTC'}));
+  let h=heads.map(x=>`<div class="h">${x}</div>`).join('')+'<div></div>'.repeat(first);
+  for(let d=1;d<=days;d++){
+    const ds=`${mon}-${String(d).padStart(2,'0')}`;const es=byDate[ds];const wd=new Date(Date.UTC(y,m-1,d)).getUTCDay();
+    let cls='',sub='';
+    if(es){const e=es[0];const c=calcEntry(e,S(),hs);cls=dayClass(e,c);sub=e.type==='urlaub'?'U':e.type==='ausfall'?'A':(e.type==='travel'?'km':fcode(e.func));}
+    else if(ds<=td&&wd>0&&wd<6&&!hs.has(ds)){cls='c-miss';sub=t('calMiss');}
+    h+=`<button type="button" class="cell ${cls} ${ds===td?'today':''}" data-date="${ds}" data-id="${es?es[0].id:''}">${d}${sub?`<small>${sub}</small>`:''}</button>`;
+  }
+  const L=(c,k)=>`<span><i class="${c}"></i>${t(k)}</span>`;
+  $('calendar').innerHTML=`<div class="cal">${h}</div><div class="legend">${L('c-work','lgWork')}${L('c-night','lgNight')}${L('c-sun','lgSun')}${L('c-hol','lgHol')}${L('c-urlaub','lgVac')}${L('c-ausfall','lgAus')}${L('c-miss','lgMiss')}</div>`;
+  document.querySelectorAll('#calendar .cell').forEach(b=>b.onclick=()=>{
+    const e=b.dataset.id&&db.entries.find(x=>x.id===b.dataset.id);
+    if(e)fillForm(e);else{fillForm(null);$('f-date').value=b.dataset.date;calcPreview();}
+    show('day');
+  });
+}
+function renderChart(mon,list,hs){
+  const [y,m]=mon.split('-').map(Number);const days=new Date(Date.UTC(y,m,0)).getUTCDate();
+  const v=Array(days).fill(0);list.forEach(e=>{const d=+e.date.slice(8,10);v[d-1]+=calcEntry(e,S(),hs).net;});
+  const max=Math.max(...v,1);const W=days*12,H=110,bh=90;
+  let bars='';v.forEach((x,i)=>{if(!x)return;const h=Math.max(2,x/max*bh);bars+=`<rect x="${i*12+2}" y="${bh-h}" width="8" height="${h}" rx="2" fill="var(--brand)"><title>${i+1}. ${eur(x)}</title></rect>`;});
+  let lab='';[1,5,10,15,20,25,days].forEach(d=>{lab+=`<text x="${(d-1)*12+6}" y="${H-4}" font-size="9" text-anchor="middle" fill="var(--muted)">${d}</text>`;});
+  $('chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="direction:ltr;display:block"><line x1="0" y1="${bh}" x2="${W}" y2="${bh}" stroke="var(--line)"/>${bars}${lab}</svg><div class="hint" style="text-align:center">max ${eur(max)}</div>`;
+}
+function exportCSV(){
+  const mon=$('m-month').value;const hs=holSet();const {list,t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),hs);
+  const n=x=>new Intl.NumberFormat('de-DE',{maximumFractionDigits:2,useGrouping:false}).format(num(x));
+  const q=x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"';
+  const head=['Datum','Art','Arbeitsstelle','Funktion','Beginn','Ende','Pause (h)','Arbeitszeit (h)','Strecke','Km','Mitfahrer','Stundenlohn','Grundlohn','Nacht h','N-Zuschlag','Sonntag h','So-Zuschlag','Feiertag h','FT-Zuschlag','Fahrgeld','Verpflegung','Netto (geschätzt)','Notiz'];
+  const rows=list.map(e=>{const c=calcEntry(e,S(),hs);const p=e.date.split('-');
+    return [p[2]+'.'+p[1]+'.'+p[0],T.de[e.type],e.place,e.type==='urlaub'||e.type==='travel'?'':fcode(e.func),e.start,e.end,n(e.pause),n(e.paidHours),e.route,n(e.km),(e.passenger===true||e.passenger==='true')?'ja':'',n(c.rate),n(c.base),n(c.nightH),n(c.nightAmt),n(c.sunH),n(c.sunAmt),n(c.holH),n(c.holAmt),n(c.kmAmt),n(c.meal),n(c.net),e.notes];});
+  rows.push(['Gesamt','','','','','','',n(tt.workHours+tt.vacHours),'',n(tt.km),'','',n(tt.base),n(tt.nightH),n(tt.nightAmt),n(tt.sunH),n(tt.sunAmt),n(tt.holH),n(tt.holAmt),n(tt.kmAmt),n(tt.meal),n(tt.net),'']);
+  const csv='\ufeff'+[head,...rows].map(r=>r.map(q).join(';')).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download=`Arbeitszeiten_${mon}.csv`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
 }
 
 /* ================= COMPARE ================= */
@@ -456,6 +619,27 @@ function renderCmp(){
   $('cmpTable').innerHTML=`<table><tr><th>${t('item')}</th><th class="n">${t('appV')}</th><th class="n">${t('slipV')}</th><th class="n">${t('diff')}</th></tr>`+
    SLIP.map(([k,l,u])=>{const a=app[k],has=p[k]!==undefined&&p[k]!=='';const s=num(p[k]);const d=r2(s-a);const f=u==='e'?eur:hrs;
     return `<tr><td>${t(l)}</td><td class="n">${f(a)}</td><td class="n">${has?f(s):'—'}</td><td class="n ${has&&Math.abs(d)>=0.01?(d<0?'neg':'pos'):''}">${has?(d>0?'+':'')+f(d):''}</td></tr>`;}).join('')+'</table>';
+  const diffs=cmpDiffs(p,app);const key=['net','gross'].find(k=>p[k]!==undefined&&p[k]!=='');let v='';
+  if(!key)v=`<div class="hint" style="text-align:center;margin-bottom:8px">${t('vNone')}</div>`;
+  else{const d=r2(num(p[key])-app[key]);const extra=diffs.length?`<br><small style="font-weight:400">${diffs.length} ${t('vItems')}</small>`:'';
+    v=Math.abs(d)<1?`<div class="verdict ok">${t('vOk')}${extra}</div>`:`<div class="verdict ${d<0?'bad':'ok'}">${t(d<0?'vLess':'vMore')} ${eur(Math.abs(d))}${extra}</div>`;}
+  $('cmpVerdict').innerHTML=v;
+}
+function cmpDiffs(p,app){return SLIP.filter(([k])=>p[k]!==undefined&&p[k]!==''&&Math.abs(num(p[k])-app[k])>=0.01).map(([k,l,u])=>({k,u,a:app[k],s:num(p[k])}));}
+const DE_LBL={hours:'Arbeitsstunden',vacHours:'Urlaubsstunden',nightH:'Nachtstunden (N-Zuschlag)',sunH:'Sonntagsstunden',holH:'Feiertagsstunden',fahrgeld:'Fahrgeld',meals:'Verpflegungszuschuss',gross:'Gesamt-Brutto',net:'Auszahlungsbetrag'};
+async function copyMail(){
+  const mon=$('c-month').value;const p=db.payslips.find(x=>x.month===mon)||{};SLIP.forEach(([k])=>{const el=$('p-'+k);if(el&&el.value!=='')p[k]=el.value;});
+  const {t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
+  const app={hours:tt.hoursAll,vacHours:tt.vacHours,nightH:tt.nightH,sunH:tt.sunH,holH:tt.holH,fahrgeld:tt.kmAmt,meals:tt.meal,gross:tt.gross,net:tt.net};
+  const ds=cmpDiffs(p,app).filter(d=>d.k!=='gross'&&d.k!=='net');
+  if(!ds.length){toast(t('noDiff'));return;}
+  const f=(x,u)=>u==='e'?new Intl.NumberFormat('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2}).format(x)+' €':new Intl.NumberFormat('de-DE',{maximumFractionDigits:2}).format(x)+' h';
+  const [y,m]=mon.split('-');const mName=new Date(Date.UTC(+y,+m-1,1)).toLocaleDateString('de-DE',{month:'long',year:'numeric',timeZone:'UTC'});
+  const txt=`Sehr geehrte Damen und Herren,\n\nbeim Abgleich meiner Lohnabrechnung für ${mName} mit meinen Stundennachweisen sind mir folgende Unterschiede aufgefallen:\n\n`+
+    ds.map(d=>`- ${DE_LBL[d.k]}: laut meinen Aufzeichnungen ${f(d.a,d.u)}, laut Abrechnung ${f(d.s,d.u)}`).join('\n')+
+    `\n\nKönnten Sie mir bitte erklären, wie diese Positionen berechnet wurden? Falls ein Fehler auf meiner Seite liegt, gebe ich gerne die korrigierten Angaben weiter.\n\nVielen Dank und freundliche Grüße\n${S().name||''}`;
+  try{await navigator.clipboard.writeText(txt);toast(t('copied'));}
+  catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(t('copied'));}catch(_){prompt('',txt);}ta.remove();}
 }
 async function saveSlip(){
   const mon=$('c-month').value;if(!mon)return;const p={month:mon};SLIP.forEach(([k])=>p[k]=$('p-'+k).value);
@@ -497,8 +681,10 @@ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.
 ['f-date','f-place','f-func','f-start','f-end','f-pause','f-hours','f-route','f-km','f-pass','f-notes'].forEach(i=>$(i).addEventListener('input',calcPreview));
 $('f-type').addEventListener('change',()=>{typeVis(true);calcPreview();});
 $('saveBtn').onclick=saveEntry;$('newBtn').onclick=()=>fillForm(null);$('delBtn').onclick=deleteEntry;
-$('m-month').onchange=renderMonth;$('c-month').onchange=renderCmp;$('adjBtn').onclick=addAdj;$('printBtn').onclick=printMonth;
-$('slipBtn').onclick=saveSlip;$('setBtn').onclick=saveSet;$('connBtn').onclick=connect;
+$('m-month').onchange=renderMonth;$('c-month').onchange=renderCmp;$('adjBtn').onclick=addAdj;$('outAll').onclick=()=>exportOut('all');$('outHours').onclick=()=>exportOut('hours');$('outCalc').onclick=()=>exportOut('calc');
+$('outMode').value=cfg.outMode||'jspdf';$('outMode').onchange=()=>{cfg.outMode=$('outMode').value;ls('rw_cfg',cfg);};
+$('slipBtn').onclick=saveSlip;$('mailBtn').onclick=copyMail;$('xlsBtn').onclick=exportCSV;$('copyBtn').onclick=copyLast;
+$('themeBtn').onclick=()=>{const o=['auto','light','dark'];cfg.theme=o[(o.indexOf(cfg.theme||'auto')+1)%3];ls('rw_cfg',cfg);applyTheme();};applyTheme();$('setBtn').onclick=saveSet;$('connBtn').onclick=connect;
 $('langBtn').onclick=()=>{cfg.lang=cfg.lang==='de'?'ar':'de';ls('rw_cfg',cfg);renderAll();};
 const curM=today().slice(0,7);$('m-month').value=curM;$('c-month').value=curM;
 renderAll();sync();
