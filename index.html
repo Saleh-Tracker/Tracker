@@ -165,6 +165,13 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
       <label data-t="key"></label><input id="s-key" dir="ltr">
       <div class="hint" data-t="localNote"></div>
       <div class="btns"><button id="connBtn" data-t="connect"></button></div>
+      <div class="btns"><button class="sec" id="linkBtn" data-t="mkLink"></button></div>
+      <div id="linkBox" class="hidden" style="margin-top:10px">
+        <div class="hint" data-t="linkHint"></div>
+        <div id="qr" style="background:#fff;padding:12px;border-radius:10px;width:max-content;margin:10px auto"></div>
+        <input id="linkTxt" dir="ltr" readonly>
+        <div class="btns"><button class="sec" id="copyLinkBtn" data-t="copyLink"></button><button class="sec" id="shareLinkBtn" data-t="shareLink"></button></div>
+      </div>
     </div>
     <div class="card"><h2 data-t="rates"></h2><div id="rateForm"></div></div>
     <div class="card"><h2 data-t="rules"></h2><div id="ruleForm"></div></div>
@@ -199,7 +206,7 @@ rates:'أجور الوظائف (€/ساعة)',rules:'القواعد والنس�
 raise:'زيادة على أجر الساعة',surBase:'أساس حساب الإضافات €',nightPct:'إضافة الليل % (C فقط)',nightFrom:'الليل من الساعة',nightTo:'إلى الساعة',sunPct:'إضافة الأحد %',holPct:'إضافة العطلة %',
 kmRate:'سعر الكم €',kmRatePass:'سعر الكم مع عامل €',vacRate:'أجر ساعة الإجازة',vacHours:'ساعات يوم الإجازة',ausfallHours:'ساعات يوم الإلغاء',
 mealThreshold:'حد ساعات بدل الطعام',mealLow:'بدل عند الحد بالضبط €',mealHigh:'بدل فوق الحد €',fixedMonthly:'مبلغ ثابت شهري €',deductPct:'نسبة الاستقطاع % (ضريبة + تأمينات)',name:'الاسم',
-saved:'تم الحفظ',err:'خطأ: ',confirmDel:'حذف هذا الإدخال؟',local:'وضع محلي',online:'متصل',offline:'غير متصل — عرض آخر نسخة',loading:'جارٍ التحميل…',install:'تثبيت',copyLast:'مثل آخر يوم',outMode:'طريقة إخراج PDF',modeJs:'ملف PDF مباشر (jsPDF)',modePrint:'طباعة عادية (تدعم العربية)',outAll:'PDF — الملف كامل',arWarn:'يوجد نص عربي في بيانات هذا الشهر، وملف jsPDF لا يعرض العربية.\n\nموافق = استخدم الطباعة العادية\nإلغاء = تابع بـ jsPDF',libErr:'تعذّر تحميل مكتبة PDF — تحتاج إنترنت لأول مرة. استُخدمت الطباعة العادية.',noLast:'لا يوجد يوم سابق',monthNet:'صافي الشهر',monthHrs:'ساعات',daysW:'أيام',excel:'تصدير Excel',chartTitle:'الصافي اليومي',dayListT:'قائمة الأيام',calMiss:'ناقص',lgWork:'عمل',lgNight:'ليل',lgSun:'أحد',lgHol:'عطلة',lgVac:'إجازة',lgAus:'إلغاء',lgMiss:'بلا إدخال',vOk:'مطابق ✓',vLess:'الكشف أقل من حسابك بـ',vMore:'الكشف أعلى من حسابك بـ',vNone:'أدخل أرقام الكشف للمقارنة',vItems:'بنود مختلفة',copyMail:'نسخ رسالة للمحاسبة (ألماني)',copied:'تم النسخ — الصقها في البريد أو واتساب',noDiff:'لا توجد فروق',theme:'المظهر',iosTip:'لتثبيت التطبيق على آيفون: افتح الرابط في Safari، اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية".',q1:'إدخال واحد بانتظار الإرسال',qN:'إدخالات بانتظار الإرسال',savedOffline:'حُفظ على الهاتف وسيُرسل عند عودة الإنترنت',sent:'تم إرسال الإدخالات المعلّقة إلى الشيت',dup:'يوجد إدخال لهذا التاريخ، سيُضاف إدخال ثانٍ',
+saved:'تم الحفظ',err:'خطأ: ',confirmDel:'حذف هذا الإدخال؟',local:'وضع محلي',online:'✓ متزامن',offline:'⚠ بدون اتصال — آخر نسخة',loading:'⟳ جارٍ المزامنة…',install:'تثبيت',copyLast:'مثل آخر يوم',mkLink:'إنشاء رابط إعداد / QR',linkHint:'افتح هذا الرابط مرة واحدة على أي جهاز (أو امسح الرمز) فيتصل التطبيق تلقائياً. لا تنشره علناً — فيه كلمة السر.',copyLink:'نسخ الرابط',shareLink:'مشاركة',setupOk:'تم الإعداد — المزامنة تعمل تلقائياً',needUrl:'أدخل الرابط وكلمة السر أولاً',qrErr:'تعذّر إنشاء QR بدون إنترنت — انسخ الرابط بدلاً منه',outMode:'طريقة إخراج PDF',modeJs:'ملف PDF مباشر (jsPDF)',modePrint:'طباعة عادية (تدعم العربية)',outAll:'PDF — الملف كامل',arWarn:'يوجد نص عربي في بيانات هذا الشهر، وملف jsPDF لا يعرض العربية.\n\nموافق = استخدم الطباعة العادية\nإلغاء = تابع بـ jsPDF',libErr:'تعذّر تحميل مكتبة PDF — تحتاج إنترنت لأول مرة. استُخدمت الطباعة العادية.',noLast:'لا يوجد يوم سابق',monthNet:'صافي الشهر',monthHrs:'ساعات',daysW:'أيام',excel:'تصدير Excel',chartTitle:'الصافي اليومي',dayListT:'قائمة الأيام',calMiss:'ناقص',lgWork:'عمل',lgNight:'ليل',lgSun:'أحد',lgHol:'عطلة',lgVac:'إجازة',lgAus:'إلغاء',lgMiss:'بلا إدخال',vOk:'مطابق ✓',vLess:'الكشف أقل من حسابك بـ',vMore:'الكشف أعلى من حسابك بـ',vNone:'أدخل أرقام الكشف للمقارنة',vItems:'بنود مختلفة',copyMail:'نسخ رسالة للمحاسبة (ألماني)',copied:'تم النسخ — الصقها في البريد أو واتساب',noDiff:'لا توجد فروق',theme:'المظهر',iosTip:'لتثبيت التطبيق على آيفون: افتح الرابط في Safari، اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية".',q1:'إدخال واحد بانتظار الإرسال',qN:'إدخالات بانتظار الإرسال',savedOffline:'حُفظ على الهاتف وسيُرسل عند عودة الإنترنت',sent:'تم إرسال الإدخالات المعلّقة إلى الشيت',dup:'يوجد إدخال لهذا التاريخ، سيُضاف إدخال ثانٍ',
 F_A:'A · حارس أمان',F_C:'C · مشرف أمان',F_H:'H · عامل',F_M:'M · تأريض السكة',F_U:'U · مشغّل AWS',F_X:'X · مدقق مخططات',F_Z:'Z · فني/مشروع',F_CU:'C/U · مشرف + AWS'},
 de:{app:'Arbeitszeiten',tabDay:'Tag',tabMonth:'Monat',tabCmp:'Abgleich',tabSet:'Einstellungen',newTitle:'Neuer Eintrag',editTitle:'Eintrag bearbeiten',
 date:'Datum',type:'Art',work:'Arbeit',ausfall:'Ausfall',urlaub:'Urlaub',travel:'Nur Fahrt',
@@ -216,7 +223,7 @@ rates:'Stundenlöhne je Funktion (€)',rules:'Regeln und Sätze',holidays:'Feie
 raise:'Lohnerhöhung je Stunde',surBase:'Basis für Zuschläge €',nightPct:'N-Zuschlag % (nur C)',nightFrom:'Nacht ab Uhr',nightTo:'bis Uhr',sunPct:'Sonntagszuschlag %',holPct:'Feiertagszuschlag %',
 kmRate:'Km-Satz €',kmRatePass:'Km-Satz mit Mitfahrer €',vacRate:'Urlaubsstundenlohn',vacHours:'Std. je Urlaubstag',ausfallHours:'Std. je Ausfalltag',
 mealThreshold:'Stundengrenze Verpflegung',mealLow:'Zuschuss genau an der Grenze €',mealHigh:'Zuschuss über der Grenze €',fixedMonthly:'Festbezug monatlich €',deductPct:'Abzüge % (Steuer + SV)',name:'Name',
-saved:'Gespeichert',err:'Fehler: ',confirmDel:'Eintrag löschen?',local:'Lokaler Modus',online:'Verbunden',offline:'Offline — letzte Kopie',loading:'Laden…',install:'Installieren',copyLast:'Wie letzter Tag',outMode:'PDF-Ausgabe',modeJs:'PDF-Datei direkt (jsPDF)',modePrint:'Normal drucken (mit Arabisch)',outAll:'PDF — Gesamt',arWarn:'Arabischer Text gefunden; jsPDF kann ihn nicht darstellen.\n\nOK = normal drucken\nAbbrechen = trotzdem jsPDF',libErr:'PDF-Bibliothek nicht ladbar (Internet nötig). Normaler Druck verwendet.',noLast:'Kein vorheriger Tag',monthNet:'Netto Monat',monthHrs:'Stunden',daysW:'Tage',excel:'Excel-Export',chartTitle:'Netto pro Tag',dayListT:'Tagesliste',calMiss:'fehlt',lgWork:'Arbeit',lgNight:'Nacht',lgSun:'Sonntag',lgHol:'Feiertag',lgVac:'Urlaub',lgAus:'Ausfall',lgMiss:'ohne Eintrag',vOk:'Stimmt überein ✓',vLess:'Abrechnung niedriger um',vMore:'Abrechnung höher um',vNone:'Werte der Abrechnung eingeben',vItems:'Positionen abweichend',copyMail:'Nachricht an Buchhaltung kopieren',copied:'Kopiert',noDiff:'Keine Abweichungen',theme:'Design',iosTip:'Installation auf dem iPhone: Link in Safari öffnen, Teilen ⬆️ tippen, dann "Zum Home-Bildschirm".',q1:'1 Eintrag wartet auf Upload',qN:'Einträge warten auf Upload',savedOffline:'Auf dem Handy gespeichert, wird bei Internet gesendet',sent:'Wartende Einträge wurden gesendet',dup:'Für dieses Datum gibt es schon einen Eintrag',
+saved:'Gespeichert',err:'Fehler: ',confirmDel:'Eintrag löschen?',local:'Lokaler Modus',online:'✓ Synchron',offline:'⚠ Offline — letzte Kopie',loading:'⟳ Synchronisiere…',install:'Installieren',copyLast:'Wie letzter Tag',mkLink:'Einrichtungslink / QR erstellen',linkHint:'Link einmal auf jedem Gerät öffnen (oder QR scannen) — die App verbindet sich automatisch. Nicht öffentlich teilen (enthält Passwort).',copyLink:'Link kopieren',shareLink:'Teilen',setupOk:'Eingerichtet — Synchronisierung läuft automatisch',needUrl:'Zuerst URL und Passwort eingeben',qrErr:'QR ohne Internet nicht möglich — Link kopieren',outMode:'PDF-Ausgabe',modeJs:'PDF-Datei direkt (jsPDF)',modePrint:'Normal drucken (mit Arabisch)',outAll:'PDF — Gesamt',arWarn:'Arabischer Text gefunden; jsPDF kann ihn nicht darstellen.\n\nOK = normal drucken\nAbbrechen = trotzdem jsPDF',libErr:'PDF-Bibliothek nicht ladbar (Internet nötig). Normaler Druck verwendet.',noLast:'Kein vorheriger Tag',monthNet:'Netto Monat',monthHrs:'Stunden',daysW:'Tage',excel:'Excel-Export',chartTitle:'Netto pro Tag',dayListT:'Tagesliste',calMiss:'fehlt',lgWork:'Arbeit',lgNight:'Nacht',lgSun:'Sonntag',lgHol:'Feiertag',lgVac:'Urlaub',lgAus:'Ausfall',lgMiss:'ohne Eintrag',vOk:'Stimmt überein ✓',vLess:'Abrechnung niedriger um',vMore:'Abrechnung höher um',vNone:'Werte der Abrechnung eingeben',vItems:'Positionen abweichend',copyMail:'Nachricht an Buchhaltung kopieren',copied:'Kopiert',noDiff:'Keine Abweichungen',theme:'Design',iosTip:'Installation auf dem iPhone: Link in Safari öffnen, Teilen ⬆️ tippen, dann "Zum Home-Bildschirm".',q1:'1 Eintrag wartet auf Upload',qN:'Einträge warten auf Upload',savedOffline:'Auf dem Handy gespeichert, wird bei Internet gesendet',sent:'Wartende Einträge wurden gesendet',dup:'Für dieses Datum gibt es schon einen Eintrag',
 F_A:'A · Sicherungsposten',F_C:'C · Sicherungsaufsicht',F_H:'H · Arbeiter',F_M:'M · Bahnerder',F_U:'U · AWS-Bediener',F_X:'X · Planprüfer',F_Z:'Z · Projektant/Techn.',F_CU:'C/U · Aufsicht + AWS'}
 };
 
@@ -663,10 +670,34 @@ async function saveSet(){
 }
 async function connect(){
   cfg.url=$('s-url').value.trim();cfg.key=$('s-key').value.trim();ls('rw_cfg',cfg);
-  if(cfg.url&&db.entries.length&&confirm(cfg.lang==='de'?'Lokale Einträge in das Sheet hochladen?':'رفع الإدخالات المحلية الموجودة إلى الشيت؟')){
-    try{for(const e of db.entries)await write('saveEntry',e);}catch(err){toast(t('err')+err.message);return;}
-  }
-  await sync();
+  pushLocal();await sync();
+}
+/* يرفع البيانات المحلية الموجودة على هذا الجهاز إلى الشيت (مرة عند الربط) — بدون سؤال */
+function pushLocal(){
+  if(!cfg.url||!db.entries.length)return;
+  enqueue('saveSettings',Object.assign({},db.settings));enqueue('saveHolidays',db.holidays);
+  db.entries.forEach(e=>enqueue('saveEntry',e));db.adjustments.forEach(a=>enqueue('saveAdjustment',a));db.payslips.forEach(p=>enqueue('savePayslip',p));
+}
+/* ---- رابط الإعداد لمرة واحدة ---- */
+const b64e=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const b64d=s=>JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/')))));
+function readSetupLink(){
+  const m=location.hash.match(/setup=([\w\-]+)/);if(!m)return false;
+  try{const o=b64d(m[1]);if(!o.u)return false;
+    cfg.url=o.u;cfg.key=o.k||'';ls('rw_cfg',cfg);
+    history.replaceState(null,'',location.pathname+location.search); // محو الرابط من شريط العنوان
+    pushLocal();setTimeout(()=>toast(t('setupOk')),300);return true;
+  }catch(e){return false;}
+}
+let qrLoading=null;
+function loadQR(){if(window.QRCode)return Promise.resolve();if(!qrLoading)qrLoading=loadScript('https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js').catch(e=>{qrLoading=null;throw e;});return qrLoading;}
+async function makeLink(){
+  const u=$('s-url').value.trim()||cfg.url,k=$('s-key').value.trim()||cfg.key;
+  if(!u){toast(t('needUrl'));return;}
+  const link=location.origin+location.pathname+'#setup='+b64e({u,k});
+  $('linkBox').classList.remove('hidden');$('linkTxt').value=link;$('qr').innerHTML='';
+  try{await loadQR();new QRCode($('qr'),{text:link,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});}
+  catch(e){$('qr').classList.add('hidden');toast(t('qrErr'));}
 }
 
 /* ================= NAV ================= */
@@ -687,11 +718,18 @@ $('slipBtn').onclick=saveSlip;$('mailBtn').onclick=copyMail;$('xlsBtn').onclick=
 $('themeBtn').onclick=()=>{const o=['auto','light','dark'];cfg.theme=o[(o.indexOf(cfg.theme||'auto')+1)%3];ls('rw_cfg',cfg);applyTheme();};applyTheme();$('setBtn').onclick=saveSet;$('connBtn').onclick=connect;
 $('langBtn').onclick=()=>{cfg.lang=cfg.lang==='de'?'ar':'de';ls('rw_cfg',cfg);renderAll();};
 const curM=today().slice(0,7);$('m-month').value=curM;$('c-month').value=curM;
+readSetupLink();
 renderAll();sync();
 window.addEventListener('online',()=>sync());
 window.addEventListener('offline',()=>{online=false;setStatus(t('offline'));});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&queue.length)sync();});
-setInterval(()=>{if(queue.length&&navigator.onLine)sync();},60000);
+let lastSync=Date.now();
+const autoSync=()=>{if(cfg.url&&navigator.onLine&&!flushing){lastSync=Date.now();sync();}};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&(queue.length||Date.now()-lastSync>60000))autoSync();});
+setInterval(()=>{if(document.hidden)return;if(queue.length||Date.now()-lastSync>5*60000)autoSync();},60000);
+$('linkBtn').onclick=makeLink;
+$('copyLinkBtn').onclick=async()=>{const v=$('linkTxt').value;try{await navigator.clipboard.writeText(v);}catch(e){$('linkTxt').select();document.execCommand('copy');}toast(t('copied'));};
+$('shareLinkBtn').onclick=()=>{const v=$('linkTxt').value;if(navigator.share)navigator.share({title:t('app'),url:v}).catch(()=>{});else $('copyLinkBtn').click();};
+window.addEventListener('hashchange',()=>{if(readSetupLink())sync();});
 $('qBadge').onclick=()=>sync();
 /* ---- التثبيت كتطبيق (PWA) ---- */
 let deferredPrompt=null;
