@@ -189,11 +189,12 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
 
   <!-- SETTINGS -->
   <section id="v-set" class="hidden">
-    <div class="card"><h2 data-t="connection"></h2>
-      <label data-t="url"></label><input id="s-url" dir="ltr" placeholder="https://script.google.com/macros/s/.../exec">
-      <label data-t="key"></label><input id="s-key" dir="ltr">
+    <div class="card" id="connStatus"></div>
+    <div class="card hidden" id="connCard"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 data-t="connection" style="margin:0"></h2><button class="sec mini" id="lockBtn">🔒</button></div>
+      <label data-t="url"></label><input id="s-url" dir="ltr" readonly placeholder="https://script.google.com/macros/s/.../exec">
+      <label data-t="key"></label><div style="display:flex;gap:6px"><input id="s-key" dir="ltr" type="password" readonly autocomplete="off" style="flex:1"><button class="sec mini" id="eyeBtn" type="button" style="min-width:46px">👁</button></div>
       <div class="hint" data-t="localNote"></div>
-      <div class="btns"><button id="connBtn" data-t="connect"></button></div>
+      <div class="btns"><button class="sec" id="editConnBtn" data-t="editConn"></button><button id="connBtn" class="hidden" data-t="connect"></button></div>
       <div class="btns"><button class="sec" id="linkBtn" data-t="mkLink"></button></div>
       <div id="linkBox" class="hidden" style="margin-top:10px">
         <div class="hint" data-t="linkHint"></div>
@@ -235,7 +236,7 @@ rates:'أجور الوظائف (€/ساعة)',rules:'القواعد والنس�
 raise:'زيادة على أجر الساعة',surBase:'أساس حساب الإضافات €',nightPct:'إضافة الليل % (C فقط)',nightFrom:'الليل من الساعة',nightTo:'إلى الساعة',sunPct:'إضافة الأحد %',holPct:'إضافة العطلة %',
 kmRate:'سعر الكم €',kmRatePass:'سعر الكم مع عامل €',vacRate:'أجر ساعة الإجازة',vacHours:'ساعات يوم الإجازة',ausfallHours:'ساعات يوم الإلغاء',
 mealThreshold:'حد ساعات بدل الطعام',mealLow:'بدل عند الحد بالضبط €',mealHigh:'بدل فوق الحد €',fixedMonthly:'مبلغ ثابت شهري €',deductPct:'نسبة الاستقطاع % (ضريبة + تأمينات)',name:'الاسم',
-saved:'تم الحفظ',err:'خطأ: ',confirmDel:'حذف هذا الإدخال؟',local:'وضع محلي',online:'✓ متزامن',offline:'⚠ بدون اتصال — آخر نسخة',loading:'⟳ جارٍ المزامنة…',install:'تثبيت',copyLast:'مثل آخر يوم',noHours:'⚠ لم تُدخل ساعات العمل (Arbeitszeit)',statTitle:'جدول الساعات حسب الوظيفة',anTitle:'تحليل ساعات العمل',tyNorm:'عادية',tyNight:'ليلية',tySun:'أحد',tyHol:'عطلة',kTotal:'الساعات',kTop:'الوظيفة الأكثر',kNight:'نسبة الليل',kDays:'أيام العمل',anHint:'اضغط على أي وظيفة لعرض تفاصيلها',anShare:'من الإجمالي',stFunc:'الوظيفة',stMonth:'الشهر',stDays:'أيام',stPay:'الأجر',stYear:'السنة',stNone:'لا توجد ساعات عمل',stTotal:'المجموع',company:'اسم الشركة',vacYear:'الإجازات المدفوعة',vacOf:'من',vacLeft:'متبقٍ',vacUnpaid:'غير مدفوعة',vacOver:'تجاوزت الرصيد بـ',daysU:'يوم',vacDaysYear:'أيام الإجازة المدفوعة سنوياً',lgUnpaid:'غير مدفوعة',mkLink:'إنشاء رابط إعداد / QR',linkHint:'افتح هذا الرابط مرة واحدة على أي جهاز (أو امسح الرمز) فيتصل التطبيق تلقائياً. لا تنشره علناً — فيه كلمة السر.',copyLink:'نسخ الرابط',shareLink:'مشاركة',setupOk:'تم الإعداد — المزامنة تعمل تلقائياً',needUrl:'أدخل الرابط وكلمة السر أولاً',qrErr:'تعذّر إنشاء QR بدون إنترنت — انسخ الرابط بدلاً منه',outMode:'طريقة إخراج PDF',modeJs:'ملف PDF مباشر (jsPDF)',modePrint:'طباعة عادية (تدعم العربية)',outAll:'PDF — الملف كامل',arWarn:'يوجد نص عربي في بيانات هذا الشهر، وملف jsPDF لا يعرض العربية.\n\nموافق = استخدم الطباعة العادية\nإلغاء = تابع بـ jsPDF',libErr:'تعذّر تحميل مكتبة PDF — تحتاج إنترنت لأول مرة. استُخدمت الطباعة العادية.',noLast:'لا يوجد يوم سابق',monthNet:'صافي الشهر',monthHrs:'ساعات',daysW:'أيام',excel:'تصدير Excel',chartTitle:'الصافي اليومي',dayListT:'قائمة الأيام',calMiss:'ناقص',lgWork:'عمل',lgNight:'ليل',lgSun:'أحد',lgHol:'عطلة',lgVac:'إجازة',lgAus:'إلغاء',lgMiss:'بلا إدخال',vOk:'مطابق ✓',vLess:'الكشف أقل من حسابك بـ',vMore:'الكشف أعلى من حسابك بـ',vNone:'أدخل أرقام الكشف للمقارنة',vItems:'بنود مختلفة',copyMail:'نسخ رسالة للمحاسبة (ألماني)',copied:'تم النسخ — الصقها في البريد أو واتساب',noDiff:'لا توجد فروق',theme:'المظهر',iosTip:'لتثبيت التطبيق على آيفون: افتح الرابط في Safari، اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية".',q1:'إدخال واحد بانتظار الإرسال',qN:'إدخالات بانتظار الإرسال',savedOffline:'حُفظ على الهاتف وسيُرسل عند عودة الإنترنت',sent:'تم إرسال الإدخالات المعلّقة إلى الشيت',dup:'يوجد إدخال لهذا التاريخ، سيُضاف إدخال ثانٍ',
+saved:'تم الحفظ',err:'خطأ: ',confirmDel:'حذف هذا الإدخال؟',local:'وضع محلي',online:'✓ متزامن',offline:'⚠ بدون اتصال — آخر نسخة',loading:'⟳ جارٍ المزامنة…',install:'تثبيت',copyLast:'مثل آخر يوم',dupExact:'⚠ هذا السطر مكرر تماماً: يوجد إدخال مطابق بتاريخ {d}',dupDay:'⚠ يوجد إدخال آخر بتاريخ {d}:',dupAsk:'هل أنت متأكد أنك تريد حفظ إدخال ثانٍ لنفس اليوم؟',dupWarn:'أيام فيها أكثر من إدخال:',dupClean:'حذف المكرر المطابق',dupNone:'لا توجد سطور مطابقة تماماً — راجع هذه الأيام يدوياً',dupConfirm:'سيُحذف {n} سطر مكرر مطابق تماماً (يبقى سطر واحد لكل يوم). متابعة؟',dupDone:'حُذف {n} سطر مكرر',connOk:'متصل بـ Google Sheet',connNo:'غير متصل — افتح رابط الإعداد مرة واحدة',lastSync:'آخر مزامنة',tapsLeft:'ضغطات متبقية',unlocked:'تم فتح إعدادات الاتصال',editConn:'تعديل',confirmDisc:'الرابط فارغ — هل تريد قطع الاتصال بالشيت؟',noHours:'⚠ لم تُدخل ساعات العمل (Arbeitszeit)',statTitle:'جدول الساعات حسب الوظيفة',anTitle:'تحليل ساعات العمل',tyNorm:'عادية',tyNight:'ليلية',tySun:'أحد',tyHol:'عطلة',kTotal:'الساعات',kTop:'الوظيفة الأكثر',kNight:'نسبة الليل',kDays:'أيام العمل',anHint:'اضغط على أي وظيفة لعرض تفاصيلها',anShare:'من الإجمالي',stFunc:'الوظيفة',stMonth:'الشهر',stDays:'أيام',stPay:'الأجر',stYear:'السنة',stNone:'لا توجد ساعات عمل',stTotal:'المجموع',company:'اسم الشركة',vacYear:'الإجازات المدفوعة',vacOf:'من',vacLeft:'متبقٍ',vacUnpaid:'غير مدفوعة',vacOver:'تجاوزت الرصيد بـ',daysU:'يوم',vacDaysYear:'أيام الإجازة المدفوعة سنوياً',lgUnpaid:'غير مدفوعة',mkLink:'إنشاء رابط إعداد / QR',linkHint:'افتح هذا الرابط مرة واحدة على أي جهاز (أو امسح الرمز) فيتصل التطبيق تلقائياً. لا تنشره علناً — فيه كلمة السر.',copyLink:'نسخ الرابط',shareLink:'مشاركة',setupOk:'تم الإعداد — المزامنة تعمل تلقائياً',needUrl:'أدخل الرابط وكلمة السر أولاً',qrErr:'تعذّر إنشاء QR بدون إنترنت — انسخ الرابط بدلاً منه',outMode:'طريقة إخراج PDF',modeJs:'ملف PDF مباشر (jsPDF)',modePrint:'طباعة عادية (تدعم العربية)',outAll:'PDF — الملف كامل',arWarn:'يوجد نص عربي في بيانات هذا الشهر، وملف jsPDF لا يعرض العربية.\n\nموافق = استخدم الطباعة العادية\nإلغاء = تابع بـ jsPDF',libErr:'تعذّر تحميل مكتبة PDF — تحتاج إنترنت لأول مرة. استُخدمت الطباعة العادية.',noLast:'لا يوجد يوم سابق',monthNet:'صافي الشهر',monthHrs:'ساعات',daysW:'أيام',excel:'تصدير Excel',chartTitle:'الصافي اليومي',dayListT:'قائمة الأيام',calMiss:'ناقص',lgWork:'عمل',lgNight:'ليل',lgSun:'أحد',lgHol:'عطلة',lgVac:'إجازة',lgAus:'إلغاء',lgMiss:'بلا إدخال',vOk:'مطابق ✓',vLess:'الكشف أقل من حسابك بـ',vMore:'الكشف أعلى من حسابك بـ',vNone:'أدخل أرقام الكشف للمقارنة',vItems:'بنود مختلفة',copyMail:'نسخ رسالة للمحاسبة (ألماني)',copied:'تم النسخ — الصقها في البريد أو واتساب',noDiff:'لا توجد فروق',theme:'المظهر',iosTip:'لتثبيت التطبيق على آيفون: افتح الرابط في Safari، اضغط زر المشاركة ⬆️ ثم "إضافة إلى الشاشة الرئيسية".',q1:'إدخال واحد بانتظار الإرسال',qN:'إدخالات بانتظار الإرسال',savedOffline:'حُفظ على الهاتف وسيُرسل عند عودة الإنترنت',sent:'تم إرسال الإدخالات المعلّقة إلى الشيت',dup:'يوجد إدخال لهذا التاريخ، سيُضاف إدخال ثانٍ',
 F_A:'A · حارس أمان',F_G:'G · مساعد في تشغيل السكة',F_K:'K · حارس معبر سكة',F_L:'L · حارس مساعد',F_O:'O · طالب الفصل الكهربائي',F_W:'W · فني تركيب AWS',F_C:'C · مشرف أمان',F_H:'H · عامل',F_M:'M · تأريض السكة',F_U:'U · مشغّل AWS',F_X:'X · مدقق مخططات',F_Z:'Z · فني/مشروع',F_CU:'C/U · مشرف + AWS'},
 de:{app:'Arbeitszeiten',tabDay:'Tag',tabMonth:'Monat',tabCmp:'Abgleich',tabSet:'Einstellungen',newTitle:'Neuer Eintrag',editTitle:'Eintrag bearbeiten',
 date:'Datum',type:'Art',work:'Arbeit',ausfall:'Ausfall',urlaub:'Urlaub (bezahlt)',unbezahlt:'Unbezahlter Urlaub',frei:'Frei',krank:'Krank',sickHoursT:'Krankheitsstunden',sickRate:'Stundenlohn Krankheit',sickHours:'Std. je Krankheitstag',vacSick:'krank',vacFrei:'frei',lgSick:'krank',lgFrei:'frei',travel:'Nur Fahrt',
@@ -252,7 +253,7 @@ rates:'Stundenlöhne je Funktion (€)',rules:'Regeln und Sätze',holidays:'Feie
 raise:'Lohnerhöhung je Stunde',surBase:'Basis für Zuschläge €',nightPct:'N-Zuschlag % (nur C)',nightFrom:'Nacht ab Uhr',nightTo:'bis Uhr',sunPct:'Sonntagszuschlag %',holPct:'Feiertagszuschlag %',
 kmRate:'Km-Satz €',kmRatePass:'Km-Satz mit Mitfahrer €',vacRate:'Urlaubsstundenlohn',vacHours:'Std. je Urlaubstag',ausfallHours:'Std. je Ausfalltag',
 mealThreshold:'Stundengrenze Verpflegung',mealLow:'Zuschuss genau an der Grenze €',mealHigh:'Zuschuss über der Grenze €',fixedMonthly:'Festbezug monatlich €',deductPct:'Abzüge % (Steuer + SV)',name:'Name',
-saved:'Gespeichert',err:'Fehler: ',confirmDel:'Eintrag löschen?',local:'Lokaler Modus',online:'✓ Synchron',offline:'⚠ Offline — letzte Kopie',loading:'⟳ Synchronisiere…',install:'Installieren',copyLast:'Wie letzter Tag',noHours:'⚠ Arbeitszeit (h) nicht eingetragen',statTitle:'Tabelle: Stunden nach Funktion',anTitle:'Analyse der Arbeitsstunden',tyNorm:'Normal',tyNight:'Nacht',tySun:'Sonntag',tyHol:'Feiertag',kTotal:'Stunden gesamt',kTop:'Häufigste Funktion',kNight:'Nachtanteil',kDays:'Arbeitstage',anHint:'Funktion antippen für Details',anShare:'vom Gesamt',stFunc:'Funktion',stMonth:'Monat',stDays:'Tage',stPay:'Lohn',stYear:'Jahr',stNone:'Keine Arbeitsstunden',stTotal:'Summe',company:'Firma',vacYear:'Bezahlter Urlaub',vacOf:'von',vacLeft:'Rest',vacUnpaid:'unbezahlt',vacOver:'Überschritten um',daysU:'Tage',vacDaysYear:'Urlaubstage pro Jahr',lgUnpaid:'unbezahlt',mkLink:'Einrichtungslink / QR erstellen',linkHint:'Link einmal auf jedem Gerät öffnen (oder QR scannen) — die App verbindet sich automatisch. Nicht öffentlich teilen (enthält Passwort).',copyLink:'Link kopieren',shareLink:'Teilen',setupOk:'Eingerichtet — Synchronisierung läuft automatisch',needUrl:'Zuerst URL und Passwort eingeben',qrErr:'QR ohne Internet nicht möglich — Link kopieren',outMode:'PDF-Ausgabe',modeJs:'PDF-Datei direkt (jsPDF)',modePrint:'Normal drucken (mit Arabisch)',outAll:'PDF — Gesamt',arWarn:'Arabischer Text gefunden; jsPDF kann ihn nicht darstellen.\n\nOK = normal drucken\nAbbrechen = trotzdem jsPDF',libErr:'PDF-Bibliothek nicht ladbar (Internet nötig). Normaler Druck verwendet.',noLast:'Kein vorheriger Tag',monthNet:'Netto Monat',monthHrs:'Stunden',daysW:'Tage',excel:'Excel-Export',chartTitle:'Netto pro Tag',dayListT:'Tagesliste',calMiss:'fehlt',lgWork:'Arbeit',lgNight:'Nacht',lgSun:'Sonntag',lgHol:'Feiertag',lgVac:'Urlaub',lgAus:'Ausfall',lgMiss:'ohne Eintrag',vOk:'Stimmt überein ✓',vLess:'Abrechnung niedriger um',vMore:'Abrechnung höher um',vNone:'Werte der Abrechnung eingeben',vItems:'Positionen abweichend',copyMail:'Nachricht an Buchhaltung kopieren',copied:'Kopiert',noDiff:'Keine Abweichungen',theme:'Design',iosTip:'Installation auf dem iPhone: Link in Safari öffnen, Teilen ⬆️ tippen, dann "Zum Home-Bildschirm".',q1:'1 Eintrag wartet auf Upload',qN:'Einträge warten auf Upload',savedOffline:'Auf dem Handy gespeichert, wird bei Internet gesendet',sent:'Wartende Einträge wurden gesendet',dup:'Für dieses Datum gibt es schon einen Eintrag',
+saved:'Gespeichert',err:'Fehler: ',confirmDel:'Eintrag löschen?',local:'Lokaler Modus',online:'✓ Synchron',offline:'⚠ Offline — letzte Kopie',loading:'⟳ Synchronisiere…',install:'Installieren',copyLast:'Wie letzter Tag',dupExact:'⚠ Doppelter Eintrag: identischer Eintrag am {d} vorhanden',dupDay:'⚠ Am {d} gibt es bereits einen Eintrag:',dupAsk:'Wirklich einen zweiten Eintrag für diesen Tag speichern?',dupWarn:'Tage mit mehreren Einträgen:',dupClean:'Identische Duplikate löschen',dupNone:'Keine identischen Duplikate — bitte manuell prüfen',dupConfirm:'{n} identische Duplikate löschen (ein Eintrag pro Tag bleibt)?',dupDone:'{n} Duplikate gelöscht',connOk:'Mit Google Sheet verbunden',connNo:'Nicht verbunden — Einrichtungslink einmal öffnen',lastSync:'Letzte Synchronisierung',tapsLeft:'Mal tippen',unlocked:'Verbindungseinstellungen entsperrt',editConn:'Bearbeiten',confirmDisc:'URL ist leer — Verbindung zum Sheet trennen?',noHours:'⚠ Arbeitszeit (h) nicht eingetragen',statTitle:'Tabelle: Stunden nach Funktion',anTitle:'Analyse der Arbeitsstunden',tyNorm:'Normal',tyNight:'Nacht',tySun:'Sonntag',tyHol:'Feiertag',kTotal:'Stunden gesamt',kTop:'Häufigste Funktion',kNight:'Nachtanteil',kDays:'Arbeitstage',anHint:'Funktion antippen für Details',anShare:'vom Gesamt',stFunc:'Funktion',stMonth:'Monat',stDays:'Tage',stPay:'Lohn',stYear:'Jahr',stNone:'Keine Arbeitsstunden',stTotal:'Summe',company:'Firma',vacYear:'Bezahlter Urlaub',vacOf:'von',vacLeft:'Rest',vacUnpaid:'unbezahlt',vacOver:'Überschritten um',daysU:'Tage',vacDaysYear:'Urlaubstage pro Jahr',lgUnpaid:'unbezahlt',mkLink:'Einrichtungslink / QR erstellen',linkHint:'Link einmal auf jedem Gerät öffnen (oder QR scannen) — die App verbindet sich automatisch. Nicht öffentlich teilen (enthält Passwort).',copyLink:'Link kopieren',shareLink:'Teilen',setupOk:'Eingerichtet — Synchronisierung läuft automatisch',needUrl:'Zuerst URL und Passwort eingeben',qrErr:'QR ohne Internet nicht möglich — Link kopieren',outMode:'PDF-Ausgabe',modeJs:'PDF-Datei direkt (jsPDF)',modePrint:'Normal drucken (mit Arabisch)',outAll:'PDF — Gesamt',arWarn:'Arabischer Text gefunden; jsPDF kann ihn nicht darstellen.\n\nOK = normal drucken\nAbbrechen = trotzdem jsPDF',libErr:'PDF-Bibliothek nicht ladbar (Internet nötig). Normaler Druck verwendet.',noLast:'Kein vorheriger Tag',monthNet:'Netto Monat',monthHrs:'Stunden',daysW:'Tage',excel:'Excel-Export',chartTitle:'Netto pro Tag',dayListT:'Tagesliste',calMiss:'fehlt',lgWork:'Arbeit',lgNight:'Nacht',lgSun:'Sonntag',lgHol:'Feiertag',lgVac:'Urlaub',lgAus:'Ausfall',lgMiss:'ohne Eintrag',vOk:'Stimmt überein ✓',vLess:'Abrechnung niedriger um',vMore:'Abrechnung höher um',vNone:'Werte der Abrechnung eingeben',vItems:'Positionen abweichend',copyMail:'Nachricht an Buchhaltung kopieren',copied:'Kopiert',noDiff:'Keine Abweichungen',theme:'Design',iosTip:'Installation auf dem iPhone: Link in Safari öffnen, Teilen ⬆️ tippen, dann "Zum Home-Bildschirm".',q1:'1 Eintrag wartet auf Upload',qN:'Einträge warten auf Upload',savedOffline:'Auf dem Handy gespeichert, wird bei Internet gesendet',sent:'Wartende Einträge wurden gesendet',dup:'Für dieses Datum gibt es schon einen Eintrag',
 F_A:'A · Sicherungsposten',F_G:'G · Helfer im Bahnbetrieb',F_K:'K · Bahnübergangsposten',F_L:'L · Hilfsposten',F_O:'O · Schaltantragsteller',F_W:'W · AWS-Monteur',F_C:'C · Sicherungsaufsicht',F_H:'H · Arbeiter',F_M:'M · Bahnerder',F_U:'U · AWS-Bediener',F_X:'X · Planprüfer',F_Z:'Z · Projektant/Techn.',F_CU:'C/U · Aufsicht + AWS'}
 };
 
@@ -263,6 +264,8 @@ const FUNCS=['A','C','G','H','K','L','M','O','U','W','X','Z','CU'];
 const isVac=t=>['urlaub','unbezahlt','frei','krank'].includes(t);
 // الإجازة المدفوعة بلا ساعات مسجّلة (إدخالات قديمة حُفظت 0) تُحسب بساعات يوم الإجازة من الإعدادات
 const effH=(e,S)=>e.type==='urlaub'?(num(e.paidHours)||num(S.vacHours)||7.5):e.type==='krank'?(num(e.paidHours)||num(S.sickHours)||7.5):(e.type==='unbezahlt'||e.type==='frei')?0:num(e.paidHours);
+// الأوقات والاستراحة تخص أيام العمل فقط (إدخالات قديمة حُفظت معها أوقات افتراضية)
+const wT=(e,k)=>e.type==='work'?(e[k]||''):'';
 const noFunc=e=>isVac(e.type)||e.type==='travel';
 const r2=x=>Math.round((Number(x)||0)*100)/100;
 const num=x=>Number(String(x==null?'':x).replace(',','.').trim())||0;
@@ -387,7 +390,7 @@ async function sync(){
   if(queue.length||!navigator.onLine){online=false;setStatus(t('offline'));renderAll();return;}
   try{const d=await api('getAll');
     db={settings:Object.assign({},DEF,clean(d.settings)),holidays:d.holidays.length?d.holidays:DEF_HOL,entries:d.entries,adjustments:d.adjustments,payslips:d.payslips};
-    persist();online=true;
+    persist();online=true;cfg.lastSyncAt=Date.now();ls('rw_cfg',cfg);
   }catch(e){online=false;if(!(e instanceof NetErr))toast(t('err')+e.message);}
   renderAll();
 }
@@ -423,9 +426,14 @@ function applyTheme(){const th=cfg.theme||'auto';if(th==='auto')delete document.
 
 /* ================= DAY FORM ================= */
 function readForm(){
-  return {id:editId||uid(),date:$('f-date').value,type:$('f-type').value,place:$('f-place').value.trim(),func:$('f-func').value,
+  const r={id:editId||uid(),date:$('f-date').value,type:$('f-type').value,place:$('f-place').value.trim(),func:$('f-func').value,
     start:$('f-start').value,end:$('f-end').value,pause:$('f-pause').value,paidHours:$('f-hours').value,
     route:$('f-route').value.trim(),km:$('f-km').value,passenger:$('f-pass').checked,notes:$('f-notes').value.trim()};
+  // لا تُحفظ أوقات أو وظيفة مخفية لأيام الغياب
+  if(r.type!=='work'){r.start='';r.end='';r.pause='';}
+  if(noFunc(r))r.func='';
+  if(isVac(r.type)){r.km='';r.route='';r.passenger=false;}
+  return r;
 }
 function fillForm(e){
   editId=e?e.id:null;
@@ -487,9 +495,23 @@ function renderSum(){
   <div class="kpi"><span>${t('monthHrs')}</span><b>${hrs(tt.workHours+tt.vacHours+tt.sickHours+tt.adjHours)}</b></div>
   <div class="kpi"><span>km · ${list.length} ${t('daysW')}</span><b>${hrs(tt.km)}</b></div></div>`;
 }
+let saving=false;
+// مقارنة بعد تجاهل الحقول التي لا معنى لها لنوع اليوم (أوقات/وظيفة أيام الغياب)
+const normE=e=>({type:e.type,func:noFunc(e)?'':(e.func||''),start:wT(e,'start'),end:wT(e,'end'),h:String(effH(e,S())),km:isVac(e.type)?'':String(num(e.km)),route:isVac(e.type)?'':(e.route||''),place:(e.place||'').trim()});
+const sameEntry=(a,b)=>{const x=normE(a),y=normE(b);return Object.keys(x).every(k=>x[k]===y[k]);};
 async function saveEntry(){
+  if(saving)return; // يمنع الحفظ المزدوج عند الضغط مرتين بسرعة
   const e=readForm();if(!e.date)return;
-  if(!editId&&db.entries.some(x=>x.date===e.date))toast(t('dup'));
+  const others=db.entries.filter(x=>x.date===e.date&&x.id!==e.id);
+  if(others.length){
+    const exact=others.some(x=>sameEntry(x,e));
+    const msg=(exact?t('dupExact'):t('dupDay')).replace('{d}',ddmm(e.date))+'\n\n'+others.map(x=>`• ${t(x.type)} ${x.place||''} ${x.func?fcode(x.func):''} ${x.start?x.start+'–'+x.end:''} ${effH(x,S())?hrs(effH(x,S()))+' h':''}`).join('\n')+'\n\n'+t('dupAsk');
+    if(!confirm(msg))return;
+  }
+  saving=true;$('saveBtn').disabled=true;$('saveBtn').style.opacity=.6;
+  try{await doSave(e);}finally{saving=false;$('saveBtn').disabled=false;$('saveBtn').style.opacity='';}
+}
+async function doSave(e){
   Object.assign(e,calcEntry(e,S(),holSet()));
   let res;try{res=await write('saveEntry',e);}catch(err){toast(t('err')+err.message);return;}
   const i=db.entries.findIndex(x=>x.id===e.id);if(i>=0)db.entries[i]=e;else db.entries.push(e);
@@ -514,14 +536,17 @@ function renderMonth(){
   $('dayList').innerHTML=list.length?list.map(e=>{const c=calcEntry(e,S(),hs);
     const tags=(c.nightH?`<span class="tag t-n">N ${hrs(c.nightH)}</span>`:'')+(c.sunH?`<span class="tag t-s">So ${hrs(c.sunH)}</span>`:'')+(c.holH?`<span class="tag t-h">FT ${hrs(c.holH)}</span>`:'')+(e.type!=='work'?`<span class="tag t-x">${t(e.type)}</span>`:'');
     return `<div class="day" data-id="${e.id}"><div><div class="d">${ddmm(e.date)} ${dayName(e.date)} · ${esc(e.place)} ${e.func&&!isVac(e.type)&&e.type!=='travel'?'· '+fcode(e.func):''}${tags}</div>
-    <div class="s">${e.start?e.start+'–'+e.end+' · ':''}${(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S()))+' '+t('hrs')+' · ':''}${e.km?hrs(e.km)+' km':''}</div></div>
+    <div class="s">${wT(e,'start')?e.start+'–'+e.end+' · ':''}${(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S()))+' '+t('hrs')+' · ':''}${e.km?hrs(e.km)+' km':''}</div></div>
     <div class="n" style="text-align:end"><b>${eur(c.net)}</b><div class="s">${eur(c.taxable+c.taxfree)}</div></div></div>`;}).join(''):`<div class="hint">${t('noEntries')}</div>`;
   document.querySelectorAll('.day').forEach(el=>el.onclick=()=>{fillForm(db.entries.find(x=>x.id===el.dataset.id));show('day');});
   // أيام بلا إدخال
   const [y,m]=mon.split('-').map(Number);const days=new Date(Date.UTC(y,m,0)).getUTCDate();const have=new Set(list.map(e=>e.date));const td=today();const miss=[];
   for(let d=1;d<=days;d++){const ds=`${mon}-${String(d).padStart(2,'0')}`;if(ds>td)break;const wd=new Date(Date.UTC(y,m-1,d)).getUTCDay();if(wd>0&&wd<6&&!have.has(ds)&&!hs.has(ds))miss.push(ddmm(ds));}
   renderVac(mon);renderFuncStats(mon);renderAnalytics(mon);renderCal(mon,list,hs,td);renderChart(mon,list,hs);renderSum();
-  $('missing').innerHTML=miss.length?`<div class="warn">${t('missing')} ${miss.join('، ')}</div>`:'';
+  const cnt={};list.forEach(e=>cnt[e.date]=(cnt[e.date]||0)+1);const dupDays=Object.keys(cnt).filter(d=>cnt[d]>1).sort();
+  const dupHtml=dupDays.length?`<div class="warn" style="border-color:var(--bad);color:var(--bad)">${t('dupWarn')} ${dupDays.map(d=>ddmm(d)+' (×'+cnt[d]+')').join('، ')}<div class="btns" style="margin-top:8px"><button class="danger" id="dupCleanBtn">${t('dupClean')}</button></div></div>`:'';
+  $('missing').innerHTML=dupHtml+(miss.length?`<div class="warn">${t('missing')} ${miss.join('، ')}</div>`:'');
+  if($('dupCleanBtn'))$('dupCleanBtn').onclick=()=>cleanDups(list);
   const R=(k,v,cls,z)=>z===0?'':`<tr class="${cls||''}"><td>${k}</td><td class="n">${v}</td></tr>`;
   $('monthTotals').innerHTML=`<table>
    ${R(t('workHours'),hrs(tt.workHours)+(tt.adjHours?' + '+hrs(tt.adjHours):'')+' '+t('hrs'))}${R(t('vacHours'),hrs(tt.vacHours)+' '+t('hrs'),'',tt.vacHours)}${R(t('sickHoursT'),hrs(tt.sickHours)+' '+t('hrs'),'',tt.sickHours)}
@@ -544,7 +569,7 @@ async function addAdj(){
 function printMonth(part){part=part||'all';
   const mon=$('m-month').value;const {list,t:tt}=monthSummary(mon,db.entries,db.adjustments,S(),holSet());
   const L=cfg.lang;cfg.lang='de';
-  const rows=list.map(e=>`<tr><td>${ddmm(e.date)}</td><td>${esc(e.place)}</td><td>${noFunc(e)?'':fcode(e.func)}</td><td>${e.start||''}</td><td>${e.end||''}</td><td>${e.pause||''}</td><td>${(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S())):((e.type==='unbezahlt'||e.type==='frei')?'0':'')}</td><td>${esc(e.route)}${e.type==='ausfall'?' (Ausfall)':''}</td><td>${e.km?hrs(e.km):''}${(e.passenger===true||e.passenger==='true')?' +1':''}</td></tr>`).join('');
+  const rows=list.map(e=>`<tr><td>${ddmm(e.date)}</td><td>${esc(e.place)}</td><td>${noFunc(e)?'':fcode(e.func)}</td><td>${wT(e,'start')}</td><td>${wT(e,'end')}</td><td>${wT(e,'pause')}</td><td>${(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S())):((e.type==='unbezahlt'||e.type==='frei')?'0':'')}</td><td>${esc(e.route)}${e.type==='ausfall'?' (Ausfall)':''}</td><td>${e.km?hrs(e.km):''}${(e.passenger===true||e.passenger==='true')?' +1':''}</td></tr>`).join('');
   const P=(k,v)=>`<tr><td>${k}</td><td style="text-align:right">${v}</td></tr>`;
   const head=`<div style="display:flex;justify-content:space-between"><b>${esc(S().company||'')}</b><span>Name: ${esc(S().name)} · ${mon.split('-').reverse().join('/')}</span></div>`;
   const hoursHtml=`<h1>Stundennachweis Personal</h1>
@@ -590,7 +615,7 @@ function makePDF(mon,part){
   let y=24;
   if(part!=='calc'){
     doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(0);doc.text('Stundennachweis Personal',105,y,{align:'center'});
-    const body=list.map(e=>[ddmm(e.date).replace(/\.$/,''),e.place||'',noFunc(e)?'':fcode(e.func),e.start||'',e.end||'',e.pause||'',(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S())):((e.type==='unbezahlt'||e.type==='frei')?'0':''),(e.route||'')+(e.type==='ausfall'?' (Ausfall)':''),(e.km?hrs(e.km):'')+((e.passenger===true||e.passenger==='true')?' +1':'')]);
+    const body=list.map(e=>[ddmm(e.date).replace(/\.$/,''),e.place||'',noFunc(e)?'':fcode(e.func),wT(e,'start'),wT(e,'end'),wT(e,'pause'),(e.type==='urlaub'||e.type==='krank'||e.paidHours)?hrs(effH(e,S())):((e.type==='unbezahlt'||e.type==='frei')?'0':''),(e.route||'')+(e.type==='ausfall'?' (Ausfall)':''),(e.km?hrs(e.km):'')+((e.passenger===true||e.passenger==='true')?' +1':'')]);
     doc.autoTable(Object.assign({},common,{startY:y+3,
       head:[['Datum','Arbeitsstelle','Funktion','Beginn','Ende','Pause (h)','Arbeitszeit (h)','Strecke (von-bis)','Gefahrene Km']],
       body,foot:[['Gesamt','','','','','',hrs(tt.workHours+tt.vacHours+tt.sickHours),'',hrs(tt.km)]],showFoot:'lastPage',
@@ -665,6 +690,15 @@ function renderAnalytics(mon){
   $('analytics').innerHTML=kpis+legend+rows+`<div class="hint" style="margin-top:6px">${t('anHint')}</div>`;
   document.querySelectorAll('#analytics .an-row').forEach(r=>r.onclick=()=>{anSel=anSel===r.dataset.f?null:r.dataset.f;renderAnalytics(mon);});
 }
+async function cleanDups(list){
+  const seen=[];const del=[];
+  list.slice().sort((a,b)=>String(a.updated||a.id).localeCompare(String(b.updated||b.id))).forEach(e=>{
+    if(seen.some(x=>x.date===e.date&&sameEntry(x,e)))del.push(e);else seen.push(e);});
+  if(!del.length){toast(t('dupNone'));return;}
+  if(!confirm(t('dupConfirm').replace('{n}',del.length)))return;
+  for(const e of del){try{await write('deleteEntry',{id:e.id});}catch(err){toast(t('err')+err.message);return;}}
+  const ids=new Set(del.map(e=>e.id));db.entries=db.entries.filter(e=>!ids.has(e.id));persist();renderMonth();toast(t('dupDone').replace('{n}',del.length));
+}
 function renderVac(mon){
   const y=mon.slice(0,4);const ys=db.entries.filter(e=>String(e.date).startsWith(y));
   const paid=new Set(ys.filter(e=>e.type==='urlaub').map(e=>e.date)).size;
@@ -692,6 +726,7 @@ function renderCal(mon,list,hs,td){
     let cls='',sub='';
     if(es){const e=es[0];const c=calcEntry(e,S(),hs);cls=dayClass(e,c);sub=e.type==='urlaub'?'Url':e.type==='unbezahlt'?'UB':e.type==='krank'?'Kr':e.type==='frei'?'Fr':e.type==='ausfall'?'Aus':(e.type==='travel'?'km':fcode(e.func));}
     else if(ds<=td&&wd>0&&wd<6&&!hs.has(ds)){cls='c-miss';sub=t('calMiss');}
+    if(es&&es.length>1)sub=(sub?sub+' ':'')+'×'+es.length;
     h+=`<button type="button" class="cell ${cls} ${ds===td?'today':''}" data-date="${ds}" data-id="${es?es[0].id:''}">${d}${sub?`<small>${sub}</small>`:''}</button>`;
   }
   const L=(c,k)=>`<span><i class="${c}"></i>${t(k)}</span>`;
@@ -716,7 +751,7 @@ function exportCSV(){
   const q=x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"';
   const head=['Datum','Art','Arbeitsstelle','Funktion','Beginn','Ende','Pause (h)','Arbeitszeit (h)','Strecke','Km','Mitfahrer','Stundenlohn','Grundlohn','Nacht h','N-Zuschlag','Sonntag h','So-Zuschlag','Feiertag h','FT-Zuschlag','Fahrgeld','Verpflegung','Netto (geschätzt)','Notiz'];
   const rows=list.map(e=>{const c=calcEntry(e,S(),hs);const p=e.date.split('-');
-    return [p[2]+'.'+p[1]+'.'+p[0],T.de[e.type],e.place,noFunc(e)?'':fcode(e.func),e.start,e.end,n(e.pause),n(effH(e,S())),e.route,n(e.km),(e.passenger===true||e.passenger==='true')?'ja':'',n(c.rate),n(c.base),n(c.nightH),n(c.nightAmt),n(c.sunH),n(c.sunAmt),n(c.holH),n(c.holAmt),n(c.kmAmt),n(c.meal),n(c.net),e.notes];});
+    return [p[2]+'.'+p[1]+'.'+p[0],T.de[e.type],e.place,noFunc(e)?'':fcode(e.func),wT(e,'start'),wT(e,'end'),wT(e,'pause')?n(e.pause):'',n(effH(e,S())),e.route,n(e.km),(e.passenger===true||e.passenger==='true')?'ja':'',n(c.rate),n(c.base),n(c.nightH),n(c.nightAmt),n(c.sunH),n(c.sunAmt),n(c.holH),n(c.holAmt),n(c.kmAmt),n(c.meal),n(c.net),e.notes];});
   rows.push(['Gesamt','','','','','','',n(tt.workHours+tt.vacHours+tt.sickHours),'',n(tt.km),'','',n(tt.base),n(tt.nightH),n(tt.nightAmt),n(tt.sunH),n(tt.sunAmt),n(tt.holH),n(tt.holAmt),n(tt.kmAmt),n(tt.meal),n(tt.net),'']);
   const csv='\ufeff'+[head,...rows].map(r=>r.map(q).join(';')).join('\r\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
@@ -765,7 +800,8 @@ async function saveSlip(){
 /* ================= SETTINGS ================= */
 const RULES=['company','name','raise','surBase','nightPct','nightFrom','nightTo','sunPct','holPct','kmRate','kmRatePass','vacRate','vacHours','ausfallHours','mealThreshold','mealLow','mealHigh','deductPct','vacDaysYear','sickRate','sickHours'];
 function renderSet(){
-  $('s-url').value=cfg.url;$('s-key').value=cfg.key;
+  if($('s-url').readOnly){$('s-url').value=cfg.url;$('s-key').value=cfg.key;}
+  renderConnStatus();
   $('rateForm').innerHTML='<div class="row">'+FUNCS.map(f=>`<div><label>${t('F_'+f)}</label><input inputmode="decimal" id="s-rate_${f}" value="${S()['rate_'+f]}"></div>`).join('')+'</div>';
   $('ruleForm').innerHTML='<div class="row">'+RULES.map(k=>`<div><label>${t(k)}</label><input ${k==='name'||k==='company'?'':'inputmode="decimal"'} id="s-${k}" value="${esc(S()[k])}"></div>`).join('')+'</div>';
   $('s-hol').value=db.holidays.map(h=>h.date+' '+h.name).join('\n');
@@ -777,7 +813,9 @@ async function saveSet(){
   Object.assign(db.settings,o);db.holidays=hol;persist();toast(t('saved'));renderAll();
 }
 async function connect(){
-  cfg.url=$('s-url').value.trim();cfg.key=$('s-key').value.trim();ls('rw_cfg',cfg);
+  const nu=$('s-url').value.trim();
+  if(!nu&&cfg.url&&!confirm(t('confirmDisc'))){$('s-url').value=cfg.url;return;}
+  cfg.url=nu;cfg.key=$('s-key').value.trim();ls('rw_cfg',cfg);setConnEdit(false);
   pushLocal();await sync();
 }
 /* يرفع البيانات المحلية الموجودة على هذا الجهاز إلى الشيت (مرة عند الربط) — بدون سؤال */
@@ -808,8 +846,36 @@ async function makeLink(){
   catch(e){$('qr').classList.add('hidden');toast(t('qrErr'));}
 }
 
+/* ---- قسم الاتصال المخفي: يُفتح بـ 7 ضغطات على عنوان التطبيق ---- */
+let taps=0,tapTimer=null,lockTimer=null;
+function renderConnStatus(){
+  const ok=!!cfg.url;const at=cfg.lastSyncAt?new Date(cfg.lastSyncAt):null;
+  const when=at?at.toLocaleString(cfg.lang==='de'?'de-DE':'ar',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+  $('connStatus').innerHTML=`<div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">${ok?'✅':'⚠️'}</span>
+   <div><b>${t(ok?'connOk':'connNo')}</b>${ok?`<div class="hint">${t('lastSync')}: ${when}</div>`:''}</div></div>`;
+}
+function setConnEdit(on){
+  $('s-url').readOnly=!on;$('s-key').readOnly=!on;
+  $('editConnBtn').classList.toggle('hidden',on);$('connBtn').classList.toggle('hidden',!on);
+  if(!on){$('s-key').type='password';}
+}
+function lockConn(){
+  $('connCard').classList.add('hidden');$('linkBox').classList.add('hidden');setConnEdit(false);
+  $('s-url').value=cfg.url;$('s-key').value=cfg.key;clearTimeout(lockTimer);
+}
+function unlockConn(){
+  $('connCard').classList.remove('hidden');toast(t('unlocked'));show('set');
+  clearTimeout(lockTimer);lockTimer=setTimeout(lockConn,120000); // يُقفل تلقائياً بعد دقيقتين
+  setTimeout(()=>$('connCard').scrollIntoView({behavior:'smooth',block:'start'}),50);
+}
+function titleTap(){
+  taps++;clearTimeout(tapTimer);tapTimer=setTimeout(()=>taps=0,1500);
+  if(taps>=7){taps=0;unlockConn();}else if(taps>=4)toast(`${7-taps} ${t('tapsLeft')}`);
+}
+
 /* ================= NAV ================= */
 function show(v){
+  if(v!=='set')lockConn();
   ['day','month','cmp','set'].forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v));
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
   if(v==='month')renderMonth();if(v==='cmp')renderCmp();if(v==='set')renderSet();window.scrollTo(0,0);
@@ -835,6 +901,10 @@ const autoSync=()=>{if(cfg.url&&navigator.onLine&&!flushing){lastSync=Date.now()
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&(queue.length||Date.now()-lastSync>60000))autoSync();});
 setInterval(()=>{if(document.hidden)return;if(queue.length||Date.now()-lastSync>5*60000)autoSync();},60000);
 $('linkBtn').onclick=makeLink;
+$('hTitle').addEventListener('click',titleTap);$('hTitle').style.userSelect='none';
+$('lockBtn').onclick=lockConn;
+$('eyeBtn').onclick=()=>{$('s-key').type=$('s-key').type==='password'?'text':'password';};
+$('editConnBtn').onclick=()=>{setConnEdit(true);clearTimeout(lockTimer);lockTimer=setTimeout(lockConn,300000);$('s-url').focus();};
 $('copyLinkBtn').onclick=async()=>{const v=$('linkTxt').value;try{await navigator.clipboard.writeText(v);}catch(e){$('linkTxt').select();document.execCommand('copy');}toast(t('copied'));};
 $('shareLinkBtn').onclick=()=>{const v=$('linkTxt').value;if(navigator.share)navigator.share({title:t('app'),url:v}).catch(()=>{});else $('copyLinkBtn').click();};
 window.addEventListener('hashchange',()=>{if(readSetupLink())sync();});
