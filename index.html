@@ -191,7 +191,7 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
   <section id="v-set" class="hidden">
     <div class="card" id="connStatus"></div>
     <div class="card hidden" id="connCard"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 data-t="connection" style="margin:0"></h2><button class="sec mini" id="lockBtn">🔒</button></div>
-      <label data-t="url"></label><input id="s-url" dir="ltr" readonly placeholder="https://script.google.com/macros/s/AKfycbyxk2Y-QAsmjK9Vo-Gn_mHFQLkYaACt4nZDHCl46qiQjE1vuhSH50sFomRxTh6SEo-Qmw/exec">
+      <label data-t="url"></label><input id="s-url" dir="ltr" readonly placeholder="https://script.google.com/macros/s/.../exec">
       <label data-t="key"></label><div style="display:flex;gap:6px"><input id="s-key" dir="ltr" type="password" readonly autocomplete="off" style="flex:1"><button class="sec mini" id="eyeBtn" type="button" style="min-width:46px">👁</button></div>
       <div class="hint" data-t="localNote"></div>
       <div class="btns"><button class="sec" id="editConnBtn" data-t="editConn"></button><button id="connBtn" class="hidden" data-t="connect"></button></div>
@@ -330,6 +330,12 @@ const DEF_HOL=[['2026-01-01','Neujahr'],['2026-04-03','Karfreitag'],['2026-04-06
 
 function ls(k,v){try{if(v===undefined){const x=localStorage.getItem(k);return x?JSON.parse(x):null;}localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
 let cfg=Object.assign({url:'',key:'',lang:'ar'},ls('rw_cfg')||{});
+// رابط الشيت الافتراضي: كل جهاز يتصل به تلقائياً بدون إعداد
+const DEFAULT_URL='https://script.google.com/macros/s/AKfycbyxk2Y-QAsmjK9Vo-Gn_mHFQLkYaACt4nZDHCl46qiQjE1vuhSH50sFomRxTh6SEo-Qmw/exec';
+const DEFAULT_KEY='260515';
+const URL_VER=1; // ارفع الرقم عند تغيير الرابط الافتراضي ليُستبدل على كل الأجهزة
+let urlMigrated=false;
+if(cfg.urlVer!==URL_VER){urlMigrated=!!cfg.url&&cfg.url!==DEFAULT_URL;cfg.url=DEFAULT_URL;cfg.key=DEFAULT_KEY;cfg.urlVer=URL_VER;cfg.lastErr='';try{localStorage.setItem('rw_cfg',JSON.stringify(cfg));}catch(e){}}
 let db=ls('rw_db')||{settings:Object.assign({},DEF),holidays:DEF_HOL,entries:[],adjustments:[],payslips:[]};
 // يتجاهل أي إعداد رقمي غير مفهوم (مثلاً تاريخ من الشيت) ويستخدم القيمة الافتراضية بدل الصفر
 const okNum=v=>/^\s*-?\d+([.,]\d+)?\s*$/.test(String(v));
@@ -930,6 +936,7 @@ $('themeBtn').onclick=()=>{const o=['auto','light','dark'];cfg.theme=o[(o.indexO
 $('langBtn').onclick=()=>{cfg.lang=cfg.lang==='de'?'ar':'de';ls('rw_cfg',cfg);renderAll();};
 const curM=today().slice(0,7);$('m-month').value=curM;$('c-month').value=curM;
 readSetupLink();
+if(urlMigrated){queue=[];saveQ();askPushLocal();} // رابط جديد: لا تُرسل تعديلات قديمة دون سؤال
 renderAll();sync();
 window.addEventListener('online',()=>sync());
 window.addEventListener('offline',()=>{online=false;setStatus(t('offline'));});
