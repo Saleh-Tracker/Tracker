@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ساعات العمل</title>
-<meta name="theme-color" content="#1f4e8c">
+<meta name="theme-color" content="#1c3354">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -13,13 +13,15 @@
 <meta name="apple-mobile-web-app-title" content="Arbeitszeiten">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
-:root{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--bg:#f3f5f9;--card:#fff;--ink:#1b2430;--muted:#6b7686;--line:#e2e7ef;--brand:#1f4e8c;--brand2:#e8eef7;--ok:#1e8a4c;--bad:#c0392b;--warn:#b7791f;--night:#4b3f9e;--sun:#b7791f;--hol:#c0392b;--warnbg:#fff6e5;--warnfg:#7a5200;--warnbd:#f0d49a;--vac:#1e8a4c}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--bg:#11161d;--card:#1a212b;--ink:#e6ebf2;--muted:#95a1b2;--line:#2a3340;--brand:#6fa3e8;--brand2:#22324a;--ok:#4cc27e;--bad:#ef6b5b;--warn:#e3b04b;--night:#a99cf2;--sun:#e3b04b;--hol:#ef6b5b;--warnbg:#3a2e14;--warnfg:#f0d49a;--warnbd:#6b5420}}
-:root[data-theme="dark"]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--bg:#11161d;--card:#1a212b;--ink:#e6ebf2;--muted:#95a1b2;--line:#2a3340;--brand:#6fa3e8;--brand2:#22324a;--ok:#4cc27e;--bad:#ef6b5b;--warn:#e3b04b;--night:#a99cf2;--sun:#e3b04b;--hol:#ef6b5b;--warnbg:#3a2e14;--warnfg:#f0d49a;--warnbd:#6b5420}
+:root{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--bg:#f1f3f6;--card:#fff;--ink:#17202c;--muted:#5f6b7b;--line:#dfe4ec;--brand:#1c3354;--brand2:#e6ebf3;--head:#1c3354;--vis:#f2c230;--vison:#1d1a0c;--ok:#1e8a4c;--bad:#c0392b;--warn:#b7791f;--night:#4b3f9e;--sun:#b7791f;--hol:#c0392b;--warnbg:#fff6e5;--warnfg:#7a5200;--warnbd:#f0d49a;--vac:#1e8a4c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--bg:#10151d;--card:#18202b;--ink:#e6ebf2;--muted:#95a1b2;--line:#2a3340;--brand:#8fb1e6;--brand2:#212f45;--head:#16233a;--ok:#4cc27e;--bad:#ef6b5b;--warn:#e3b04b;--night:#a99cf2;--sun:#e3b04b;--hol:#ef6b5b;--warnbg:#3a2e14;--warnfg:#f0d49a;--warnbd:#6b5420}}
+:root[data-theme="dark"]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--bg:#10151d;--card:#18202b;--ink:#e6ebf2;--muted:#95a1b2;--line:#2a3340;--brand:#8fb1e6;--brand2:#212f45;--head:#16233a;--ok:#4cc27e;--bad:#ef6b5b;--warn:#e3b04b;--night:#a99cf2;--sun:#e3b04b;--hol:#ef6b5b;--warnbg:#3a2e14;--warnfg:#f0d49a;--warnbd:#6b5420}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:15px;padding-bottom:76px}
-header{background:#1f4e8c;color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
-header h1{font-size:18px;margin:0}
+header{background:var(--head);color:#fff;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+header h1{font-size:19px;margin:0;letter-spacing:-.2px}
+header button.sec{background:rgba(255,255,255,.12);color:#fff}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 header .st{font-size:12px;opacity:.85}
 main{padding:12px;max-width:720px;margin:auto}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
@@ -39,7 +41,7 @@ button.danger{background:transparent;color:var(--bad);border:1px solid var(--bad
 nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;z-index:6;padding-bottom:env(safe-area-inset-bottom)}
 nav button{flex:1;background:none;color:var(--muted);border-radius:0;padding:10px 4px;font-size:12px}
 nav button b{display:block;font-size:20px;line-height:1.2}
-nav button.on{color:var(--brand);font-weight:700}
+nav button.on{color:var(--brand);font-weight:700;box-shadow:inset 0 2px 0 var(--brand)}
 table{width:100%;border-collapse:collapse;font-size:14px}
 td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:start}
 td.n,th.n{text-align:end;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -48,7 +50,7 @@ tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
 .calc{font-size:11.5px;color:var(--muted);opacity:.85;direction:ltr;text-align:left;margin-top:2px}
 html[dir=rtl] .calc{text-align:right}
 .nohrs{background:rgba(192,57,43,.12);color:var(--bad);border:1px solid var(--bad);border-radius:10px;padding:8px 12px;font-size:14px;font-weight:600;margin-bottom:8px}
-.big{font-size:22px;font-weight:700}
+.big{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .kpi{background:var(--brand2);border-radius:10px;padding:10px}.kpi span{display:block;font-size:12px;color:var(--muted)}
 .day{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
@@ -68,10 +70,10 @@ html[dir=rtl] .calc{text-align:right}
 .chip.on{background:var(--brand);color:#fff}
 .mini{padding:6px 12px;min-height:34px;font-size:13px}
 .savebar{position:sticky;bottom:72px;z-index:4;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 18px rgba(0,0,0,.14);margin-bottom:12px}
-.savebar .live{flex:1;line-height:1.2}.savebar .live span{display:block;font-size:12px;color:var(--muted)}.savebar .live b{font-size:22px}
-.savebar button{flex:0 0 40%}
+.savebar .live{flex:1;line-height:1.2}.savebar .live span{display:block;font-size:12px;color:var(--muted)}.savebar .live b{font-size:22px;font-variant-numeric:tabular-nums}
+.savebar button{flex:0 0 40%;background:var(--vis);color:var(--vison);font-weight:700}
 .sum{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px}
-.sum .kpi b{font-size:18px;white-space:nowrap}.sum .kpi:first-child b{font-size:20px}
+.sum .kpi b{font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}.sum .kpi:first-child b{font-size:20px}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .cal .h{font-size:11px;color:var(--muted);text-align:center;padding-bottom:2px}
 .cell{aspect-ratio:1;border-radius:9px;background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink);padding:0;min-height:0}
@@ -111,6 +113,12 @@ html[dir=rtl] .calc{text-align:right}
 .an-tip{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;margin-top:6px}
 .an-tip td{border:0;padding:2px 4px}
 details summary{cursor:pointer;font-weight:700;padding:4px 0}
+.shift{margin-top:12px}
+.shift svg{display:block;width:100%;height:auto;overflow:visible}
+.shift .ax{fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}
+.shift-cap{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted);margin-top:10px}
+.shift-cap b{color:var(--ink);font-variant-numeric:tabular-nums}
+.shift-cap i{display:inline-block;width:10px;height:10px;border-radius:3px;vertical-align:-1px;margin-inline-end:5px}
 @media print{
   body{padding:0;background:#fff;color:#000}
   header,nav,main,.toast{display:none!important}
@@ -140,6 +148,7 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
         <div><label data-t="end"></label><input type="time" id="f-end"></div>
         <div><label data-t="pause"></label><input type="number" step="0.25" min="0" id="f-pause"></div>
       </div>
+      <div class="shift" id="shiftBar"></div>
       <div class="g-hours"><label data-t="paidHours"></label><input type="number" step="0.25" min="0" id="f-hours"></div>
       <div class="g-km"><label data-t="route"></label><input id="f-route"></div>
       <div class="row g-km">
@@ -480,8 +489,28 @@ function resultTable(c,e){
   <div class="kpi"><span>${t('gross')}</span><b>${eur(c.taxable+c.taxfree)}</b></div><div class="kpi"><span>${t('net')}</span><b class="big">${eur(c.net)}</b></div></div>
   <div class="calc" style="margin-top:6px">${eur(c.taxable)} × (1 − ${hrs(St.deductPct)}%) + ${eur(c.taxfree)} = ${eur(c.net)}</div>`;
 }
-function calcPreview(){const e=readForm();if(!e.date){$('dayResult').innerHTML='';$('liveNet').textContent=eur(0);return;}const c=calcEntry(e,S(),holSet());$('dayResult').innerHTML=resultTable(c,e);$('liveNet').textContent=eur(c.net);
+function calcPreview(){const e=readForm();if(!e.date){$('dayResult').innerHTML='';$('liveNet').textContent=eur(0);return;}const c=calcEntry(e,S(),holSet());$('dayResult').innerHTML=resultTable(c,e);$('liveNet').textContent=eur(c.net);$('shiftBar').innerHTML=shiftBarHtml(e,c);
   $('noHrs').classList.toggle('hidden',!((e.type==='work'||e.type==='ausfall')&&!num(e.paidHours)));}
+// 24 hours in 15-minute slots: the shift in solid colour, night / Sunday / holiday hours tinted behind it
+function shiftBarHtml(e,c){
+  if(e.type!=='work'||!e.start||!e.end||!e.date)return '';
+  const s=S(),hol=holSet(),t0=Date.parse(e.date+'T00:00:00Z');
+  const a=hm(e.start);let b=hm(e.end);if(b<=a)b+=1440;
+  const w0=b>1440?720:0,nf=num(s.nightFrom)*60,nt=num(s.nightTo)*60,nightOK=(e.func==='C'||e.func==='CU');
+  const rtl=document.documentElement.dir==='rtl',W=96,sw=3,H=26,x=k=>rtl?(W-1-k)*sw:k*sw;
+  let bg='',fg='';
+  for(let k=0;k<W;k++){
+    const m=w0+k*15,dt=new Date(t0+m*60000),mod=dt.getUTCHours()*60+dt.getUTCMinutes();
+    const ho=hol.has(dt.toISOString().slice(0,10)),su=dt.getUTCDay()===0,n=nf>nt?(mod>=nf||mod<nt):(mod>=nf&&mod<nt);
+    const col=ho?'var(--hol)':su?'var(--sun)':n?'var(--night)':'';
+    if(col)bg+=`<rect x="${x(k)}" y="0" width="${sw}" height="${H}" fill="${col}" opacity=".16"/>`;
+    if(m>=a&&m<b)fg+=`<rect x="${x(k)}" y="6" width="${sw}" height="${H-12}" fill="${ho?'var(--hol)':su?'var(--sun)':(n&&nightOK)?'var(--night)':'var(--brand)'}"/>`;
+  }
+  let ax='';for(let k=0;k<=W;k+=24){const h=String(((w0/60)+k/4)%24).padStart(2,'0');ax+=`<text class="ax" x="${rtl?(W-k)*sw:k*sw}" y="${H+12}" text-anchor="${k===0?(rtl?'end':'start'):k===W?(rtl?'start':'end'):'middle'}">${h}:00</text>`;}
+  const cap=[[c.actualH,'var(--brand)',t('workHours')],[nightOK?c.nightH:0,'var(--night)',t('nightH')],[c.sunH,'var(--sun)',t('sunH')],[c.holH,'var(--hol)',t('holH')]]
+    .filter(([v],i)=>i===0||v>0).map(([v,col,l])=>`<span><i style="background:${col}"></i>${l} <b>${hrs(v)}</b></span>`).join('');
+  return `<svg viewBox="0 0 ${W*sw} ${H+14}" direction="ltr" role="img" aria-label="${e.start}–${e.end}"><rect x="0" y="0" width="${W*sw}" height="${H}" rx="4" fill="var(--bg)"/><g shape-rendering="crispEdges">${bg}${fg}</g>${ax}</svg><div class="shift-cap">${cap}</div>`;
+}
 function copyLast(){
   const d=$('f-date').value||today();
   const prev=db.entries.filter(x=>x.type==='work'&&x.date<=d&&x.id!==editId).sort((a,b)=>(b.date+b.start).localeCompare(a.date+a.start))[0]
